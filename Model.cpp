@@ -1,6 +1,6 @@
 #include "Model.h"
 #include "soil\SOIL.h"
-
+#define mesh mData[0].mesh
 Model::Model(const char* filename, Shader *shader) {
 	load(filename, shader);
 }
@@ -42,11 +42,16 @@ void Model::load(const char* filename, Shader *shader) {
 	
 	glGenBuffers(1, &ib);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mData[0].mesh.indices[0] * mData[0].mesh.indices.size()), &mData[0].mesh.indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mesh.indices[0]) * mesh.indices.size(), &mesh.indices[0], GL_STATIC_DRAW);
 	
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	
+	//total size = positions(3), normals(3), tex(2)
+
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 10 * 5, NULL, GL_STATIC_DRAW);
+
+	//offset, size, data
 	glBufferSubData(GL_ARRAY_BUFFER, 0, (3*5) * sizeof(GLfloat), verts);
 	glBufferSubData(GL_ARRAY_BUFFER, (3*5) * sizeof(GLfloat), (4*5) * sizeof(GLfloat), color);
 	glBufferSubData(GL_ARRAY_BUFFER, (3*5 + 5*4) * sizeof(GLfloat), (3*4) * sizeof(GLfloat), normal);
