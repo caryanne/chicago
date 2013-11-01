@@ -5,12 +5,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\shaders">
-      <UniqueIdentifier>{28444392-9877-4342-8b82-ac8454f3af80}</UniqueIdentifier>
-    </Filter>
     <Filter Include="header files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\tinyobjloader">
+      <UniqueIdentifier>{b37bf9b4-a858-4ed7-a8ea-6e64b99f6661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\soil">
+      <UniqueIdentifier>{498f57e6-29b7-447f-bc82-83087b29c2d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -20,18 +23,42 @@
     <ClCompile Include="Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tinyobjloader\tiny_obj_loader.cc">
+      <Filter>Source Files\tinyobjloader</Filter>
+    </ClCompile>
+    <ClCompile Include="soil\image_DXT.c">
+      <Filter>Source Files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="soil\image_helper.c">
+      <Filter>Source Files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="soil\SOIL.c">
+      <Filter>Source Files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="soil\stb_image_aug.c">
+      <Filter>Source Files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="vertex.glsl">
-      <Filter>Source Files\shaders</Filter>
+      <Filter>Source Files</Filter>
     </FxCompile>
-    <FxCompile Include="pixel.glsl">
-      <Filter>Source Files\shaders</Filter>
+    <FxCompile Include="frag.glsl">
+      <Filter>Source Files</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="vertex.hlsl" />
   </ItemGroup>
 </Project>

@@ -1,12 +1,12 @@
 #version 130
 
-in vec4 s_vpos;
-in vec4 s_vcolor;
+in vec4 vpos;
+in vec4 vcolor;
+in vec4 vnormal;
 
 out vec4 color;
 
 void main() {
-	gl_FrontColor = s_vcolor;
-	gl_Position = s_vpos;
-
+	gl_Position = vpos * gl_ModelViewProjectionMatrix;
+	color = vcolor;
 }
