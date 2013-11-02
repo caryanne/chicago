@@ -1,7 +1,8 @@
 #include "Model.h"
-#include "soil/SOIL.h"
+#include "soil\SOIL.h"
 #include <iostream>
-#include "glm/glm.hpp"
+#include "glm\gtc\type_ptr.hpp"
+#include "glm\gtc\matrix_inverse.hpp"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 #define mesh mData[0].mesh
@@ -19,18 +20,16 @@ void Model::load(const char* filename, Shader *shader) {
 			printf("loading %s..\n", mData[i].material.diffuse_texname.c_str());
 		}
 	}
+	
+	glGenVertexArrays(1, &mVAO);
+	glBindVertexArray(mVAO);
 
-
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
-
-	glGenBuffers(1, &ib);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+	glGenBuffers(1, &mIB);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIB);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mesh.indices[0]) * mesh.indices.size(), &(mesh.indices.front()), GL_STATIC_DRAW);
 
-
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glGenBuffers(1, &mVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 
 	//total size = positions(3), normals(3), tex(2)
 	int sizePositions = sizeof(mesh.positions[0]) * mesh.positions.size();
@@ -38,11 +37,7 @@ void Model::load(const char* filename, Shader *shader) {
 	//int sizeTexCoords = sizeof(mesh.texcoords[0]) * mesh.texcoords.size();
 
 	glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, NULL, GL_STATIC_DRAW);// 
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(positions) + sizeof(colors), NULL, GL_STATIC_DRAW);// + sizeNormals + sizeTexCoords
-	//offset, size, data	
-	//glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(positions), positions);//positions
-	//glBufferSubData(GL_ARRAY_BUFFER, sizeof(positions), sizeof(colors), colors);//colors
-	
+
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizePositions, &mesh.positions[0]);//positions
 	glBufferSubData(GL_ARRAY_BUFFER, sizePositions, sizeNormals, &mesh.normals[0]);//normals
 	//glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, sizeTexCoords, &mesh.texcoords[0]);printf("coords\n");//textures
@@ -50,19 +45,22 @@ void Model::load(const char* filename, Shader *shader) {
 	mShader = shader;
 
 	GLuint position = mShader->getAttribLocation("vPosition");
-	//GLuint color = mShader->getAttribLocation("vColor");
 	GLuint normal = mShader->getAttribLocation("vNormal");
 	//GLuint texcoord = mShader->getAttribLocation("vTexCoord");
-	//printf("position location:%i//normal location:%i\n",position, normal);
+
+	mMVP = mShader->getUniformLocation("mModelViewProj");
+	mMV = mShader->getUniformLocation("mModelView");
+	mNM = mShader->getUniformLocation("mNormalMatrix");
+	mEye = mShader->getUniformLocation("vEye");
+	
 	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	//glVertexAttribPointer(color, 4, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeof(positions)));
+
 	glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions));
 	//glVertexAttribPointer(texcoord, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizePositions + sizeNormals));
-
+	
 	mShader->use();
 
 	glEnableVertexAttribArray(position);
-	//glEnableVertexAttribArray(color);
 	glEnableVertexAttribArray(normal);
 	//glEnableVertexAttribArray(texcoord);
 
@@ -70,10 +68,21 @@ void Model::load(const char* filename, Shader *shader) {
 	printf("done\n");
 }
 
-void Model::render() {
+void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
 	
-	glBindVertexArray(vao);
+	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 mvp = viewProjection * model;
+	glm::mat4 mv = view * model;
+	glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv));
+	glBindVertexArray(mVAO);
 	mShader->use();
+
+	glUniformMatrix4fv(mMVP, 1, GL_FALSE, glm::value_ptr(mvp));
+	glUniformMatrix4fv(mMV, 1, GL_FALSE, glm::value_ptr(mv));
+	glUniformMatrix3fv(mNM, 1, GL_FALSE, glm::value_ptr(nm));
+
+	glUniform3fv(mEye, 1, glm::value_ptr(eye));
+
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 
 	//glBindBuffer(GL_ARRAY_BUFFER,vbo);

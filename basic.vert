@@ -2,6 +2,9 @@
 
 uniform mat4 mModelView;
 uniform mat4 mModelViewProj;
+uniform mat3 mNormalMatrix;
+
+uniform vec3 vEye;
 
 in vec3 vPosition;
 in vec3 vNormal;
@@ -9,11 +12,18 @@ in vec3 vNormal;
 //in vec4 vColor;
 
 out vec4 color;
-
+out float intensity;
 
 void main() {
-	gl_Normal = vNormal;
-	gl_Position = gl_ModelViewProjectionMatrix * vec4(vPosition,1.0);
-	color = vec4(vNormal,1.0);;//vec4(0.0,0.0,0.8,1.0);
 
+	vec3 tnorm = normalize(mNormalMatrix * vNormal);
+
+	vec4 eyeCoords = mModelView * vec4(vPosition,1.0);
+	vec4 lightpos = mModelView * vec4(5,20,10,1.0f);
+
+	vec3 s = normalize(	vec3(		lightpos - eyeCoords	)	 );
+	
+	intensity =max( dot( s, tnorm ), 0.0 );
+
+	gl_Position = mModelViewProj * vec4(vPosition,1.0);
 }

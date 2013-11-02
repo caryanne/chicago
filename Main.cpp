@@ -1,14 +1,15 @@
-#include <gl/glew.h>
+#include <gl\glew.h>
 #include <windows.h>
-#include "glfw/glfw3.h"
-#include <gl/GLU.h>
-#include "bullet/btBulletDynamicsCommon.h"
+#include "glfw\glfw3.h"
+#include <gl\GLU.h>
+#include "bullet\btBulletDynamicsCommon.h"
 
-#include "soil/SOIL.h"
+#include "soil\SOIL.h"
 #include "Shader.h"
 #include "Model.h"
-#include "glm/glm.hpp"
 
+#include "glm\glm.hpp"
+#include "glm\gtc\matrix_transform.hpp"
 
 
 GLFWwindow *window;
@@ -17,9 +18,9 @@ void setup3d(double w, double h) {
 
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45.f, w / h, 0.1f, 100.f);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//gluPerspective(45.f, w / h, 0.1f, 100.f);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -55,9 +56,9 @@ int main() {
 
 	//load and set up shit
 
-	Shader test = Shader("basic.vert", "basic.frag");
-	Model model = Model("monkey.obj", &test);
-	Model plane = Model("plane.obj", &test);
+	Shader basic = Shader("basic.vert", "basic.frag");
+	Model monkey = Model("monkey.obj", &basic);
+	Model plane = Model("plane.obj", &basic);
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	
@@ -67,12 +68,22 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
-		gluLookAt(8.5f * sin(glfwGetTime()), 3.f, 8.5f *  cos(glfwGetTime()),
+		/*gluLookAt(8.5f * sin(glfwGetTime()), 3.f, 8.5f *  cos(glfwGetTime()),
 					0.f, 0.0f, 0.f,
-					0.f, 1.f, 0.f);
+					0.f, 1.f, 0.f);*/
 
-		model.render();
-		plane.render();
+		glm::mat4 projection = glm::perspective( 45.f, width / (float)height, 0.1f, 100.f);
+
+		glm::vec3 eye = glm::vec3(8.5f * (float)sin(glfwGetTime()), 3.f, 8.5f * (float)cos(glfwGetTime()));
+		glm::mat4 view = glm::lookAt(eye,
+										glm::vec3(0.f, 1.f, 0.f),
+										glm::vec3(0.f, 1.f, 0.f));
+
+		glm::mat4 viewProjection = projection * view;
+
+
+		monkey.render(eye, view, viewProjection);
+		//plane.render(view, viewProjection);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
