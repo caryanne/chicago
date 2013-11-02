@@ -3,9 +3,12 @@
 #include "glfw/glfw3.h"
 #include <gl/GLU.h>
 #include "bullet/btBulletDynamicsCommon.h"
+
 #include "soil/SOIL.h"
 #include "Shader.h"
 #include "Model.h"
+#include "glm/glm.hpp"
+
 
 
 GLFWwindow *window;
@@ -53,7 +56,8 @@ int main() {
 	//load and set up shit
 
 	Shader test = Shader("basic.vert", "basic.frag");
-	Model model = Model("pib2.obj", &test);
+	Model model = Model("monkey.obj", &test);
+	Model plane = Model("plane.obj", &test);
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	
@@ -63,11 +67,12 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
-		gluLookAt(3.f * sin(glfwGetTime()), 1.f, 3.f *  cos(glfwGetTime()),
+		gluLookAt(8.5f * sin(glfwGetTime()), 3.f, 8.5f *  cos(glfwGetTime()),
 					0.f, 0.0f, 0.f,
 					0.f, 1.f, 0.f);
 
 		model.render();
+		plane.render();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

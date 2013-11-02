@@ -1,6 +1,8 @@
 #include "Model.h"
-#include "soil\SOIL.h"
+#include "soil/SOIL.h"
 #include <iostream>
+#include "glm/glm.hpp"
+
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 #define mesh mData[0].mesh
 
@@ -69,6 +71,7 @@ void Model::load(const char* filename, Shader *shader) {
 }
 
 void Model::render() {
+	
 	glBindVertexArray(vao);
 	mShader->use();
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
