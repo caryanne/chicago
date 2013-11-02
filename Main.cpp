@@ -16,9 +16,7 @@ void setup3d(double w, double h) {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-
 	gluPerspective(45.f, w / h, 0.1f, 100.f);
-
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 	/*glEnable(GL_BLEND);
@@ -54,8 +52,8 @@ int main() {
 
 	//load and set up shit
 
-	Shader test = Shader("vertex.glsl", "frag.glsl");
-	Model model = Model("pib2.obj", &test);
+	Shader test = Shader("basic.vert", "basic.frag");
+	Model model = Model("cube.obj", &test);
 
 	glClearColor(0.f, 0.5f, 1.f, 1.f);
 	
@@ -65,9 +63,9 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
-		gluLookAt(0.f, 0.0f, 10.f,
+		gluLookAt(10.f, 10.0f, 10.f,
 					0.f, 0.0f, 0.f,
-					0.f, 1.f, 0.f);
+					0.f, 0.f, 0.f);
 
 		model.render();
 

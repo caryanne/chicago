@@ -3,6 +3,6 @@ in vec4 color;
 
 void main() {
 
-	gl_FragColor = color/3;
+	gl_FragColor = color;
 
 }
