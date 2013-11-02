@@ -1,12 +1,15 @@
 #version 130
 
 in vec4 vPosition;
-in vec4 vNormal;
+in vec3 vNormal;
 in vec4 vTexCoord;
+in vec4 vColor;
 
 out vec4 color;
 
+
 void main() {
-	gl_Position = vPosition * gl_ModelViewProjectionMatrix;
-	color = vec4(1.0,0.0,0.0,1.0);//vNormal;
+	gl_Position = gl_ModelViewProjectionMatrix * vPosition;
+	color = vColor;
+
 }

@@ -19,9 +19,9 @@ void setup3d(double w, double h) {
 	gluPerspective(45.f, w / h, 0.1f, 100.f);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
-	/*glEnable(GL_BLEND);
+	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_TEXTURE_2D);
+	/*glEnable(GL_TEXTURE_2D);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glShadeModel(GL_SMOOTH);
@@ -55,7 +55,7 @@ int main() {
 	Shader test = Shader("basic.vert", "basic.frag");
 	Model model = Model("cube.obj", &test);
 
-	glClearColor(0.f, 0.5f, 1.f, 1.f);
+	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	
 	while(!glfwWindowShouldClose(window)) {
 
@@ -63,9 +63,9 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
-		gluLookAt(10.f, 10.0f, 10.f,
+		gluLookAt(5.f * sin(glfwGetTime() * 2), 2.f, 5.f *  cos(glfwGetTime() * 2),
 					0.f, 0.0f, 0.f,
-					0.f, 0.f, 0.f);
+					0.f, 1.f, 0.f);
 
 		model.render();
 
