@@ -53,7 +53,7 @@ int main() {
 	//load and set up shit
 
 	Shader test = Shader("basic.vert", "basic.frag");
-	Model model = Model("cube.obj", &test);
+	Model model = Model("pib2.obj", &test);
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	
@@ -63,7 +63,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
-		gluLookAt(5.f * sin(glfwGetTime() * 2), 2.f, 5.f *  cos(glfwGetTime() * 2),
+		gluLookAt(3.f * sin(glfwGetTime()), 1.f, 3.f *  cos(glfwGetTime()),
 					0.f, 0.0f, 0.f,
 					0.f, 1.f, 0.f);
 
