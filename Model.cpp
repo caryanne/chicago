@@ -37,18 +37,21 @@ void Model::load(const char* filename, Shader *shader) {
  3, 8, 4,
  5, 1, 4,
  5, 4, 8};*/
- float positions[] = {0.0,0.0,0.0,1.0,
-					0.0,1.0,0.0,1.0,
-					1.0,0.0,0.0,1.0};
- GLubyte indices[] = {0,1,2};
+ GLfloat positions[] = {-2.5f, 0.f, 0.f,
+						0.f, 2.f, 0.f,
+						2.5f, 0.f, 0.f,
+						-2.5f, 4.f, 0.f,
+						2.5f, 4.f, 0.f };
+ GLubyte indices[] =  { 0, 1, 2,
+						  3, 1, 4 };
 
 
 
 	
-	/*glGenBuffers(1, &ib);
+	glGenBuffers(1, &ib);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
 	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mesh.indices[0]) * mesh.indices.size(), &mesh.indices[0], GL_STATIC_DRAW);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -70,10 +73,10 @@ void Model::load(const char* filename, Shader *shader) {
 	mShader = shader;
 
 	GLuint position = mShader->getAttribLocation("vPosition");
-	GLuint normal = mShader->getAttribLocation("vNormal");
-	GLuint texcoord = mShader->getAttribLocation("vTexCoord");
+	//GLuint normal = mShader->getAttribLocation("vNormal");
+	//GLuint texcoord = mShader->getAttribLocation("vTexCoord");
 
-	glVertexAttribPointer(position, 4, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	//glVertexAttribPointer(normal, 4, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)sizePositions);
 	//glVertexAttribPointer(texcoord, 3, GL_FLOAT, GL_FALSE, 0, (const GLvoid*)(sizePositions + sizeNormals));
 	
@@ -83,14 +86,14 @@ void Model::load(const char* filename, Shader *shader) {
 	//glEnableVertexAttribArray(normal);
 	//glEnableVertexAttribArray(texcoord);
 
-	//glBindVertexArray(0);
+	glBindVertexArray(0);
 }
 
 void Model::render() {
 	glBindVertexArray(vao);
 	mShader->use();
-	//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, NULL);
-	glBindBuffer(GL_ARRAY_BUFFER,vbo);
-	glDrawArrays(GL_TRIANGLES,0,3);
-	//glBindVertexArray(0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, NULL);
+	//glBindBuffer(GL_ARRAY_BUFFER,vbo);
+	//glDrawArrays(GL_TRIANGLES,0,3);
+	glBindVertexArray(0);
 }
