@@ -5,6 +5,7 @@
 #include "glfw\glfw3.h"
 #include "tinyobjloader\tiny_obj_loader.h"
 #include "glm\glm.hpp"
+#include "glm\gtx\quaternion.hpp"
 #include <map>
 #include <string>
 #include "Shader.h"
@@ -27,6 +28,10 @@ private:
 	GLuint mMV;
 	GLuint mNM;
 	GLuint mEye;
+	GLuint mTexture;
+
+	glm::vec3 mPosition;
+	glm::quat mRotation;
 
 	
 public:
@@ -34,7 +39,8 @@ public:
 	void load(const char* filename, Shader *shader);
 	void setShader(Shader *shader) { mShader = shader; }
 	void render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection);
-
+	void setPosition(glm::vec3 position) { mPosition = position; }
+	void setRotation(glm::quat rotation) { mRotation = rotation; }
 
 };
 

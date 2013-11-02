@@ -16,8 +16,8 @@ GLFWwindow *window;
 
 void setup3d(double w, double h) {
 
-	glClear(GL_DEPTH_BUFFER_BIT);
-
+	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+	glViewport(0, 0, w, h);
 	//glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 	//gluPerspective(45.f, w / h, 0.1f, 100.f);
@@ -25,8 +25,9 @@ void setup3d(double w, double h) {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	/*glEnable(GL_TEXTURE_2D);
-	glEnable(GL_LIGHTING);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_TEXTURE_2D);
+	/*glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glShadeModel(GL_SMOOTH);
 	float pos[] = {20,3,20,0};
@@ -57,10 +58,14 @@ int main() {
 	//load and set up shit
 
 	Shader basic = Shader("basic.vert", "basic.frag");
+	Shader simple = Shader("simple.vert", "simple.frag");
 	Model monkey = Model("monkey.obj", &basic);
-	Model plane = Model("plane.obj", &basic);
+	//Model plane = Model("cloth.obj", &simple);
 
+	//monkey.setPosition(glm::vec3(0.f,1.5f,0.f));
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+	unsigned frames = 0;
+	double lastUpdate = 0;
 	
 	while(!glfwWindowShouldClose(window)) {
 
@@ -68,24 +73,33 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
-		/*gluLookAt(8.5f * sin(glfwGetTime()), 3.f, 8.5f *  cos(glfwGetTime()),
-					0.f, 0.0f, 0.f,
-					0.f, 1.f, 0.f);*/
+		monkey.setRotation(glm::quat(glm::vec3(0,glm::radians(glfwGetTime()*10),0.0)));
 
 		glm::mat4 projection = glm::perspective( 45.f, width / (float)height, 0.1f, 100.f);
 
-		glm::vec3 eye = glm::vec3(8.5f * (float)sin(glfwGetTime()), 3.f, 8.5f * (float)cos(glfwGetTime()));
+		//glm::vec3 eye = glm::vec3(6.5f * (float)sin(glfwGetTime()), 5.f, 6.5f * (float)cos(glfwGetTime()));
+		glm::vec3 eye = glm::vec3(3.f, 3.f, 3.f);
 		glm::mat4 view = glm::lookAt(eye,
-										glm::vec3(0.f, 1.f, 0.f),
+										glm::vec3(0.f, 0.f, 0.f),
 										glm::vec3(0.f, 1.f, 0.f));
 
 		glm::mat4 viewProjection = projection * view;
 
 
 		monkey.render(eye, view, viewProjection);
-		//plane.render(view, viewProjection);
+		//plane.render(eye, view, viewProjection);
 
 		glfwSwapBuffers(window);
+
+		frames++;
+		if(glfwGetTime() - lastUpdate > 1.0) {
+			char buffer[32];
+			sprintf(buffer, "%ifps", frames);
+			lastUpdate = glfwGetTime();
+			glfwSetWindowTitle(window,buffer);
+			frames = 0;
+		}
+
 		glfwPollEvents();
 	}
 

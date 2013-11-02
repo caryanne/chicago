@@ -3,6 +3,8 @@
 #include <iostream>
 #include "glm\gtc\type_ptr.hpp"
 #include "glm\gtc\matrix_inverse.hpp"
+#include "glm\gtc\matrix_transform.hpp"
+#include "glm\gtx\quaternion.hpp"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 #define mesh mData[0].mesh
@@ -34,58 +36,63 @@ void Model::load(const char* filename, Shader *shader) {
 	//total size = positions(3), normals(3), tex(2)
 	int sizePositions = sizeof(mesh.positions[0]) * mesh.positions.size();
 	int sizeNormals = sizeof(mesh.normals[0]) * mesh.normals.size();
-	//int sizeTexCoords = sizeof(mesh.texcoords[0]) * mesh.texcoords.size();
+	int sizeTexCoords = sizeof(mesh.texcoords[0]) * mesh.texcoords.size();
 
-	glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, NULL, GL_STATIC_DRAW);// 
+	glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords, NULL, GL_STATIC_DRAW);// 
 
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizePositions, &mesh.positions[0]);//positions
 	glBufferSubData(GL_ARRAY_BUFFER, sizePositions, sizeNormals, &mesh.normals[0]);//normals
-	//glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, sizeTexCoords, &mesh.texcoords[0]);printf("coords\n");//textures
+	glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, sizeTexCoords, &mesh.texcoords[0]);//textures
 
 	mShader = shader;
 
 	GLuint position = mShader->getAttribLocation("vPosition");
 	GLuint normal = mShader->getAttribLocation("vNormal");
-	//GLuint texcoord = mShader->getAttribLocation("vTexCoord");
+	GLuint texcoord = mShader->getAttribLocation("vTexCoord");
 
 	mMVP = mShader->getUniformLocation("mModelViewProj");
 	mMV = mShader->getUniformLocation("mModelView");
 	mNM = mShader->getUniformLocation("mNormalMatrix");
 	mEye = mShader->getUniformLocation("vEye");
-	
-	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	mTexture = mShader->getUniformLocation("sTexture");
 
+
+	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions));
-	//glVertexAttribPointer(texcoord, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizePositions + sizeNormals));
+	glVertexAttribPointer(texcoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizePositions + sizeNormals));
 	
 	mShader->use();
 
 	glEnableVertexAttribArray(position);
 	glEnableVertexAttribArray(normal);
-	//glEnableVertexAttribArray(texcoord);
+	glEnableVertexAttribArray(texcoord);
 
 	glBindVertexArray(0);
+	setPosition(glm::vec3(0.f, 0.f, 0.f));
 	printf("done\n");
 }
 
 void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
 	
-	glm::mat4 model = glm::mat4(1.0f);
+	glm::mat4 translation = glm::translate(glm::mat4(1.f), mPosition);
+	glm::mat4 rotation = glm::toMat4(mRotation);
+	glm::mat4 model =  translation * rotation;  
 	glm::mat4 mvp = viewProjection * model;
 	glm::mat4 mv = view * model;
 	glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv));
+
 	glBindVertexArray(mVAO);
 	mShader->use();
 
 	glUniformMatrix4fv(mMVP, 1, GL_FALSE, glm::value_ptr(mvp));
 	glUniformMatrix4fv(mMV, 1, GL_FALSE, glm::value_ptr(mv));
 	glUniformMatrix3fv(mNM, 1, GL_FALSE, glm::value_ptr(nm));
-
+	glUniform1f(mShader->getUniformLocation("time"),glfwGetTime());
 	glUniform3fv(mEye, 1, glm::value_ptr(eye));
-
+	glUniform1i(mTexture, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.diffuse_texname]);
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 
-	//glBindBuffer(GL_ARRAY_BUFFER,vbo);
-	//glDrawArrays(GL_TRIANGLES,0,3);
 	glBindVertexArray(0);
 }
