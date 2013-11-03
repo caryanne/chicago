@@ -9,17 +9,17 @@
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 #define mesh mData[0].mesh
 
-Model::Model(const char* filename, Shader *shader) {
+Model::Model(string filename, Shader *shader) {
 	load(filename, shader);
 }
 
-void Model::load(const char* filename, Shader *shader) {
-	printf("loading %s:%s\n", filename, tinyobj::LoadObj(mData, filename).c_str());
+void Model::load(string filename, Shader *shader) {
+	tinyobj::LoadObj(mData, filename.c_str());
 	for(unsigned i = 0; i < mData.size(); i++) {
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
 			mTextures[mData[i].material.diffuse_texname] =
 				SOIL_load_OGL_texture(mData[i].material.diffuse_texname.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
-			printf("loading %s..\n", mData[i].material.diffuse_texname.c_str());
+			printf("loading texture %s..\n", mData[i].material.diffuse_texname.c_str());
 		}
 	}
 	
@@ -50,11 +50,11 @@ void Model::load(const char* filename, Shader *shader) {
 	GLuint normal = mShader->getAttribLocation("vNormal");
 	GLuint texcoord = mShader->getAttribLocation("vTexCoord");
 
-	mMVP = mShader->getUniformLocation("mModelViewProj");
-	mMV = mShader->getUniformLocation("mModelView");
-	mNM = mShader->getUniformLocation("mNormalMatrix");
-	mEye = mShader->getUniformLocation("vEye");
-	mTexture = mShader->getUniformLocation("sTexture");
+	uniformMVP = mShader->getUniformLocation("mModelViewProj");
+	uniformMV = mShader->getUniformLocation("mModelView");
+	uniformNM = mShader->getUniformLocation("mNormalMatrix");
+	uniformEye = mShader->getUniformLocation("vEye");
+	uniformTexBase = mShader->getUniformLocation("sTexture");
 
 
 	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -84,14 +84,16 @@ void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
 	glBindVertexArray(mVAO);
 	mShader->use();
 
-	glUniformMatrix4fv(mMVP, 1, GL_FALSE, glm::value_ptr(mvp));
-	glUniformMatrix4fv(mMV, 1, GL_FALSE, glm::value_ptr(mv));
-	glUniformMatrix3fv(mNM, 1, GL_FALSE, glm::value_ptr(nm));
+	glUniformMatrix4fv(uniformMVP, 1, GL_FALSE, glm::value_ptr(mvp));
+	glUniformMatrix4fv(uniformMV, 1, GL_FALSE, glm::value_ptr(mv));
+	glUniformMatrix3fv(uniformNM, 1, GL_FALSE, glm::value_ptr(nm));
+
 	glUniform1f(mShader->getUniformLocation("time"),glfwGetTime());
-	glUniform3fv(mEye, 1, glm::value_ptr(eye));
-	glUniform1i(mTexture, 0);
-	glActiveTexture(GL_TEXTURE0);
+	glUniform3fv(uniformEye, 1, glm::value_ptr(eye));
+	
+	glUniform1i(uniformTexBase, 0);
 	glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.diffuse_texname]);
+
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 
 	glBindVertexArray(0);

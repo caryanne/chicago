@@ -24,19 +24,19 @@ private:
 	GLuint mVBO;
 	GLuint mIB;
 	
-	GLuint mMVP;
-	GLuint mMV;
-	GLuint mNM;
-	GLuint mEye;
-	GLuint mTexture;
+	GLuint uniformMVP;
+	GLuint uniformMV;
+	GLuint uniformNM;
+	GLuint uniformEye;
+	GLuint uniformTexBase;
 
 	glm::vec3 mPosition;
 	glm::quat mRotation;
 
 	
 public:
-	Model(const char* filename, Shader *shader);
-	void load(const char* filename, Shader *shader);
+	Model(string filename, Shader *shader);
+	void load(string filename, Shader *shader);
 	void setShader(Shader *shader) { mShader = shader; }
 	void render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection);
 	void setPosition(glm::vec3 position) { mPosition = position; }
