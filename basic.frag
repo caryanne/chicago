@@ -10,14 +10,9 @@ void main() {
 
 	vec4 inter;
 
-	vec4 diffuse = texture( sTexture, UV);
+	vec4 diffuse = texture( sTexture, UV*6);
 	
 	inter = diffuse * intensity;
-	if(intensity > 0.95)
-		inter = diffuse * 3;
-	if(intensity < 0.25)
-		inter = diffuse * intensity * .5;
-	
 
 	inter.a=1.0;
 	gl_FragColor = inter;

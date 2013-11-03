@@ -18,7 +18,7 @@ void Model::load(string filename, Shader *shader) {
 	for(unsigned i = 0; i < mData.size(); i++) {
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
 			mTextures[mData[i].material.diffuse_texname] =
-				SOIL_load_OGL_texture(mData[i].material.diffuse_texname.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
+				SOIL_load_OGL_texture(mData[i].material.diffuse_texname.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
 			printf("loading texture %s..\n", mData[i].material.diffuse_texname.c_str());
 		}
 	}
