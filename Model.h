@@ -32,6 +32,7 @@ private:
 
 	glm::vec3 mPosition;
 	glm::quat mRotation;
+	glm::vec3 mScale;
 
 	
 public:
@@ -41,6 +42,7 @@ public:
 	void render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection);
 	void setPosition(glm::vec3 position) { mPosition = position; }
 	void setRotation(glm::quat rotation) { mRotation = rotation; }
+	void setScale(glm::vec3 scale) { mScale = scale; }
 
 };
 

@@ -3,10 +3,7 @@
 uniform mat4 mModelView;
 uniform mat4 mModelViewProj;
 uniform mat3 mNormalMatrix;
-
 uniform vec3 vEye;
-
-uniform float time;
 
 in vec3 vPosition;
 in vec3 vNormal;
@@ -22,7 +19,7 @@ void main() {
 
 	vec4 eyeCoords = mModelView* vec4(vPosition,1.0);
 
-	vec4 lightpos = mModelView*vec4(10 * sin(time),0.0,10.0 * cos(time),1.0f);
+	vec4 lightpos = vec4(3,3.0,3.0,1.0f);
 
 	vec3 s = normalize(vec3(lightpos - eyeCoords));
 	

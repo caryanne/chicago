@@ -68,15 +68,19 @@ void Model::load(string filename, Shader *shader) {
 	glEnableVertexAttribArray(texcoord);
 
 	glBindVertexArray(0);
+	
 	setPosition(glm::vec3(0.f, 0.f, 0.f));
+	setRotation(glm::quat(glm::vec3(0.f, 0.f, 0.f)));
+	setScale(glm::vec3(1.f, 1.f, 1.f));
+
 	printf("done\n");
 }
 
 void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
-	
+	glm::mat4 scale = glm::scale(glm::mat4(1.f), mScale);
 	glm::mat4 translation = glm::translate(glm::mat4(1.f), mPosition);
 	glm::mat4 rotation = glm::toMat4(mRotation);
-	glm::mat4 model =  translation * rotation;  
+	glm::mat4 model =  scale * translation * rotation;  
 	glm::mat4 mvp = viewProjection * model;
 	glm::mat4 mv = view * model;
 	glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv));
