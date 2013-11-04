@@ -57,10 +57,8 @@ int main() {
 
 	//load and set up shit
 
-	Shader basic = Shader("basic.vert", "basic.frag");
-	Shader simple = Shader("simple.vert", "simple.frag");
-	Model base = Model("station.obj", &simple);
-	Model plane = Model("plane.obj", &basic);
+	Model base = Model("station.obj");
+	Model plane = Model("plane.obj");
 	
 	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
 	unsigned frames = 0;

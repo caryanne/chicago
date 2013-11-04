@@ -16,9 +16,10 @@ using namespace std;
 class Model {
 
 private:
-	map<string,unsigned> mTextures;
+	map<string, unsigned> mTextures;
+	map<unsigned, Shader> mShaders;
 	vector<tinyobj::shape_t> mData;
-	Shader *mShader;
+	//Shader *mShader;
 
 	GLuint mVAO;
 	GLuint mVBO;
@@ -33,12 +34,13 @@ private:
 	glm::vec3 mPosition;
 	glm::quat mRotation;
 	glm::vec3 mScale;
+	
 
 	
 public:
-	Model(string filename, Shader *shader);
-	void load(string filename, Shader *shader);
-	void setShader(Shader *shader) { mShader = shader; }
+	Model(string filename);
+	void load(string filename);
+	void setShader(unsigned index, Shader shader) { mShaders[index] = shader; }
 	void render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection);
 	void setPosition(glm::vec3 position) { mPosition = position; }
 	void setRotation(glm::quat rotation) { mRotation = rotation; }

@@ -9,6 +9,7 @@ private:
 	GLuint shader;
 
 public:
+	Shader() {}
 	Shader(const char *vertexShaderFilename, const char *fragShaderFilename);
 	GLuint getAttribLocation(const GLchar* name) { return glGetAttribLocation(shader, name); }
 	GLuint getUniformLocation(const GLchar* name) { return glGetUniformLocation(shader, name); }

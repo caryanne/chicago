@@ -9,17 +9,24 @@
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 #define mesh mData[0].mesh
 
-Model::Model(string filename, Shader *shader) {
-	load(filename, shader);
+Model::Model(string filename) {
+	load(filename);
 }
 
-void Model::load(string filename, Shader *shader) {
+void Model::load(string filename) {
 	tinyobj::LoadObj(mData, filename.c_str());
 	for(unsigned i = 0; i < mData.size(); i++) {
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
 			mTextures[mData[i].material.diffuse_texname] =
 				SOIL_load_OGL_texture(mData[i].material.diffuse_texname.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
 			printf("loading texture %s..\n", mData[i].material.diffuse_texname.c_str());
+		}
+		if(mData[i].material.unknown_parameter.find("vshader") != mData[i].material.unknown_parameter.end() &&
+			mData[i].material.unknown_parameter.find("fshader") != mData[i].material.unknown_parameter.end()) {
+			printf("loading shaders %s and %s..\n", mData[i].material.unknown_parameter.find("vshader")->second.c_str(),
+													mData[i].material.unknown_parameter.find("fshader")->second.c_str());
+			mShaders[i] = Shader(mData[i].material.unknown_parameter.find("vshader")->second.c_str(), 
+								mData[i].material.unknown_parameter.find("fshader")->second.c_str());
 		}
 	}
 	
@@ -44,24 +51,22 @@ void Model::load(string filename, Shader *shader) {
 	glBufferSubData(GL_ARRAY_BUFFER, sizePositions, sizeNormals, &mesh.normals[0]);//normals
 	glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, sizeTexCoords, &mesh.texcoords[0]);//textures
 
-	mShader = shader;
+	GLuint position = mShaders[0].getAttribLocation("vPosition");
+	GLuint normal = mShaders[0].getAttribLocation("vNormal");
+	GLuint texcoord = mShaders[0].getAttribLocation("vTexCoord");
 
-	GLuint position = mShader->getAttribLocation("vPosition");
-	GLuint normal = mShader->getAttribLocation("vNormal");
-	GLuint texcoord = mShader->getAttribLocation("vTexCoord");
-
-	uniformMVP = mShader->getUniformLocation("mModelViewProj");
-	uniformMV = mShader->getUniformLocation("mModelView");
-	uniformNM = mShader->getUniformLocation("mNormalMatrix");
-	uniformEye = mShader->getUniformLocation("vEye");
-	uniformTexBase = mShader->getUniformLocation("sTexture");
+	uniformMVP = mShaders[0].getUniformLocation("mModelViewProj");
+	uniformMV = mShaders[0].getUniformLocation("mModelView");
+	uniformNM = mShaders[0].getUniformLocation("mNormalMatrix");
+	uniformEye = mShaders[0].getUniformLocation("vEye");
+	uniformTexBase = mShaders[0].getUniformLocation("sTexture");
 
 
 	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions));
 	glVertexAttribPointer(texcoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizePositions + sizeNormals));
 	
-	mShader->use();
+	mShaders[0].use();
 
 	glEnableVertexAttribArray(position);
 	glEnableVertexAttribArray(normal);
@@ -86,13 +91,14 @@ void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
 	glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv));
 
 	glBindVertexArray(mVAO);
-	mShader->use();
+
+	mShaders[0].use();
 
 	glUniformMatrix4fv(uniformMVP, 1, GL_FALSE, glm::value_ptr(mvp));
 	glUniformMatrix4fv(uniformMV, 1, GL_FALSE, glm::value_ptr(mv));
 	glUniformMatrix3fv(uniformNM, 1, GL_FALSE, glm::value_ptr(nm));
 
-	glUniform1f(mShader->getUniformLocation("time"),glfwGetTime());
+	glUniform1f(mShaders[0].getUniformLocation("time"),glfwGetTime());
 	glUniform3fv(uniformEye, 1, glm::value_ptr(eye));
 	
 	glUniform1i(uniformTexBase, 0);

@@ -9,5 +9,7 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd hair.JPG
+vshader basic.vert
+fshader basic.frag
 
 
