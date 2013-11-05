@@ -7,11 +7,11 @@
 #include "soil\SOIL.h"
 #include "Shader.h"
 #include "Model.h"
+#include "ResourceManager.h"
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm\gtc\matrix_inverse.hpp"
-
 
 GLFWwindow *window;
 
