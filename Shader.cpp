@@ -23,20 +23,20 @@ static char *readFile(const char *filename) {
 const char* compileSuccessful(int obj) {
   int status;
   glGetShaderiv(obj, GL_COMPILE_STATUS, &status);
-  return (status == GL_TRUE) ? "good" : "bad";
+  return (status == GL_TRUE) ? "OK" : "FAIL";
 }
 
 const char* linkSuccessful(int obj) {
   int status;
   glGetProgramiv(obj, GL_LINK_STATUS, &status);
-  return (status == GL_TRUE) ? "good" : "bad";
+  return (status == GL_TRUE) ? "OK" : "FAIL";
 }
 GLuint makeVertexShader(const char *filename) {
 	GLuint id = glCreateShader(GL_VERTEX_SHADER);
 	char *source = readFile(filename);
 	glShaderSource(id, 1, (const GLchar**)&source, NULL);
 	glCompileShader(id);
-	printf("%s compiled %s..\n", filename, compileSuccessful(id));
+	//printf("%.2f:%s %s\n", glfwGetTime(), filename, compileSuccessful(id));
 	return id;
 }
 GLuint makeFragmentShader(const char *filename) {
@@ -44,7 +44,7 @@ GLuint makeFragmentShader(const char *filename) {
 	char *source = readFile(filename);
 	glShaderSource(id, 1, (const GLchar**)&source, NULL);
 	glCompileShader(id);
-	printf("%s compiled %s..\n", filename, compileSuccessful(id));
+	//printf("%.2f:%s %s\n", glfwGetTime(), filename, compileSuccessful(id));
 	return id;
 }
 GLuint makeShaderProgram(GLuint vertexShader, GLuint fragShader) {
@@ -52,7 +52,7 @@ GLuint makeShaderProgram(GLuint vertexShader, GLuint fragShader) {
 	glAttachShader(id, vertexShader);
 	glAttachShader(id, fragShader);
 	glLinkProgram(id);
-	printf("shader program %i linked %s..\n", id, linkSuccessful(id));
+	printf("%.2f:shader %i %s [vertex(%s) fragment(%s)]\n", glfwGetTime(), id, linkSuccessful(id), compileSuccessful(vertexShader), compileSuccessful(fragShader));
 	return id;
 }
 

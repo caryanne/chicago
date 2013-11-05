@@ -1,0 +1,14 @@
+# Blender MTL File: 'helmet.blend'
+# Material Count: 1
+newmtl Material.001
+Ns 194.117647
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.555145 0.080257
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.0
+illum 2
+map_Kd shield.png
+vshader helmet_shield.vert
+fshader helmet_shield.frag
+

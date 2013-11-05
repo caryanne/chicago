@@ -14,22 +14,24 @@ Model::Model(string filename) {
 }
 
 void Model::load(string filename) {
+	double start = glfwGetTime();
+	printf("%.2f:loading mesh %s\n", glfwGetTime(), filename.c_str());
 	tinyobj::LoadObj(mData, filename.c_str());
 	for(unsigned i = 0; i < mData.size(); i++) {
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
+			printf("%.2f:...loading texture %s\n", glfwGetTime(), mData[i].material.diffuse_texname.c_str());
 			mTextures[mData[i].material.diffuse_texname] =
 				SOIL_load_OGL_texture(mData[i].material.diffuse_texname.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
-			printf("loading texture %s..\n", mData[i].material.diffuse_texname.c_str());
 		}
 		if(mData[i].material.unknown_parameter.find("vshader") != mData[i].material.unknown_parameter.end() &&
 			mData[i].material.unknown_parameter.find("fshader") != mData[i].material.unknown_parameter.end()) {
-			printf("loading shaders %s and %s..\n", mData[i].material.unknown_parameter.find("vshader")->second.c_str(),
+			printf("%.2f:...loading shaders %s and %s\n", glfwGetTime(), mData[i].material.unknown_parameter.find("vshader")->second.c_str(),
 													mData[i].material.unknown_parameter.find("fshader")->second.c_str());
 			mShaders[i] = Shader(mData[i].material.unknown_parameter.find("vshader")->second.c_str(), 
 								mData[i].material.unknown_parameter.find("fshader")->second.c_str());
 		}
 	}
-	
+	printf("%.2f:...populating vertex array\n", glfwGetTime());
 	glGenVertexArrays(1, &mVAO);
 	glBindVertexArray(mVAO);
 
@@ -78,7 +80,7 @@ void Model::load(string filename) {
 	setRotation(glm::quat(glm::vec3(0.f, 0.f, 0.f)));
 	setScale(glm::vec3(1.f, 1.f, 1.f));
 
-	printf("done\n");
+	printf("%.2f:done loading %s in %.2fms\n", glfwGetTime(), filename.c_str(), (glfwGetTime() - start) * 1000.0);
 }
 
 void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {

@@ -10,7 +10,7 @@ void main() {
 
 	vec4 inter;
 
-	vec4 diffuse = texture( sTexture, UV*6);
+	vec4 diffuse = texture( sTexture, UV);
 	
 	inter = diffuse * intensity;
 

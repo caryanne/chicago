@@ -10,6 +10,7 @@
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
+#include "glm\gtc\matrix_inverse.hpp"
 
 
 GLFWwindow *window;
@@ -38,60 +39,76 @@ void setup3d(double w, double h) {
 
 int main() {
 
-
+	
 	if(!glfwInit())
 		exit(EXIT_FAILURE);
+	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
+	double start = glfwGetTime();
 
-	window = glfwCreateWindow(800, 600, "chicago", NULL, NULL);
+	window = glfwCreateWindow(1360, 768, "chicago", glfwGetPrimaryMonitor(), NULL);
+	//window = glfwCreateWindow(800, 600, "chicago", NULL, NULL);
 	if(!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+	printf("%.2f:window created\n", glfwGetTime());
 
 	glfwMakeContextCurrent(window);
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
-	
+	printf("%.2f:OpenGL context created\n", glfwGetTime());
 	if(glewInit() != GLEW_OK)
 		exit(EXIT_FAILURE);
-
+	printf("%.2f:checked OpenGL extensions\n", glfwGetTime());
 	//load and set up shit
 
 	Model base = Model("station.obj");
 	Model plane = Model("plane.obj");
+
+	Model helmetframe = Model("helmetframe.obj");
+	Model helmetshield = Model("helmetshield.obj");
 	
-	glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+	plane.setScale(glm::vec3(5.0f));
+	base.setScale(glm::vec3(0.25f));
+	helmetframe.setScale(glm::vec3(0.9f));
+	helmetshield.setScale(glm::vec3(0.9f));
+
+	glClearColor(0.0f, 0.0f, 0.05f, 1.f);
 	unsigned frames = 0;
 	double lastUpdate = 0;
 	
+	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
+
 	while(!glfwWindowShouldClose(window)) {
 
 	
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
-		plane.setScale(glm::vec3(5.0f));
-		base.setScale(glm::vec3(0.25f));
+		
 		
 
 		glm::mat4 projection = glm::perspective( 45.f, width / (float)height, 0.1f, 100.f);
 
-		glm::vec3 eye = glm::vec3(6.5f * (float)sin(glfwGetTime()), 3.f, 6.5f * (float)cos(glfwGetTime()));
+		glm::vec3 eye = glm::vec3(5.f * (float)sin(glfwGetTime()), 1.5f, 5.f * (float)cos(glfwGetTime()));
 		//glm::vec3 eye = glm::vec3(-5.f, 3.f, -5.f);
 		glm::mat4 view = glm::lookAt(eye,
-										glm::vec3(-.5, 1.f, -1),
-										glm::vec3(0.75f, 1.f, 0.25f));
+										glm::vec3(1.f, 1.f, 1.5f),
+										glm::vec3(0.5f, 1.f, -0.25f));
 
 		glm::mat4 viewProjection = projection * view;
 
+		helmetframe.setPosition(eye);
+		helmetshield.setPosition(eye);
 
-		//base.setRotation(glm::quat(glm::vec3(0,glm::radians(180+glfwGetTime()*5),0.0)));
-		base.render(eye, view, viewProjection);
+		helmetframe.setRotation(glm::toQuat(glm::inverse(view)));
+		helmetshield.setRotation(glm::toQuat(glm::inverse(view)));
 
-
+		
 		base.render(eye, view, viewProjection);
 		plane.render(eye, view, viewProjection);
-
+		helmetframe.render(eye, view, viewProjection);
+		helmetshield.render(eye, view, viewProjection);
 		glfwSwapBuffers(window);
 
 		frames++;
