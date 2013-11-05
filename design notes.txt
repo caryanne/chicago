@@ -1,0 +1,18 @@
+scene manager (root node, skybox, etc)
+
+scene node (add child, transformation, shit like that)
+	
+	entity (contains mesh)
+	camera
+	light
+
+shader manager (sets uniforms, parameters, etc?)
+
+resource manager (loads resources returning pointers to resources)
+			essentially std:vectors for different resource types
+
+resource
+	audio
+	mesh (transfers to video memory on request for gluint of vbo or something)
+	texture
+	shader
