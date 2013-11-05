@@ -1,83 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="header files">
+    <Filter Include="engine">
+      <UniqueIdentifier>{ae08b440-c44b-4355-8153-92eca1127eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="engine\header files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="source files">
+    <Filter Include="engine\source files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="source files\tinyobjloader">
+    <Filter Include="engine\source files\tinyobjloader">
       <UniqueIdentifier>{b37bf9b4-a858-4ed7-a8ea-6e64b99f6661}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source files\soil">
+    <Filter Include="engine\source files\soil">
       <UniqueIdentifier>{498f57e6-29b7-447f-bc82-83087b29c2d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>source files</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
-      <Filter>source files</Filter>
+      <Filter>engine\source files</Filter>
     </ClCompile>
     <ClCompile Include="tinyobjloader\tiny_obj_loader.cc">
-      <Filter>source files\tinyobjloader</Filter>
+      <Filter>engine\source files\tinyobjloader</Filter>
     </ClCompile>
     <ClCompile Include="soil\image_DXT.c">
-      <Filter>source files\soil</Filter>
+      <Filter>engine\source files\soil</Filter>
     </ClCompile>
     <ClCompile Include="soil\image_helper.c">
-      <Filter>source files\soil</Filter>
+      <Filter>engine\source files\soil</Filter>
     </ClCompile>
     <ClCompile Include="soil\SOIL.c">
-      <Filter>source files\soil</Filter>
+      <Filter>engine\source files\soil</Filter>
     </ClCompile>
     <ClCompile Include="soil\stb_image_aug.c">
-      <Filter>source files\soil</Filter>
+      <Filter>engine\source files\soil</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>source files</Filter>
+      <Filter>engine\source files</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>source files</Filter>
+      <Filter>engine\source files</Filter>
     </ClCompile>
     <ClCompile Include="SceneNode.cpp">
-      <Filter>source files</Filter>
+      <Filter>engine\source files</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h">
-      <Filter>header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="SceneNode.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="MoveableObject.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>header files</Filter>
+      <Filter>engine\header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>engine\header files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
