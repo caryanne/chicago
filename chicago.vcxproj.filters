@@ -44,6 +44,9 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>source files</Filter>
     </ClCompile>
+    <ClCompile Include="SceneNode.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h">
@@ -68,6 +71,12 @@
       <Filter>header files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveableObject.h">
+      <Filter>header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
       <Filter>header files</Filter>
     </ClInclude>
   </ItemGroup>
