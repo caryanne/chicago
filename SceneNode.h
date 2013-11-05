@@ -4,7 +4,7 @@
 #include <vector>
 #include "glm\glm.hpp"
 #include "glm\gtx\quaternion.hpp"
-#include "MoveableObject.h"
+
 
 using namespace std;
 
@@ -13,7 +13,7 @@ class SceneNode {
 private:
 	vector<SceneNode*> mChildren;
 	SceneNode* mParent;
-	MoveableObject* mObj;
+	Entity* mEntity;
 	glm::vec3 mPosition;
 	glm::quat mRotation;
 	glm::vec3 mScale;

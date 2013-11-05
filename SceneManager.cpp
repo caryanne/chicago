@@ -28,6 +28,9 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 
 	glBindVertexArray(0);
 
+	//while has children, iterate though
+
+
 }
 
 void SceneManager::drawScene() {
@@ -37,6 +40,6 @@ void SceneManager::drawScene() {
 	// update uniforms
 	// draw object
 	
-
+	drawNode(getRootNode());
 
 }

@@ -1,10 +1,10 @@
 #include "SceneNode.h"
 
-SceneNode::SceneNode(MoveableObject* obj) {
+SceneNode::SceneNode(Entity *entity) {
 	setPosition(glm::vec3(0.f, 0.f, 0.f));
 	setRotation(glm::quat(glm::vec3(0.f, 0.f, 0.f)));
 	setScale(glm::vec3(1.f,1.f,1.f));
-	mObj = obj;
+	mEntity = entity;
 }
 
 unsigned SceneNode::addChild(SceneNode *sceneNode) {
