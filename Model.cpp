@@ -16,19 +16,19 @@ Model::Model(string filename) {
 void Model::load(string filename) {
 	double start = glfwGetTime();
 	printf("%.2f:loading mesh %s\n", glfwGetTime(), filename.c_str());
-	tinyobj::LoadObj(mData, filename.c_str());
+	tinyobj::LoadObj(mData, ("media/" + filename).c_str(), "media/");
 	for(unsigned i = 0; i < mData.size(); i++) {
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
 			printf("%.2f:...loading texture %s\n", glfwGetTime(), mData[i].material.diffuse_texname.c_str());
 			mTextures[mData[i].material.diffuse_texname] =
-				SOIL_load_OGL_texture(mData[i].material.diffuse_texname.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
+				SOIL_load_OGL_texture(("media/textures/" + mData[i].material.diffuse_texname).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
 		}
 		if(mData[i].material.unknown_parameter.find("vshader") != mData[i].material.unknown_parameter.end() &&
 			mData[i].material.unknown_parameter.find("fshader") != mData[i].material.unknown_parameter.end()) {
 			printf("%.2f:...loading shaders %s and %s\n", glfwGetTime(), mData[i].material.unknown_parameter.find("vshader")->second.c_str(),
 													mData[i].material.unknown_parameter.find("fshader")->second.c_str());
-			mShaders[i] = Shader(mData[i].material.unknown_parameter.find("vshader")->second.c_str(), 
-								mData[i].material.unknown_parameter.find("fshader")->second.c_str());
+			mShaders[i] = Shader(("media/shaders/" + mData[i].material.unknown_parameter.find("vshader")->second).c_str(), 
+								("media/shaders/" + mData[i].material.unknown_parameter.find("fshader")->second).c_str());
 		}
 	}
 	printf("%.2f:...populating vertex array\n", glfwGetTime());

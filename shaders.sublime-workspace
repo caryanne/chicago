@@ -32,67 +32,11 @@
 	"buffers":
 	[
 		{
-			"file": "helmet_shield.vert",
+			"file": "media/helmetframe.obj",
 			"settings":
 			{
-				"buffer_size": 541,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "basic.frag",
-			"settings":
-			{
-				"buffer_size": 236,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "basic.vert",
-			"settings":
-			{
-				"buffer_size": 544,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "helmet_frame.frag",
-			"settings":
-			{
-				"buffer_size": 183,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "helmet_frame.vert",
-			"settings":
-			{
-				"buffer_size": 541,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "simple.frag",
-			"settings":
-			{
-				"buffer_size": 183,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "simple.vert",
-			"settings":
-			{
-				"buffer_size": 541,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "helmet_shield.frag",
-			"settings":
-			{
-				"buffer_size": 183,
-				"line_ending": "Windows"
+				"buffer_size": 36150,
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -127,12 +71,21 @@
 	},
 	"file_history":
 	[
-		"/C/Users/adam/Downloads/asmodai-shaderlanguages-21aa149e18ee/asmodai-shaderlanguages-21aa149e18ee/README.rst",
-		"/C/Users/adam/Documents/GitHub/chicago/plane.mtl",
-		"/C/Users/adam/Documents/GitHub/chicago/plane.obj",
-		"/C/Users/adam/Documents/GitHub/chicago/helmetframe.obj",
-		"/C/Users/adam/Documents/GitHub/chicago/helmetshield.mtl",
 		"/C/Users/adam/Documents/GitHub/chicago/helmetframe.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/helmetshield.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/helmet_shield.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/helmet_shield.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/plane.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/simple.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/helmet_frame.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/simple.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/helmet_frame.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/plane.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/basic.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/basic.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/cube.mtl",
+		"/C/Users/adam/Downloads/asmodai-shaderlanguages-21aa149e18ee/asmodai-shaderlanguages-21aa149e18ee/README.rst",
+		"/C/Users/adam/Documents/GitHub/chicago/helmetframe.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/station.mtl",
 		"/C/Users/adam/Documents/GitHub/chicago/monkey.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/pib2.mtl",
@@ -144,7 +97,6 @@
 		"/C/Users/adam/Documents/GitHub/chicago/mo.mtl",
 		"/C/Users/adam/Documents/GitHub/chicago/mo.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/README.md",
-		"/C/Users/adam/Documents/GitHub/chicago/cube.mtl",
 		"/C/Users/adam/Documents/GitHub/strawberry-pie/README.md",
 		"/C/Users/adam/Downloads/bullet-2.82-r2704/bullet-2.82-r2704/INSTALL",
 		"/C/Users/adam/Downloads/bullet-2.82-r2704/bullet-2.82-r2704/lib/readme.txt",
@@ -215,6 +167,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"use",
+			"shield",
 			"s",
 			"usemtl",
 			"o ",
@@ -235,6 +189,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"frame",
 			"",
 			".0",
 			"1.0",
@@ -251,43 +206,16 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "helmet_shield.vert",
+					"file": "media/helmetframe.obj",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								115,
-								115
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "basic.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 236,
+						"buffer_size": 36150,
 						"regions":
 						{
 						},
@@ -301,168 +229,6 @@
 						"settings":
 						{
 							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "basic.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 544,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "helmet_frame.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 183,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "helmet_frame.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "simple.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 183,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "simple.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 541,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "helmet_shield.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 183,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								180,
-								180
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -503,7 +269,7 @@
 			1.0
 		]
 	},
-	"menu_visible": false,
+	"menu_visible": true,
 	"project": "shaders.sublime-project",
 	"replace":
 	{
