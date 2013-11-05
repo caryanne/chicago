@@ -48,6 +48,9 @@
       <Filter>engine\source files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>engine\source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h">

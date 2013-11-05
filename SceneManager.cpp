@@ -1,8 +1,6 @@
 #include "SceneManager.h"
 
-void SceneManager::drawScene() {
-
-	
+void SceneManager::drawNode(SceneNode* sceneNode) {
 
 	glm::mat4 scale = glm::scale(glm::mat4(1.f), mScale);
 	glm::mat4 translation = glm::translate(glm::mat4(1.f), mPosition);
@@ -12,8 +10,8 @@ void SceneManager::drawScene() {
 	glm::mat4 mv = view * model;
 	glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv));
 
-	glBindVertexArray(mVAO);
-
+	sceneNode->getObj()->bind();
+	
 	mShaders[0].use();
 
 	glUniformMatrix4fv(uniformMVP, 1, GL_FALSE, glm::value_ptr(mvp));
@@ -29,4 +27,16 @@ void SceneManager::drawScene() {
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 
 	glBindVertexArray(0);
+
+}
+
+void SceneManager::drawScene() {
+	//figure out matrices
+	//iterate through all children
+	// bind vao
+	// update uniforms
+	// draw object
+	
+
+
 }

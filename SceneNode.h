@@ -23,6 +23,7 @@ public:
 	SceneNode(MoveableObject* obj);
 	virtual unsigned addChild(SceneNode* sceneNode);
 	virtual void attach(MoveableObject* obj) { mObj = obj; }
+	virtual MoveableObject* getObj() { return mObj; }
 	virtual SceneNode* getParent() { return mParent; }
 	virtual void setParent(SceneNode* sceneNode) { mParent = sceneNode; }
 	virtual void setPosition(glm::vec3 position) { mPosition = position; }

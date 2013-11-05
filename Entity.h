@@ -14,6 +14,8 @@ public:
 	Entity(Mesh* mesh) { setMesh(mesh); }
 	Mesh* getMesh() { return mMesh; }
 	void setMesh(Mesh* mesh) { mMesh = mesh; }
+	void bind();
+
 
 };
 

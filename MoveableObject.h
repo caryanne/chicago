@@ -16,7 +16,7 @@ public:
 	virtual void setName(const string& name) { mName = name; }
 	virtual bool getVisible() { return mVisible; }
 	virtual void setVisible(bool visible) { mVisible = visible; }
-
+	virtual void bind() = 0;
 };
 
 #endif

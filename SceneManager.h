@@ -15,6 +15,7 @@ class SceneManager {
 private:
 	SceneNode mRootNode;
 	Camera *mCamera;
+	void drawNode(SceneNode* sceneNode);
 
 public:
 	SceneManager() {}

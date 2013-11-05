@@ -12,7 +12,9 @@ class Camera: public MoveableObject {
 
 private:
 	float mFOV;
-
+	glm::vec3 mPosition;
+	glm::quat mRotation;
+	glm::vec3 mScale;
 public:
 	Camera();
 	void setFOV(float fov) { mFOV = fov; }
@@ -22,7 +24,7 @@ public:
 	void setPosition(glm::vec3 position);
 	void setRotation(glm::quat rotation);
 	void setRotation(glm::vec3 euler);
-
+	void bind();
 
 };
 
