@@ -10,7 +10,7 @@ private:
 	string mName;
 
 public:
-	MoveableObject();
+	MoveableObject() {}
 	MoveableObject(const string& name, bool visible) { setName(name); setVisible(visible); }
 	virtual const string& getName() { return mName; }
 	virtual void setName(const string& name) { mName = name; }

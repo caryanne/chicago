@@ -18,6 +18,7 @@
 #include "Camera.h"
 #include "Mesh.h"
 #include "ResourceManager.h"
+#include "Entity.h"
 
 GLFWwindow *window;
 
@@ -83,6 +84,13 @@ int main() {
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 
 	SceneManager mgr;
+	
+	Mesh gndmesh = Mesh("plane.obj");
+	Entity gndent = Entity(&gndmesh);
+	SceneNode ground = SceneNode(&gndent);
+
+	mgr.getRootNode()->addChild(&ground);
+	
 
 	while(!glfwWindowShouldClose(window)) {
 
