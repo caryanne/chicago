@@ -1,5 +1,15 @@
 #include "Mesh.h"
 
+Mesh::Mesh(const string& filename) {
+	load(filename);
+}
+
+void Mesh::load(const string& filename) {
+
+
+
+}
+
 void Mesh::bind() {
 	GLint last;
 	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &last);

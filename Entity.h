@@ -7,11 +7,13 @@
 class Entity: public MoveableObject {
 
 private:
-	Mesh mMesh;
+	Mesh *mMesh;
 
 public:
 	Entity();
-
+	Entity(Mesh* mesh) { setMesh(mesh); }
+	Mesh* getMesh() { return mMesh; }
+	void setMesh(Mesh* mesh) { mMesh = mesh; }
 
 };
 

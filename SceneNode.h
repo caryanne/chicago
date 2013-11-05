@@ -19,7 +19,8 @@ private:
 	glm::vec3 mScale;
 
 public:
-	SceneNode();
+	SceneNode() { SceneNode(NULL); }
+	SceneNode(MoveableObject* obj);
 	virtual unsigned addChild(SceneNode* sceneNode);
 	virtual void attach(MoveableObject* obj) { mObj = obj; }
 	virtual SceneNode* getParent() { return mParent; }
@@ -27,8 +28,8 @@ public:
 	virtual void setPosition(glm::vec3 position) { mPosition = position; }
 	virtual void setRotation(glm::quat rotation) { mRotation = rotation; }
 	virtual void setScale(glm::vec3 scale) { mScale = scale; }
-	virtual void detach();
-	virtual void removeChild();
+	//virtual void detach();
+	//virtual void removeChild();
 
 };
 

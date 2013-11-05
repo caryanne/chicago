@@ -16,3 +16,9 @@ resource
 	mesh (transfers to video memory on request for gluint of vbo or something)
 	texture
 	shader
+
+game state manager
+
+input manager
+
+audio engine

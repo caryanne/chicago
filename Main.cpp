@@ -13,15 +13,18 @@
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm\gtc\matrix_inverse.hpp"
 
+#include "SceneManager.h"
+#include "SceneNode.h"
+#include "Camera.h"
+#include "Mesh.h"
+#include "ResourceManager.h"
+
 GLFWwindow *window;
 
 void setup3d(double w, double h) {
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, w, h);
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//gluPerspective(45.f, w / h, 0.1f, 100.f);
 	glDepthFunc(GL_LEQUAL);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -78,6 +81,8 @@ int main() {
 	double lastUpdate = 0;
 	
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
+
+	SceneManager mgr;
 
 	while(!glfwWindowShouldClose(window)) {
 

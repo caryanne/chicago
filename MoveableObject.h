@@ -11,7 +11,7 @@ private:
 
 public:
 	MoveableObject();
-	MoveableObject(const string& name, bool visible) { mName = name; mVisible = visible; }
+	MoveableObject(const string& name, bool visible) { setName(name); setVisible(visible); }
 	virtual const string& getName() { return mName; }
 	virtual void setName(const string& name) { mName = name; }
 	virtual bool getVisible() { return mVisible; }

@@ -29,8 +29,8 @@ private:
 	GLuint uniformTexBase;
 	
 public:
-	Mesh(string filename);
-	void load(string filename);
+	Mesh(const string& filename);
+	void load(const string& filename);
 	void setShader(unsigned index, Shader shader) { mShaders[index] = shader; }
 
 	void bind();
