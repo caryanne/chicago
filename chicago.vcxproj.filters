@@ -56,12 +56,6 @@
     <ClInclude Include="Model.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>engine\header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>engine\header files</Filter>
-    </ClInclude>
     <ClInclude Include="SceneNode.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
@@ -72,9 +66,6 @@
       <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>engine\header files</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveableObject.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">

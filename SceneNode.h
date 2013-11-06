@@ -4,7 +4,7 @@
 #include <vector>
 #include "glm\glm.hpp"
 #include "glm\gtx\quaternion.hpp"
-
+#include "Entity.h"
 
 using namespace std;
 
@@ -20,10 +20,10 @@ private:
 
 public:
 	SceneNode() { SceneNode(NULL); }
-	SceneNode(MoveableObject* obj);
+	SceneNode(Entity* entity);
 	virtual unsigned addChild(SceneNode* sceneNode);
-	virtual void attach(MoveableObject* obj) { mObj = obj; }
-	virtual MoveableObject* getObj() { return mObj; }
+	virtual void attach(Entity* entity) { mEntity = entity; }
+	virtual Entity* getEntity() { return mEntity; }
 	virtual SceneNode* getParent() { return mParent; }
 	virtual void setParent(SceneNode* sceneNode) { mParent = sceneNode; }
 	virtual void setPosition(glm::vec3 position) { mPosition = position; }

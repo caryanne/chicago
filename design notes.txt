@@ -1,3 +1,6 @@
+resource manager needs ability to reload shaders.
+
+
 scene manager (root node, skybox, etc)
 
 scene node (add child, transformation, shit like that)

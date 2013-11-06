@@ -1,8 +1,7 @@
 #ifndef _SCENEMANAGER_H_
 #define _SCENEMANAGER_H_
 
-#include <gl\glew.h>
-#include "glfw\glfw3.h"
+
 #include <vector>
 #include "SceneNode.h"
 #include "Camera.h"

@@ -1,14 +1,13 @@
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
 
-#include "MoveableObject.h"
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm\gtc\matrix_inverse.hpp"
 #include "glm\gtx\quaternion.hpp"
 
-class Camera: public MoveableObject {
+class Camera {
 
 private:
 	float mFOV;

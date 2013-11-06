@@ -7,7 +7,6 @@
 #include "soil\SOIL.h"
 #include "Shader.h"
 #include "Model.h"
-#include "ResourceManager.h"
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
@@ -17,7 +16,7 @@
 #include "SceneNode.h"
 #include "Camera.h"
 #include "Mesh.h"
-#include "ResourceManager.h"
+
 #include "Entity.h"
 
 GLFWwindow *window;
@@ -49,8 +48,8 @@ int main() {
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
 
-	//window = glfwCreateWindow(1360, 768, "chicago", glfwGetPrimaryMonitor(), NULL);
-	window = glfwCreateWindow(800, 600, "chicago", NULL, NULL);
+	window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
+	//window = glfwCreateWindow(800, 600, "chicago", NULL, NULL);
 	if(!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);

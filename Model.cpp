@@ -27,8 +27,8 @@ void Model::load(string filename) {
 			mData[i].material.unknown_parameter.find("fshader") != mData[i].material.unknown_parameter.end()) {
 			printf("%.2f:...loading shaders %s and %s\n", glfwGetTime(), mData[i].material.unknown_parameter.find("vshader")->second.c_str(),
 													mData[i].material.unknown_parameter.find("fshader")->second.c_str());
-			mShaders[i] = Shader(("media/shaders/" + mData[i].material.unknown_parameter.find("vshader")->second).c_str(), 
-								("media/shaders/" + mData[i].material.unknown_parameter.find("fshader")->second).c_str());
+			mShaders[i] = Shader(("media/shaders/" + mData[i].material.unknown_parameter.find("shader")->second).c_str());
+			
 		}
 	}
 	printf("%.2f:...populating vertex array\n", glfwGetTime());

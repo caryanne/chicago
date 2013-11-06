@@ -5,8 +5,8 @@
 
 using namespace std;
 
-static char *readFile(const char *filename) {
-	FILE *fp = fopen(filename, "r");
+static char *readFile(const string& filename) {
+	FILE *fp = fopen(filename.c_str(), "r");
 	fseek(fp, 0, SEEK_END);
 	long length = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
@@ -31,7 +31,7 @@ const char* linkSuccessful(int obj) {
   glGetProgramiv(obj, GL_LINK_STATUS, &status);
   return (status == GL_TRUE) ? "OK" : "FAIL";
 }
-GLuint makeVertexShader(const char *filename) {
+GLuint makeVertexShader(const string& filename) {
 	GLuint id = glCreateShader(GL_VERTEX_SHADER);
 	char *source = readFile(filename);
 	glShaderSource(id, 1, (const GLchar**)&source, NULL);
@@ -39,7 +39,7 @@ GLuint makeVertexShader(const char *filename) {
 	//printf("%.2f:%s %s\n", glfwGetTime(), filename, compileSuccessful(id));
 	return id;
 }
-GLuint makeFragmentShader(const char *filename) {
+GLuint makeFragmentShader(const string& filename) {
 	GLuint id = glCreateShader(GL_FRAGMENT_SHADER);
 	char *source = readFile(filename);
 	glShaderSource(id, 1, (const GLchar**)&source, NULL);
@@ -56,6 +56,11 @@ GLuint makeShaderProgram(GLuint vertexShader, GLuint fragShader) {
 	return id;
 }
 
-Shader::Shader(const char *vertexShaderFilename, const char *fragShaderFilename) {
-	shader = makeShaderProgram(makeVertexShader(vertexShaderFilename), makeFragmentShader(fragShaderFilename));
+Shader::Shader(const string& filename) {
+	load(filename);
+}
+
+void Shader::load(const string& filename) {
+	mShader = makeShaderProgram(makeVertexShader(filename + ".vert"),
+								makeFragmentShader(filename + ".frag"));
 }

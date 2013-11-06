@@ -9,6 +9,5 @@ Ni 1.000000
 d 1.0
 illum 2
 map_Kd shield.png
-vshader helmet_shield.vert
-fshader helmet_shield.frag
+shader helmet_shield
 
