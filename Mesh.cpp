@@ -10,6 +10,7 @@ Mesh::Mesh(const string& filename) {
 
 void Mesh::load(const string& filename) {
 	double start = glfwGetTime();
+	mFilename = filename;
 	printf("%.2f:loading mesh %s\n", glfwGetTime(), filename.c_str());
 	tinyobj::LoadObj(mData, ("media/" + filename).c_str(), "media/");
 	for(unsigned i = 0; i < mData.size(); i++) {
@@ -87,4 +88,17 @@ void Mesh::draw() {
 
 	//glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 	glBindVertexArray(0);
+}
+
+void Mesh::reload() {
+	printf("%.2f:commence reloading mesh %s\n", glfwGetTime(), mFilename.c_str());
+	
+	for(int i = 0; i < mShaders.size(); i++)
+		mShaders[i].unload();
+
+	glDeleteBuffers(1, &mVBO);
+	glDeleteBuffers(1, &mIB);
+	glDeleteVertexArrays(1, &mVAO);
+
+	load(mFilename);
 }

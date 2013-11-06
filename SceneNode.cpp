@@ -17,3 +17,8 @@ unsigned SceneNode::addChild(SceneNode *sceneNode) {
 	return mChildren.size();
 
 }
+
+void SceneNode::reload() {
+	if(mEntity->getMesh() != NULL)
+		mEntity->getMesh()->reload();
+}

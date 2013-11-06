@@ -18,6 +18,7 @@ private:
 	map<string, unsigned> mTextures;
 	map<unsigned, Shader> mShaders;
 	vector<tinyobj::shape_t> mData;
+	string mFilename;
 
 	GLuint mVAO;
 	GLuint mVBO;
@@ -33,9 +34,11 @@ public:
 	Mesh(const string& filename);
 	void load(const string& filename);
 	void setShader(unsigned index, Shader shader) { mShaders[index] = shader; }
+	Shader* getShader(unsigned index = 0) { return &mShaders[index]; }
 
 	void bind();
 	void draw();
+	void reload();
 
 	GLuint getVertexBuffer() { return mVBO; }
 	GLuint getVertexArray() { return mVAO; }

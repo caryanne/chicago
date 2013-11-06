@@ -21,6 +21,9 @@
 
 GLFWwindow *window;
 
+SceneManager mgr;
+
+
 void setup3d(double w, double h) {
 
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
@@ -39,6 +42,18 @@ void setup3d(double w, double h) {
 
 }
 
+void reloadResources() {
+	
+	mgr.reloadScene();
+
+}
+
+static void keyPress(GLFWwindow* window, int key, int scanCode, int action, int mods) {
+	if(key == GLFW_KEY_F1 && action == GLFW_PRESS)
+		reloadResources();
+	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+}
 
 int main() {
 
@@ -48,8 +63,8 @@ int main() {
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
 
-	window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
-	//window = glfwCreateWindow(800, 600, "chicago", NULL, NULL);
+	//window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
+	window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
 	if(!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -57,6 +72,8 @@ int main() {
 	printf("%.2f:window created\n", glfwGetTime());
 
 	glfwMakeContextCurrent(window);
+	glfwSetKeyCallback(window, keyPress);
+
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 	printf("%.2f:OpenGL context created\n", glfwGetTime());
@@ -65,9 +82,8 @@ int main() {
 	printf("%.2f:checked OpenGL extensions\n", glfwGetTime());
 	//load and set up shit
 
-	Model base = Model("station.obj");
 	Model plane = Model("plane.obj");
-
+	Model base = Model("station.obj");
 	Model helmetframe = Model("helmetframe.obj");
 	Model helmetshield = Model("helmetshield.obj");
 	
@@ -82,7 +98,6 @@ int main() {
 	
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 
-	SceneManager mgr;
 	
 	Mesh gndmesh = Mesh("plane.obj");
 	Entity gndent = Entity(&gndmesh);

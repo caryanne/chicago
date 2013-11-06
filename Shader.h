@@ -14,10 +14,11 @@ private:
 public:
 	Shader() {}
 	Shader(const string& filename);
-	virtual void load(const string& filename);
+	void load(const string& filename);
 	inline GLuint getAttribLocation(const GLchar* name) { return glGetAttribLocation(mShader, name); }
 	inline GLuint getUniformLocation(const GLchar* name) { return glGetUniformLocation(mShader, name); }
 	inline void use() { glUseProgram(mShader); }
+	void unload();
 	GLuint getProgram() { return mShader; }
 
 };

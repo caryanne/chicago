@@ -23,12 +23,9 @@ void Model::load(string filename) {
 			mTextures[mData[i].material.diffuse_texname] =
 				SOIL_load_OGL_texture(("media/textures/" + mData[i].material.diffuse_texname).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
 		}
-		if(mData[i].material.unknown_parameter.find("vshader") != mData[i].material.unknown_parameter.end() &&
-			mData[i].material.unknown_parameter.find("fshader") != mData[i].material.unknown_parameter.end()) {
-			printf("%.2f:...loading shaders %s and %s\n", glfwGetTime(), mData[i].material.unknown_parameter.find("vshader")->second.c_str(),
-													mData[i].material.unknown_parameter.find("fshader")->second.c_str());
+		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
+			printf("%.2f:...loading shader %s\n", glfwGetTime(), mData[i].material.unknown_parameter.find("shader")->second.c_str());
 			mShaders[i] = Shader(("media/shaders/" + mData[i].material.unknown_parameter.find("shader")->second).c_str());
-			
 		}
 	}
 	printf("%.2f:...populating vertex array\n", glfwGetTime());

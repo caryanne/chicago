@@ -21,14 +21,18 @@ private:
 public:
 	SceneNode() { SceneNode(NULL); }
 	SceneNode(Entity* entity);
-	virtual unsigned addChild(SceneNode* sceneNode);
-	virtual void attach(Entity* entity) { mEntity = entity; }
-	virtual Entity* getEntity() { return mEntity; }
-	virtual SceneNode* getParent() { return mParent; }
-	virtual void setParent(SceneNode* sceneNode) { mParent = sceneNode; }
-	virtual void setPosition(glm::vec3 position) { mPosition = position; }
-	virtual void setRotation(glm::quat rotation) { mRotation = rotation; }
-	virtual void setScale(glm::vec3 scale) { mScale = scale; }
+	unsigned addChild(SceneNode* sceneNode);
+	
+	vector<SceneNode*>::iterator getChildren() { return mChildren.begin(); }
+	vector<SceneNode*>::iterator childrenEnd() { return mChildren.end(); }
+	void attach(Entity* entity) { mEntity = entity; }
+	Entity* getEntity() { return mEntity; }
+	SceneNode* getParent() { return mParent; }
+	void setParent(SceneNode* sceneNode) { mParent = sceneNode; }
+	void setPosition(glm::vec3 position) { mPosition = position; }
+	void setRotation(glm::quat rotation) { mRotation = rotation; }
+	void setScale(glm::vec3 scale) { mScale = scale; }
+	void reload();
 	//virtual void detach();
 	//virtual void removeChild();
 

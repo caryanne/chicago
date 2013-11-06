@@ -64,3 +64,8 @@ void Shader::load(const string& filename) {
 	mShader = makeShaderProgram(makeVertexShader(filename + ".vert"),
 								makeFragmentShader(filename + ".frag"));
 }
+
+void Shader::unload() {
+	glDeleteShader(mShader);
+
+}

@@ -51,6 +51,9 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>engine\source files</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>engine\source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Model.h">
