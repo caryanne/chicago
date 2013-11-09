@@ -15,12 +15,6 @@ public:
 	Mesh* getMesh() { return mMesh; }
 	Shader* getShader() { return mMesh->getShader(0); }
 	void setMesh(Mesh* mesh) { mMesh = mesh; }
-	void bind() {
-		getMesh()->draw();
-		
-	};
-
-
 };
 
 #endif

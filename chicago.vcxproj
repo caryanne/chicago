@@ -146,27 +146,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="SceneNode.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="soil\image_DXT.c" />
-    <ClCompile Include="soil\image_helper.c" />
-    <ClCompile Include="soil\SOIL.c" />
-    <ClCompile Include="soil\stb_image_aug.c" />
-    <ClCompile Include="tinyobjloader\tiny_obj_loader.cc" />
+    <ClCompile Include="chicago\Camera.cpp" />
+    <ClCompile Include="chicago\Main.cpp" />
+    <ClCompile Include="chicago\Mesh.cpp" />
+    <ClCompile Include="chicago\Model.cpp" />
+    <ClCompile Include="chicago\SceneManager.cpp" />
+    <ClCompile Include="chicago\SceneNode.cpp" />
+    <ClCompile Include="chicago\Shader.cpp" />
+    <ClCompile Include="chicago\soil\image_DXT.c" />
+    <ClCompile Include="chicago\soil\image_helper.c" />
+    <ClCompile Include="chicago\soil\SOIL.c" />
+    <ClCompile Include="chicago\soil\stb_image_aug.c" />
+    <ClCompile Include="chicago\tinyobjloader\tiny_obj_loader.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="SceneNode.h" />
-    <ClInclude Include="Shader.h" />
+    <ClInclude Include="chicago\Camera.h" />
+    <ClInclude Include="chicago\Entity.h" />
+    <ClInclude Include="chicago\Mesh.h" />
+    <ClInclude Include="chicago\Model.h" />
+    <ClInclude Include="chicago\SceneManager.h" />
+    <ClInclude Include="chicago\SceneNode.h" />
+    <ClInclude Include="chicago\Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

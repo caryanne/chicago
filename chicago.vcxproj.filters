@@ -20,61 +20,61 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Model.cpp">
+    <ClCompile Include="chicago\Camera.cpp">
       <Filter>engine\source files</Filter>
     </ClCompile>
-    <ClCompile Include="tinyobjloader\tiny_obj_loader.cc">
+    <ClCompile Include="chicago\Mesh.cpp">
+      <Filter>engine\source files</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\Model.cpp">
+      <Filter>engine\source files</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\SceneManager.cpp">
+      <Filter>engine\source files</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\SceneNode.cpp">
+      <Filter>engine\source files</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\Shader.cpp">
+      <Filter>engine\source files</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\Main.cpp" />
+    <ClCompile Include="chicago\soil\image_DXT.c">
+      <Filter>engine\source files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\soil\image_helper.c">
+      <Filter>engine\source files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\soil\SOIL.c">
+      <Filter>engine\source files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\soil\stb_image_aug.c">
+      <Filter>engine\source files\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\tinyobjloader\tiny_obj_loader.cc">
       <Filter>engine\source files\tinyobjloader</Filter>
-    </ClCompile>
-    <ClCompile Include="soil\image_DXT.c">
-      <Filter>engine\source files\soil</Filter>
-    </ClCompile>
-    <ClCompile Include="soil\image_helper.c">
-      <Filter>engine\source files\soil</Filter>
-    </ClCompile>
-    <ClCompile Include="soil\SOIL.c">
-      <Filter>engine\source files\soil</Filter>
-    </ClCompile>
-    <ClCompile Include="soil\stb_image_aug.c">
-      <Filter>engine\source files\soil</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>engine\source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>engine\source files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneNode.cpp">
-      <Filter>engine\source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>engine\source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>engine\source files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Model.h">
+    <ClInclude Include="chicago\Camera.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneNode.h">
+    <ClInclude Include="chicago\Entity.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
+    <ClInclude Include="chicago\Mesh.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="chicago\Model.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="chicago\SceneManager.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
+    <ClInclude Include="chicago\SceneNode.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
+    <ClInclude Include="chicago\Shader.h">
       <Filter>engine\header files</Filter>
     </ClInclude>
   </ItemGroup>
