@@ -16,6 +16,8 @@ enum UNIFORM {
 	ModelViewMatrix,
 	NormalMatrix,
 	EyePosition,
+	EyeDirection,
+	LightPosition,
 	TextureBase,
 	Time,
 	COUNT
@@ -33,11 +35,6 @@ private:
 	GLuint mVBO;
 	GLuint mIB;
 	
-	GLuint uniformMVP;
-	GLuint uniformMV;
-	GLuint uniformNM;
-	GLuint uniformEye;
-	GLuint uniformTexBase;
 	GLuint mUniforms[UNIFORM::COUNT];
 
 	

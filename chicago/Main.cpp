@@ -6,7 +6,7 @@
 
 #include "soil\SOIL.h"
 #include "Shader.h"
-#include "Model.h"
+
 
 #include "glm\glm.hpp"
 #include "glm\gtc\matrix_transform.hpp"
@@ -23,6 +23,7 @@ GLFWwindow *window;
 
 SceneManager mgr;
 
+bool keyW = false, keyS = false, keyA = false, keyD = false;
 
 void setup3d(double w, double h) {
 
@@ -34,11 +35,7 @@ void setup3d(double w, double h) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
-	/*glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glShadeModel(GL_SMOOTH);
-	float pos[] = {20,3,20,0};
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);*/
+
 
 }
 
@@ -53,6 +50,27 @@ static void keyPress(GLFWwindow* window, int key, int scanCode, int action, int 
 		reloadResources();
 	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	
+	if(key == GLFW_KEY_W && action == GLFW_PRESS)
+		keyW = true;
+	if(key == GLFW_KEY_W && action == GLFW_RELEASE)
+		keyW = false;
+	if(key == GLFW_KEY_S && action == GLFW_PRESS)
+		keyS = true;
+	if(key == GLFW_KEY_S && action == GLFW_RELEASE)
+		keyS = false;
+	if(key == GLFW_KEY_A && action == GLFW_PRESS)
+		keyA = true;
+	if(key == GLFW_KEY_A && action == GLFW_RELEASE)
+		keyA = false;
+	if(key == GLFW_KEY_D && action == GLFW_PRESS)
+		keyD = true;
+	if(key == GLFW_KEY_D && action == GLFW_RELEASE)
+		keyD = false;
+
+
+		
+
 }
 
 int main() {
@@ -73,6 +91,10 @@ int main() {
 
 	glfwMakeContextCurrent(window);
 	glfwSetKeyCallback(window, keyPress);
+	
+
+
+
 
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
@@ -82,78 +104,100 @@ int main() {
 	printf("%.2f:checked OpenGL extensions\n", glfwGetTime());
 	
 	//load and set up shit
-	
 
-	//Model helmetframe = Model("helmetframe.obj");
-	//Model helmetshield = Model("helmetshield.obj");
-	
-
-	//helmetframe.setScale(glm::vec3(0.9f));
-	//helmetshield.setScale(glm::vec3(0.9f));
-
-	glClearColor(0.0f, 0.0f, 0.05f, 1.f);
+	glClearColor(0.0f, 0.5f, 1.f, 1.f);
 	unsigned frames = 0;
 	double lastUpdate = 0;
 	
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 
-	Mesh basemesh = Mesh("station.obj");
+	Mesh basemesh = Mesh("station2.obj");
 	Entity baseent = Entity(&basemesh);
 	SceneNode base = SceneNode(&baseent);
-	base.setScale(glm::vec3(0.25f));
+
 	mgr.getRootNode()->addChild(&base);
 
-	Mesh gndmesh = Mesh("plane.obj");
+	Mesh gndmesh = Mesh("ground.obj");
 	Entity gndent = Entity(&gndmesh);
 	SceneNode ground = SceneNode(&gndent);
-	ground.setScale(glm::vec3(5.0f));
+
 	mgr.getRootNode()->addChild(&ground);
 
 	Mesh helmetmesh = Mesh("helmetframe.obj");
 	Entity helmetent = Entity(&helmetmesh);
 	SceneNode helmet = SceneNode(&helmetent);
-	helmet.setScale(glm::vec3(3.f));
-	helmet.setPosition(glm::vec3(3,3,3));
-	base.addChild(&helmet);
+	//helmet.setScale(glm::vec3(.95,.95,.95));
+	mgr.getRootNode()->addChild(&helmet);
 
-/*	Mesh basemesh = Mesh("station.obj");
-	Entity stnent = Entity(&basemesh);
-	SceneNode base = SceneNode(&stnent);
-	base.setScale(glm::vec3(0.25f));
-	mgr.getRootNode()->addChild(&base);*/
+	Mesh shieldmesh = Mesh("helmetshield.obj");
+	Entity shieldent = Entity(&shieldmesh);
+	SceneNode shield = SceneNode(&shieldent);
+	helmet.addChild(&shield);
 
+	mgr.getCamera()->setPosition(glm::vec3(0,1,10));
+	
 
 	mgr.setScreenRatio(width / (float) height);
 	
+	double last = glfwGetTime();
+
+	glm::vec3 movSpeed = glm::vec3(0.f);
+
+
+	double xRotSpeed = 0.0, yRotSpeed = 0.0, pitch = 0.0, yaw = 0.0;
+
+	double mouseX = 0.0, mouseY = 0.0;
+	glfwSetCursorPos(window, width / 2, height / 2);
+	glfwGetCursorPos(window, &mouseX, &mouseY);
+
 
 	while(!glfwWindowShouldClose(window)) {
 
 	
-		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		setup3d(width, height);
 
 		
+		double delta = glfwGetTime() - last;
+		last = glfwGetTime();
+
+		double tX, tY = 0.0;
+		glfwGetCursorPos(window, &tX, &tY);
+		double dX = mouseX - tX;
+		double dY = mouseY - tY;
+		glfwSetCursorPos(window, mouseX, mouseY);
+
+
+		if(keyW)
+			movSpeed = glm::vec3(delta * 5.f);
+		if(keyS)
+			movSpeed = glm::vec3(delta * -5.f);
+		if(abs(dY) > 0.0 && abs(dY))
+			xRotSpeed += dY * 0.001;
+		if(abs(dX) > 0.0 && abs(dX))
+			yRotSpeed += dX * 0.001;
+
+		pitch += xRotSpeed;
+		yaw += yRotSpeed;
+		xRotSpeed *= 0.995f;
+		yRotSpeed *= 0.995f;
+
+		mgr.getCamera()->setPosition(
+				mgr.getCamera()->getPosition() - movSpeed * mgr.getCamera()->getDirection());
 		
 
-		glm::vec3 eye = glm::vec3(10.f * (float)sin(glfwGetTime()), 5.f, 10.f * (float)cos(glfwGetTime()));
-		//glm::vec3 eye = glm::vec3(-5.f, 3.f, -5.f);
+		mgr.getCamera()->setRotation(glm::vec3(glm::radians(pitch), glm::radians(yaw), 0.f));
 
-		//helmetframe.setPosition(eye);
-		//helmetshield.setPosition(eye);
 
-		//helmetframe.setRotation(glm::toQuat(glm::inverse(view)));
-		//helmetshield.setRotation(glm::toQuat(glm::inverse(view)));
+		movSpeed *= 0.999f;
 
+		glm::vec3 eye = mgr.getCamera()->getPosition();
 		
-		//base.render(eye, view, viewProjection);
-		//plane.render(eye, view, viewProjection);
-		//helmetframe.render(eye, view, viewProjection);
-		//helmetshield.render(eye, view, viewProjection);
-		base.setRotation(glm::vec3(0.f,2 * (float)glfwGetTime(), 0.f));
-		helmet.setRotation(glm::vec3(6 * (float)glfwGetTime(), 0.f, 0.f));
+		helmet.setPosition(eye - glm::vec3(0.2) * mgr.getCamera()->getDirection());
 
-		mgr.getCamera()->lookAt(eye, glm::vec3(0.f, 0.f, 0.f),
-								glm::vec3(0.f, 1.f, 0.f));
+		helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
+
+
 		mgr.drawScene();
 		
 

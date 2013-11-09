@@ -149,7 +149,6 @@
     <ClCompile Include="chicago\Camera.cpp" />
     <ClCompile Include="chicago\Main.cpp" />
     <ClCompile Include="chicago\Mesh.cpp" />
-    <ClCompile Include="chicago\Model.cpp" />
     <ClCompile Include="chicago\SceneManager.cpp" />
     <ClCompile Include="chicago\SceneNode.cpp" />
     <ClCompile Include="chicago\Shader.cpp" />
@@ -163,7 +162,6 @@
     <ClInclude Include="chicago\Camera.h" />
     <ClInclude Include="chicago\Entity.h" />
     <ClInclude Include="chicago\Mesh.h" />
-    <ClInclude Include="chicago\Model.h" />
     <ClInclude Include="chicago\SceneManager.h" />
     <ClInclude Include="chicago\SceneNode.h" />
     <ClInclude Include="chicago\Shader.h" />

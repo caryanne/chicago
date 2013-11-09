@@ -54,7 +54,9 @@ void Mesh::load(const string& filename) {
 	mUniforms[UNIFORM::ModelViewProjectionMatrix] = getShader()->getUniformLocation("mModelViewProj");
 	mUniforms[UNIFORM::ModelViewMatrix] = getShader()->getUniformLocation("mModelView");
 	mUniforms[UNIFORM::NormalMatrix] = getShader()->getUniformLocation("mNormalMatrix");
-	mUniforms[UNIFORM::EyePosition] = getShader()->getUniformLocation("vEye");
+	mUniforms[UNIFORM::EyePosition] = getShader()->getUniformLocation("vEyePosition");
+	mUniforms[UNIFORM::EyeDirection] = getShader()->getUniformLocation("vEyeDirection");
+	mUniforms[UNIFORM::LightPosition] = getShader()->getUniformLocation("vLightPosition");
 	mUniforms[UNIFORM::TextureBase] = getShader()->getUniformLocation("sTexture");
 	mUniforms[UNIFORM::Time] = getShader()->getUniformLocation("fTime");
 

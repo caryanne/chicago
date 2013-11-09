@@ -14,6 +14,7 @@ private:
 	glm::vec3 mPosition;
 	glm::quat mRotation;
 	glm::mat4 mView;
+	glm::vec3 mDirection;
 	void updateView();
 
 public:
@@ -29,6 +30,7 @@ public:
 	glm::vec3 getPosition() { return mPosition; }
 	glm::quat getRotation() { return mRotation; }
 	glm::mat4 getView();
+	glm::vec3 getDirection();
 };
 
 #endif

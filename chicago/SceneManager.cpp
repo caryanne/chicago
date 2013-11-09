@@ -28,7 +28,7 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		glm::mat4 mvp = mViewProjection * model; //model-view-projection
 		glm::mat4 mv = mView * model; //model-view
 		glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv)); //normal
-		
+	
 		//update uniforms
 
 		sceneNode->bind();
@@ -45,7 +45,15 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		glUniform1f(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::Time), glfwGetTime());
 
 		glUniform3fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::EyePosition), 1, glm::value_ptr(mCamera.getPosition()));
-	
+
+		glUniform3fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::EyeDirection), 1, glm::value_ptr(mCamera.getDirection()));
+		
+		glm::vec4 lightPos = mView * glm::vec4(0, 10, 0, 1); 
+		//glm::vec4 lightPos = mView * glm::vec4(50.f * (float)sin(glfwGetTime()), 50.f, 50.f * (float)cos(glfwGetTime()), 1);
+		
+		glUniform4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::LightPosition), 1, glm::value_ptr(lightPos));
+
+
 		glUniform1i(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::TextureBase), 0);
 
 

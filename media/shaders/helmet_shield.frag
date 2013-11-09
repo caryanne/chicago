@@ -1,20 +1,23 @@
-#version 130
+#version 400
 
-uniform sampler2D sTexture;
+uniform vec3 vEyePosition;
+uniform vec3 vEyeDirection;
+uniform vec4 vLightPosition;
 
 in vec4 color;
-in float intensity;
-in vec2 UV;
+in vec3 normal;
+in vec4 position;
 
 void main() {
 
-	vec4 inter;
-
-	vec4 diffuse = texture( sTexture, UV);
-
-
-	diffuse.a=0.15;
-	gl_FragColor = diffuse;
-
-
+	vec3 lightDirection = vec3(vLightPosition) - vec3(position);
+	float lightDistance = length(lightDirection);
+	lightDirection = lightDirection / lightDistance;
+	
+	float diffuse = max(0.3, dot(-1 * normal, lightDirection));
+	vec3 final = diffuse * vec3(color);
+	if(diffuse > 0.975)
+		gl_FragColor = vec4(1);
+	else
+		gl_FragColor = vec4(final, 0.5);
 }
