@@ -24,7 +24,7 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		drawNode(*it);
 	if( sceneNode->hasRenderable()) {
 
-		glm::mat4 model = sceneNode->getModelMatrix(); //model
+		glm::mat4 model = sceneNode->getParent()->getModelMatrix() * sceneNode->getModelMatrix(); //model
 		glm::mat4 mvp = mViewProjection * model; //model-view-projection
 		glm::mat4 mv = mView * model; //model-view
 		glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv)); //normal

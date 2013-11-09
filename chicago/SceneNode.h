@@ -19,8 +19,7 @@ private:
 	glm::vec3 mScale;
 
 public:
-	SceneNode() { mEntity = NULL;
-				mParent = NULL; }
+	SceneNode();
 	SceneNode(Entity* entity);
 	unsigned addChild(SceneNode* sceneNode);
 	
@@ -33,7 +32,10 @@ public:
 	SceneNode* getParent() { return mParent; }
 	void setParent(SceneNode* sceneNode) { mParent = sceneNode; }
 	void setPosition(glm::vec3 position) { mPosition = position; }
+
 	void setRotation(glm::quat rotation) { mRotation = rotation; }
+	void setRotation(glm::vec3 rotation) { mRotation = glm::quat(rotation); }
+
 	void setScale(glm::vec3 scale) { mScale = scale; }
 	void reload();
 	void bind();

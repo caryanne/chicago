@@ -10,6 +10,15 @@ SceneNode::SceneNode(Entity *entity) {
 	mParent = NULL; 
 }
 
+SceneNode::SceneNode() {
+	setPosition(glm::vec3(0.f, 0.f, 0.f));
+	setRotation(glm::quat(glm::vec3(0.f, 0.f, 0.f)));
+	setScale(glm::vec3(1.f,1.f,1.f));
+	mEntity = NULL;
+	mParent = NULL; 
+}
+
+
 unsigned SceneNode::addChild(SceneNode *sceneNode) {
 	
 	if(sceneNode->getParent() == NULL)

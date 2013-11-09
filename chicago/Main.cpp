@@ -98,8 +98,8 @@ int main() {
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 
 	Mesh basemesh = Mesh("station.obj");
-	Entity stnent = Entity(&basemesh);
-	SceneNode base = SceneNode(&stnent);
+	Entity baseent = Entity(&basemesh);
+	SceneNode base = SceneNode(&baseent);
 	base.setScale(glm::vec3(0.25f));
 	mgr.getRootNode()->addChild(&base);
 
@@ -109,9 +109,21 @@ int main() {
 	ground.setScale(glm::vec3(5.0f));
 	mgr.getRootNode()->addChild(&ground);
 
+	Mesh helmetmesh = Mesh("helmetframe.obj");
+	Entity helmetent = Entity(&helmetmesh);
+	SceneNode helmet = SceneNode(&helmetent);
+	helmet.setScale(glm::vec3(3.f));
+	helmet.setPosition(glm::vec3(3,3,3));
+	base.addChild(&helmet);
+
+/*	Mesh basemesh = Mesh("station.obj");
+	Entity stnent = Entity(&basemesh);
+	SceneNode base = SceneNode(&stnent);
+	base.setScale(glm::vec3(0.25f));
+	mgr.getRootNode()->addChild(&base);*/
 
 
-	mgr.setScreenRatio(1024.f / 768.f);
+	mgr.setScreenRatio(width / (float) height);
 	
 
 	while(!glfwWindowShouldClose(window)) {
@@ -137,7 +149,9 @@ int main() {
 		//plane.render(eye, view, viewProjection);
 		//helmetframe.render(eye, view, viewProjection);
 		//helmetshield.render(eye, view, viewProjection);
-		
+		base.setRotation(glm::vec3(0.f,2 * (float)glfwGetTime(), 0.f));
+		helmet.setRotation(glm::vec3(6 * (float)glfwGetTime(), 0.f, 0.f));
+
 		mgr.getCamera()->lookAt(eye, glm::vec3(0.f, 0.f, 0.f),
 								glm::vec3(0.f, 1.f, 0.f));
 		mgr.drawScene();
