@@ -13,8 +13,8 @@ void main() {
 	vec4 diffuse = texture( sTexture, UV*6);
 	
 	inter = diffuse * intensity;
-
-	inter.a=1.0;
+	inter.r = 0.2;
+	inter.a=1;
 	gl_FragColor = inter;
 
 

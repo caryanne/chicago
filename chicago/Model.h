@@ -40,11 +40,11 @@ private:
 public:
 	Model(string filename);
 	void load(string filename);
-	void setShader(unsigned index, Shader shader) { mShaders[index] = shader; }
+	/*void setShader(unsigned index, Shader shader) { mShaders[index] = shader; }
 	void render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection);
 	void setPosition(glm::vec3 position) { mPosition = position; }
 	void setRotation(glm::quat rotation) { mRotation = rotation; }
-	void setScale(glm::vec3 scale) { mScale = scale; }
+	void setScale(glm::vec3 scale) { mScale = scale; }*/
 
 };
 

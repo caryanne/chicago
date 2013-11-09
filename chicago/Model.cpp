@@ -14,10 +14,10 @@ Model::Model(string filename) {
 }
 
 void Model::load(string filename) {
-	double start = glfwGetTime();
+	/*double start = glfwGetTime();
 	printf("%.2f:loading mesh %s\n", glfwGetTime(), filename.c_str());
-	tinyobj::LoadObj(mData, ("media/" + filename).c_str(), "media/");
-	for(unsigned i = 0; i < mData.size(); i++) {
+	//tinyobj::LoadObj(mData, ("media/" + filename).c_str(), "media/");
+	/*for(unsigned i = 0; i < mData.size(); i++) {
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
 			printf("%.2f:...loading texture %s\n", glfwGetTime(), mData[i].material.diffuse_texname.c_str());
 			mTextures[mData[i].material.diffuse_texname] =
@@ -28,7 +28,7 @@ void Model::load(string filename) {
 			mShaders[i] = Shader(("media/shaders/" + mData[i].material.unknown_parameter.find("shader")->second).c_str());
 		}
 	}
-	printf("%.2f:...populating vertex array\n", glfwGetTime());
+	/*printf("%.2f:...populating vertex array\n", glfwGetTime());
 	glGenVertexArrays(1, &mVAO);
 	glBindVertexArray(mVAO);
 
@@ -76,12 +76,12 @@ void Model::load(string filename) {
 	setPosition(glm::vec3(0.f, 0.f, 0.f));
 	setRotation(glm::quat(glm::vec3(0.f, 0.f, 0.f)));
 	setScale(glm::vec3(1.f, 1.f, 1.f));
-
-	printf("%.2f:done loading %s in %.2fms\n", glfwGetTime(), filename.c_str(), (glfwGetTime() - start) * 1000.0);
+	
+	printf("%.2f:done loading %s in %.2fms\n", glfwGetTime(), filename.c_str(), (glfwGetTime() - start) * 1000.0);*/
 }
 
-void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
-	glm::mat4 scale = glm::scale(glm::mat4(1.f), mScale);
+//void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
+	/*glm::mat4 scale = glm::scale(glm::mat4(1.f), mScale);
 	glm::mat4 translation = glm::translate(glm::mat4(1.f), mPosition);
 	glm::mat4 rotation = glm::toMat4(mRotation);
 	glm::mat4 model =  scale * translation * rotation;  
@@ -105,5 +105,5 @@ void Model::render(glm::vec3 eye, glm::mat4 view, glm::mat4 viewProjection ) {
 
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 
-	glBindVertexArray(0);
-}
+	glBindVertexArray(0);*/
+//}

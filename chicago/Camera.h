@@ -13,7 +13,6 @@ private:
 	float mFOV;
 	glm::vec3 mPosition;
 	glm::quat mRotation;
-	glm::vec3 mScale;
 	glm::mat4 mView;
 	void updateView();
 
@@ -26,6 +25,9 @@ public:
 	void setPosition(glm::vec3 position);
 	void setRotation(glm::quat rotation);
 	void setRotation(glm::vec3 euler);
+
+	glm::vec3 getPosition() { return mPosition; }
+	glm::quat getRotation() { return mRotation; }
 	glm::mat4 getView();
 };
 

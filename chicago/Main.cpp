@@ -63,8 +63,8 @@ int main() {
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
 
-	//window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
-	window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
+	window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
+	//window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
 	if(!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -80,17 +80,16 @@ int main() {
 	if(glewInit() != GLEW_OK)
 		exit(EXIT_FAILURE);
 	printf("%.2f:checked OpenGL extensions\n", glfwGetTime());
+	
 	//load and set up shit
 	
-	Model plane = Model("plane.obj");
-	Model base = Model("station.obj");
-	Model helmetframe = Model("helmetframe.obj");
-	Model helmetshield = Model("helmetshield.obj");
+
+	//Model helmetframe = Model("helmetframe.obj");
+	//Model helmetshield = Model("helmetshield.obj");
 	
-	plane.setScale(glm::vec3(5.0f));
-	base.setScale(glm::vec3(0.25f));
-	helmetframe.setScale(glm::vec3(0.9f));
-	helmetshield.setScale(glm::vec3(0.9f));
+
+	//helmetframe.setScale(glm::vec3(0.9f));
+	//helmetshield.setScale(glm::vec3(0.9f));
 
 	glClearColor(0.0f, 0.0f, 0.05f, 1.f);
 	unsigned frames = 0;
@@ -98,12 +97,21 @@ int main() {
 	
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 
-	
+	Mesh basemesh = Mesh("station.obj");
+	Entity stnent = Entity(&basemesh);
+	SceneNode base = SceneNode(&stnent);
+	base.setScale(glm::vec3(0.25f));
+	mgr.getRootNode()->addChild(&base);
+
 	Mesh gndmesh = Mesh("plane.obj");
 	Entity gndent = Entity(&gndmesh);
 	SceneNode ground = SceneNode(&gndent);
-
+	ground.setScale(glm::vec3(5.0f));
 	mgr.getRootNode()->addChild(&ground);
+
+
+
+	mgr.setScreenRatio(1024.f / 768.f);
 	
 
 	while(!glfwWindowShouldClose(window)) {
@@ -115,27 +123,27 @@ int main() {
 		
 		
 
-		glm::mat4 projection = glm::perspective( 45.f, width / (float)height, 0.1f, 100.f);
-
-		glm::vec3 eye = glm::vec3(5.f * (float)sin(glfwGetTime()), 1.5f, 5.f * (float)cos(glfwGetTime()));
+		glm::vec3 eye = glm::vec3(10.f * (float)sin(glfwGetTime()), 5.f, 10.f * (float)cos(glfwGetTime()));
 		//glm::vec3 eye = glm::vec3(-5.f, 3.f, -5.f);
-		glm::mat4 view = glm::lookAt(eye,
-										glm::vec3(1.f, 1.f, 1.5f),
-										glm::vec3(0.5f, 1.f, -0.25f));
 
-		glm::mat4 viewProjection = projection * view;
+		//helmetframe.setPosition(eye);
+		//helmetshield.setPosition(eye);
 
-		helmetframe.setPosition(eye);
-		helmetshield.setPosition(eye);
-
-		helmetframe.setRotation(glm::toQuat(glm::inverse(view)));
-		helmetshield.setRotation(glm::toQuat(glm::inverse(view)));
+		//helmetframe.setRotation(glm::toQuat(glm::inverse(view)));
+		//helmetshield.setRotation(glm::toQuat(glm::inverse(view)));
 
 		
-		base.render(eye, view, viewProjection);
-		plane.render(eye, view, viewProjection);
-		helmetframe.render(eye, view, viewProjection);
-		helmetshield.render(eye, view, viewProjection);
+		//base.render(eye, view, viewProjection);
+		//plane.render(eye, view, viewProjection);
+		//helmetframe.render(eye, view, viewProjection);
+		//helmetshield.render(eye, view, viewProjection);
+		
+		mgr.getCamera()->lookAt(eye, glm::vec3(0.f, 0.f, 0.f),
+								glm::vec3(0.f, 1.f, 0.f));
+		mgr.drawScene();
+		
+
+
 		glfwSwapBuffers(window);
 
 		frames++;

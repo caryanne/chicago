@@ -7,6 +7,7 @@ SceneNode::SceneNode(Entity *entity) {
 	setRotation(glm::quat(glm::vec3(0.f, 0.f, 0.f)));
 	setScale(glm::vec3(1.f,1.f,1.f));
 	mEntity = entity;
+	mParent = NULL; 
 }
 
 unsigned SceneNode::addChild(SceneNode *sceneNode) {
@@ -24,6 +25,15 @@ void SceneNode::reload() {
 	
 	if(mEntity->getMesh() != NULL)
 		mEntity->getMesh()->reload();
+}
+void SceneNode::bind() {
+	if(hasRenderable())
+		mEntity->getMesh()->bind();
+}
+
+void SceneNode::draw() {
+	if(hasRenderable())
+		mEntity->getMesh()->draw();
 }
 
 glm::mat4 SceneNode::getModelMatrix() {

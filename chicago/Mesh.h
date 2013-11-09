@@ -9,8 +9,17 @@
 #include <string>
 #include "Shader.h"
 
-
 using namespace std;
+
+enum UNIFORM {
+	ModelViewProjectionMatrix,
+	ModelViewMatrix,
+	NormalMatrix,
+	EyePosition,
+	TextureBase,
+	Time,
+	COUNT
+};
 
 class Mesh {
 
@@ -29,12 +38,21 @@ private:
 	GLuint uniformNM;
 	GLuint uniformEye;
 	GLuint uniformTexBase;
+	GLuint mUniforms[UNIFORM::COUNT];
+
 	
 public:
+	Mesh() {
+		mShaders = map<unsigned, Shader>();
+	
+	
+	};
 	Mesh(const string& filename);
 	void load(const string& filename);
 	void setShader(unsigned index, Shader shader) { mShaders[index] = shader; }
-	Shader* getShader(unsigned index = 0) { return &mShaders[index]; }
+	Shader* getShader(unsigned index = 0) { return (mShaders.size() == 0 ? NULL: &mShaders[index]); }
+
+	GLuint getUniform(UNIFORM uniform) { return mUniforms[uniform]; }
 
 	void bind();
 	void draw();
@@ -43,6 +61,8 @@ public:
 	GLuint getVertexBuffer() { return mVBO; }
 	GLuint getVertexArray() { return mVAO; }
 	GLuint getIndexBuffer() { return mIB; }
+
+	//void setMode
 
 };
 
