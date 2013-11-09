@@ -10,7 +10,7 @@ private:
 	Mesh *mMesh;
 
 public:
-	Entity();
+	Entity() {}
 	Entity(Mesh* mesh) { setMesh(mesh); }
 	Mesh* getMesh() { return mMesh; }
 	Shader* getShader() { return mMesh->getShader(0); }

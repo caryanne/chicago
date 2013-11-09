@@ -81,7 +81,7 @@ int main() {
 		exit(EXIT_FAILURE);
 	printf("%.2f:checked OpenGL extensions\n", glfwGetTime());
 	//load and set up shit
-
+	
 	Model plane = Model("plane.obj");
 	Model base = Model("station.obj");
 	Model helmetframe = Model("helmetframe.obj");

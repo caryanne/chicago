@@ -5,15 +5,39 @@
 #include "glm\gtx\quaternion.hpp"
 #include "SceneManager.h"
 
+SceneManager::SceneManager() {
+	 mRootNode = SceneNode();
+	 mCamera = Camera();
+	 mCamera.setFOV(45.f);
+	 setScreenRatio(1.77778f);
+	 updateMatrices();
+}
+
+void SceneManager::updateMatrices() {
+	mProjection = glm::perspective( getCamera()->getFOV(), getScreenRatio(), 0.1f, 100.f);
+}
+
 void SceneManager::drawNode(SceneNode* sceneNode) {
 
-/*		glm::mat4 scale = glm::scale(glm::mat4(1.f), mScale);
-	glm::mat4 translation = glm::translate(glm::mat4(1.f), mPosition);
-	glm::mat4 rotation = glm::toMat4(mRotation);
-	glm::mat4 model =  scale * translation * rotation;  
-	glm::mat4 mvp = viewProjection * model;
-	glm::mat4 mv = view * model;
-	glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv));
+	for(vector<SceneNode*>::iterator it = sceneNode->getChildren();  it != sceneNode->childrenEnd(); ++it)
+		drawNode(*it);
+	if(sceneNode->hasRenderable()) {	
+
+		glm::mat4 model = sceneNode->getModelMatrix(); //model
+		glm::mat4 mvp = mViewProjection * model; //model-view-projection
+		glm::mat4 mv = mView * model; //model-view
+		glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv)); //normal
+		
+		sceneNode->getEntity()->getMesh()->bind(); //bind vao
+
+		//update uniforms
+
+
+		sceneNode->getEntity()->getMesh()->draw();
+
+
+	}
+/*		
 	sceneNode->getObj()->bind();
 	
 	mShaders[0].use();
@@ -38,22 +62,10 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 }
 
 void SceneManager::drawScene() {
-	//figure out matrices
-	//iterate through all children
-	// bind vao
-	// update uniforms
-	// draw object
-	//glm::mat4 projection = glm::perspective( getCamera()->getFOV(), width / (float)height, 0.1f, 100.f);
-
 	glm::vec3 eye = glm::vec3(5.f * (float)sin(glfwGetTime()), 1.5f, 5.f * (float)cos(glfwGetTime()));
 	getCamera()->lookAt(eye, glm::vec3(0,0,0), glm::vec3(0,1,0));
-	glm::mat4 view = getCamera()->getView();
-
-
-	//glm::mat4 viewProjection = projection * view;
-
-
-	
+	mView = getCamera()->getView();
+	mViewProjection = mProjection * mView;
 	drawNode(getRootNode());
 
 }
@@ -62,8 +74,9 @@ void SceneManager::reloadNode(SceneNode* sceneNode) {
 	
 	for(vector<SceneNode*>::iterator it = sceneNode->getChildren();  it != sceneNode->childrenEnd(); ++it)
 		reloadNode(*it);
-	sceneNode->reload();
-
+	if(sceneNode->hasRenderable())
+		sceneNode->reload();
+	
 }
 
 void SceneManager::reloadScene() {

@@ -1,3 +1,5 @@
+#include "glm\gtc\matrix_transform.hpp"
+#include "glm\gtx\quaternion.hpp"
 #include "SceneNode.h"
 
 SceneNode::SceneNode(Entity *entity) {
@@ -19,6 +21,14 @@ unsigned SceneNode::addChild(SceneNode *sceneNode) {
 }
 
 void SceneNode::reload() {
+	
 	if(mEntity->getMesh() != NULL)
 		mEntity->getMesh()->reload();
+}
+
+glm::mat4 SceneNode::getModelMatrix() {
+		glm::mat4 scale = glm::scale(glm::mat4(1.f), mScale);
+		glm::mat4 translation = glm::translate(glm::mat4(1.f), mPosition);
+		glm::mat4 rotation = glm::toMat4(mRotation);
+		return scale * translation * rotation;
 }

@@ -86,7 +86,7 @@ void Mesh::draw() {
 	
 	//update uniforms, bind texture, etc;
 
-	//glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 	glBindVertexArray(0);
 }
 

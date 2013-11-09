@@ -67,5 +67,7 @@ void Shader::load(const string& filename) {
 
 void Shader::unload() {
 	glDeleteShader(mShader);
+	printf("%.2f:deleted shader %i\n", glfwGetTime(), mShader);
+
 
 }
