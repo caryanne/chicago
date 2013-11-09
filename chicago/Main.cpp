@@ -142,6 +142,7 @@ int main() {
 	double last = glfwGetTime();
 
 	glm::vec3 movSpeed = glm::vec3(0.f);
+	glm::vec3 strafeSpeed = glm::vec3(0.f);
 
 
 	double xRotSpeed = 0.0, yRotSpeed = 0.0, pitch = 0.0, yaw = 0.0;
@@ -172,6 +173,13 @@ int main() {
 			movSpeed = glm::vec3(delta * 5.f);
 		if(keyS)
 			movSpeed = glm::vec3(delta * -5.f);
+
+
+		if(keyA)
+			strafeSpeed = glm::vec3(delta * 5.f);
+		if(keyD)
+			strafeSpeed = glm::vec3(delta * -5.f);
+
 		if(abs(dY) > 0.0 && abs(dY))
 			xRotSpeed += dY * 0.001;
 		if(abs(dX) > 0.0 && abs(dX))
@@ -185,11 +193,14 @@ int main() {
 		mgr.getCamera()->setPosition(
 				mgr.getCamera()->getPosition() - movSpeed * mgr.getCamera()->getDirection());
 		
+		mgr.getCamera()->setPosition(
+				mgr.getCamera()->getPosition() - strafeSpeed * glm::cross(glm::vec3(0,1,0), mgr.getCamera()->getDirection()));
 
 		mgr.getCamera()->setRotation(glm::vec3(glm::radians(pitch), glm::radians(yaw), 0.f));
 
 
 		movSpeed *= 0.999f;
+		strafeSpeed *= 0.999f;
 
 		glm::vec3 eye = mgr.getCamera()->getPosition();
 		
