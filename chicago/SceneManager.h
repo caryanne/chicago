@@ -21,12 +21,14 @@ private:
 	glm::mat4 mView;
 	glm::mat4 mViewProjection;
 	void updateMatrices();
+	glm::vec4 mLightPos;
 
 public:
 	SceneManager();
 	SceneNode *getRootNode() { return &mRootNode; }	
 	float getScreenRatio() { return mRatio; }
 	void setScreenRatio(float ratio) { mRatio = ratio; updateMatrices(); }
+	void setLightPos(glm::vec4 position) { mLightPos = position; }
 	void drawScene();
 	void reloadScene();
 

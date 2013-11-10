@@ -46,14 +46,14 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 
 		glUniform3fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::EyeDirection), 1, glm::value_ptr(mCamera.getDirection()));
 		
-		glm::vec3 camPos = mCamera.getPosition();
-		glm::vec4 lightPos = mView * glm::vec4(10*sin(glfwGetTime()), 4 + sin(glfwGetTime() * 5.0), 0.0, 1.0);
+		
+		glm::vec4 lightPos = mView * mLightPos;
 		
 		glUniform4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::LightPosition), 1, glm::value_ptr(lightPos));
 
 
-		glUniform1i(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::TextureBase), 0);
-
+		glUniform1i(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::TextureColor), 0);
+		glUniform1i(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::TextureNormal), 1);
 
 		sceneNode->draw();
 

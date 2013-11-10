@@ -36,6 +36,8 @@ public:
 	void setRotation(glm::quat rotation) { mRotation = rotation; }
 	void setRotation(glm::vec3 rotation) { mRotation = glm::quat(rotation); }
 
+	glm::vec3 getPosition() { return mPosition; }
+
 	void setScale(glm::vec3 scale) { mScale = scale; }
 	void reload();
 	void bind();

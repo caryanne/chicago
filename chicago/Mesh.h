@@ -18,7 +18,8 @@ enum UNIFORM {
 	EyePosition,
 	EyeDirection,
 	LightPosition,
-	TextureBase,
+	TextureColor,
+	TextureNormal,
 	Time,
 	COUNT
 };

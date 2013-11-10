@@ -20,6 +20,12 @@ void Mesh::load(const string& filename) {
 			mTextures[mData[i].material.diffuse_texname] =
 				SOIL_load_OGL_texture(("media/textures/" + mData[i].material.diffuse_texname).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
 		}
+		if(mData[i].material.unknown_parameter.find("normalmap") != mData[i].material.unknown_parameter.end()) {
+			const string normalmap = mData[i].material.unknown_parameter.find("normalmap")->second;
+			printf("%.2f:...loading normalmap %i/%s\n", glfwGetTime(), i, normalmap.c_str());
+			mTextures[normalmap] =
+				SOIL_load_OGL_texture(string("media/textures/").append(normalmap).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
+		}
 		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
 			printf("%.2f:...loading shader %i/%s\n", glfwGetTime(), i, mData[i].material.unknown_parameter.find("shader")->second.c_str());
 			mShaders[i] = Shader(("media/shaders/" + mData[i].material.unknown_parameter.find("shader")->second).c_str());
@@ -57,7 +63,8 @@ void Mesh::load(const string& filename) {
 	mUniforms[UNIFORM::EyePosition] = getShader()->getUniformLocation("vEyePosition");
 	mUniforms[UNIFORM::EyeDirection] = getShader()->getUniformLocation("vEyeDirection");
 	mUniforms[UNIFORM::LightPosition] = getShader()->getUniformLocation("vLightPosition");
-	mUniforms[UNIFORM::TextureBase] = getShader()->getUniformLocation("sTexture");
+	mUniforms[UNIFORM::TextureColor] = getShader()->getUniformLocation("sTexture");
+	mUniforms[UNIFORM::TextureNormal] = getShader()->getUniformLocation("sNormal");
 	mUniforms[UNIFORM::Time] = getShader()->getUniformLocation("fTime");
 
 	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -91,7 +98,13 @@ void Mesh::draw() {
 
 	
 	//update uniforms, bind texture, etc;
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.diffuse_texname]);
+	
+	if(mData[0].material.unknown_parameter.find("normalmap") != mData[0].material.unknown_parameter.end()) {
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.unknown_parameter.find("normalmap")->second]);
+	}
 	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 	glBindVertexArray(0);
 }

@@ -140,7 +140,7 @@ int main() {
 	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
 	
 	btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
-	world->setGravity(btVector3(0, -3, 0));
+	world->setGravity(btVector3(0, 0, 0));
 
 	btCollisionShape* moduleShape = new btBoxShape(btVector3(10, 0.2, 10));
 	btCollisionShape* cubeShape = new btBoxShape(btVector3(1, 1, 1));
@@ -177,16 +177,16 @@ int main() {
 	camRigidBody->setActivationState(DISABLE_DEACTIVATION);
 	world->addRigidBody(camRigidBody);
 
-	cubeRigidBody->setFriction(10);
-	cubeRigidBody->applyTorqueImpulse(btVector3(3, 0, 2));
-	//cubeRigidBody->applyCentralImpulse(btVector3(2, 12, 0));
+	cubeRigidBody->setFriction(0);
+	cubeRigidBody->applyTorqueImpulse(btVector3(3, 1, 2));
+	cubeRigidBody->applyCentralImpulse(btVector3(0, 0.7, 0.8));
 
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 	
 	unsigned frames = 0;
 	double lastUpdate = 0;
 	double last = glfwGetTime();
-	
+	ShowCursor(false);
 	while(!glfwWindowShouldClose(window)) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -245,7 +245,8 @@ int main() {
 									cubeTrans.getRotation().x(),
 									cubeTrans.getRotation().y(),
 									cubeTrans.getRotation().z()));
-
+		mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
+		
 		btTransform camPos = camRigidBody->getCenterOfMassTransform();
 		camPos.setOrigin(btVector3(eye.x, eye.y, eye.z));
 		camRigidBody->setCenterOfMassTransform(camPos);
@@ -267,6 +268,7 @@ int main() {
 
 		glfwPollEvents();
 	}
+	ShowCursor(true);
 	world->removeRigidBody(camRigidBody);
 	delete camRigidBody->getMotionState();
 	delete camRigidBody;

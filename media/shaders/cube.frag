@@ -15,7 +15,7 @@ void main() {
 	float lightDistance = length(lightDirection);
 	lightDirection = lightDirection / lightDistance;
 	
-	float diffuse = max(0.0, dot(normal, lightDirection));
+	float diffuse = 1.0;//max(0.0, dot(normal, lightDirection));
 
 
 	vec4 final = diffuse * texture( sTexture, UV);
