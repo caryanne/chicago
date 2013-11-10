@@ -1,75 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="engine">
-      <UniqueIdentifier>{ae08b440-c44b-4355-8153-92eca1127eb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="engine\header files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="engine\source files">
+    <Filter Include="source">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="engine\source files\tinyobjloader">
-      <UniqueIdentifier>{b37bf9b4-a858-4ed7-a8ea-6e64b99f6661}</UniqueIdentifier>
+    <Filter Include="header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="engine\source files\soil">
-      <UniqueIdentifier>{498f57e6-29b7-447f-bc82-83087b29c2d0}</UniqueIdentifier>
+    <Filter Include="source\engine">
+      <UniqueIdentifier>{1fc8688e-8d4e-4bf5-8343-64dfbc60beab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\soil">
+      <UniqueIdentifier>{fc46d80b-ff3e-4a18-9bd3-1a2d51e82167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\tinyobjloader">
+      <UniqueIdentifier>{23c736c5-87ac-4795-ae60-fc86246b9bb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="chicago\tinyobjloader\tiny_obj_loader.cc">
+      <Filter>source\tinyobjloader</Filter>
+    </ClCompile>
     <ClCompile Include="chicago\Camera.cpp">
-      <Filter>engine\source files</Filter>
+      <Filter>source\engine</Filter>
     </ClCompile>
     <ClCompile Include="chicago\Mesh.cpp">
-      <Filter>engine\source files</Filter>
+      <Filter>source\engine</Filter>
     </ClCompile>
     <ClCompile Include="chicago\SceneManager.cpp">
-      <Filter>engine\source files</Filter>
+      <Filter>source\engine</Filter>
     </ClCompile>
     <ClCompile Include="chicago\SceneNode.cpp">
-      <Filter>engine\source files</Filter>
+      <Filter>source\engine</Filter>
     </ClCompile>
     <ClCompile Include="chicago\Shader.cpp">
-      <Filter>engine\source files</Filter>
+      <Filter>source\engine</Filter>
     </ClCompile>
     <ClCompile Include="chicago\Main.cpp" />
     <ClCompile Include="chicago\soil\image_DXT.c">
-      <Filter>engine\source files\soil</Filter>
+      <Filter>source\soil</Filter>
     </ClCompile>
     <ClCompile Include="chicago\soil\image_helper.c">
-      <Filter>engine\source files\soil</Filter>
+      <Filter>source\soil</Filter>
     </ClCompile>
     <ClCompile Include="chicago\soil\SOIL.c">
-      <Filter>engine\source files\soil</Filter>
+      <Filter>source\soil</Filter>
     </ClCompile>
     <ClCompile Include="chicago\soil\stb_image_aug.c">
-      <Filter>engine\source files\soil</Filter>
-    </ClCompile>
-    <ClCompile Include="chicago\tinyobjloader\tiny_obj_loader.cc">
-      <Filter>engine\source files\tinyobjloader</Filter>
+      <Filter>source\soil</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chicago\Camera.h">
-      <Filter>engine\header files</Filter>
+      <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="chicago\Entity.h">
-      <Filter>engine\header files</Filter>
+      <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="chicago\Mesh.h">
-      <Filter>engine\header files</Filter>
+      <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="chicago\SceneManager.h">
-      <Filter>engine\header files</Filter>
+      <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="chicago\SceneNode.h">
-      <Filter>engine\header files</Filter>
+      <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="chicago\Shader.h">
-      <Filter>engine\header files</Filter>
+      <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
