@@ -12,16 +12,22 @@
     <Filter Include="source\engine">
       <UniqueIdentifier>{1fc8688e-8d4e-4bf5-8343-64dfbc60beab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\soil">
-      <UniqueIdentifier>{fc46d80b-ff3e-4a18-9bd3-1a2d51e82167}</UniqueIdentifier>
+    <Filter Include="libraries">
+      <UniqueIdentifier>{8bacd05e-a8d5-4576-a5fd-5e9e1c7274ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="source\tinyobjloader">
+    <Filter Include="libraries\tinyobjloader">
       <UniqueIdentifier>{23c736c5-87ac-4795-ae60-fc86246b9bb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header\engine">
+      <UniqueIdentifier>{461f957f-ee88-4749-8dd6-580cdbc9cd98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\soil">
+      <UniqueIdentifier>{fc46d80b-ff3e-4a18-9bd3-1a2d51e82167}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="chicago\tinyobjloader\tiny_obj_loader.cc">
-      <Filter>source\tinyobjloader</Filter>
+      <Filter>libraries\tinyobjloader</Filter>
     </ClCompile>
     <ClCompile Include="chicago\Camera.cpp">
       <Filter>source\engine</Filter>
@@ -40,36 +46,36 @@
     </ClCompile>
     <ClCompile Include="chicago\Main.cpp" />
     <ClCompile Include="chicago\soil\image_DXT.c">
-      <Filter>source\soil</Filter>
+      <Filter>libraries\soil</Filter>
     </ClCompile>
     <ClCompile Include="chicago\soil\image_helper.c">
-      <Filter>source\soil</Filter>
+      <Filter>libraries\soil</Filter>
     </ClCompile>
     <ClCompile Include="chicago\soil\SOIL.c">
-      <Filter>source\soil</Filter>
+      <Filter>libraries\soil</Filter>
     </ClCompile>
     <ClCompile Include="chicago\soil\stb_image_aug.c">
-      <Filter>source\soil</Filter>
+      <Filter>libraries\soil</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="chicago\Shader.h">
+      <Filter>header\engine</Filter>
+    </ClInclude>
     <ClInclude Include="chicago\Camera.h">
-      <Filter>header</Filter>
+      <Filter>header\engine</Filter>
     </ClInclude>
     <ClInclude Include="chicago\Entity.h">
-      <Filter>header</Filter>
+      <Filter>header\engine</Filter>
     </ClInclude>
     <ClInclude Include="chicago\Mesh.h">
-      <Filter>header</Filter>
+      <Filter>header\engine</Filter>
     </ClInclude>
     <ClInclude Include="chicago\SceneManager.h">
-      <Filter>header</Filter>
+      <Filter>header\engine</Filter>
     </ClInclude>
     <ClInclude Include="chicago\SceneNode.h">
-      <Filter>header</Filter>
-    </ClInclude>
-    <ClInclude Include="chicago\Shader.h">
-      <Filter>header</Filter>
+      <Filter>header\engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
