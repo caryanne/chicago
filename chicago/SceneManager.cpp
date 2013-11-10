@@ -48,7 +48,8 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 
 		glUniform3fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::EyeDirection), 1, glm::value_ptr(mCamera.getDirection()));
 		
-		glm::vec4 lightPos = mView * glm::vec4(0, 10, 0, 1); 
+		glm::vec3 camPos = mCamera.getPosition();
+		glm::vec4 lightPos = mView * glm::vec4(10*sin(glfwGetTime()), 4 + sin(glfwGetTime() * 5.0), 0.0, 1.0);
 		//glm::vec4 lightPos = mView * glm::vec4(50.f * (float)sin(glfwGetTime()), 50.f, 50.f * (float)cos(glfwGetTime()), 1);
 		
 		glUniform4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::LightPosition), 1, glm::value_ptr(lightPos));
@@ -61,27 +62,6 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 
 
 	}
-/*		
-	sceneNode->getObj()->bind();
-	
-	mShaders[0].use();
-
-	glUniformMatrix4fv(uniformMVP, 1, GL_FALSE, glm::value_ptr(mvp));
-	glUniformMatrix4fv(uniformMV, 1, GL_FALSE, glm::value_ptr(mv));
-	glUniformMatrix3fv(uniformNM, 1, GL_FALSE, glm::value_ptr(nm));
-	glUniform1f(mShaders[0].getUniformLocation("time"),glfwGetTime());
-
-	glUniform3fv(uniformEye, 1, glm::value_ptr(eye));
-	
-	glUniform1i(uniformTexBase, 0);
-	glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.diffuse_texname]);
-
-	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
-
-	glBindVertexArray(0);
-	*/
-	//while has children, iterate though
-
 
 }
 

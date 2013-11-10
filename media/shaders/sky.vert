@@ -19,9 +19,9 @@ out vec4 position;
 void main() {
 
 	UV = vTexCoord;
-	color = vec4(0.8, 0.8, 0.8, 1.0);
+	color = vec4(0.8, 0.1, 0.1, 1.0);
 	normal = normalize(mNormalMatrix * vNormal);
-	position = mModelViewProj * vec4(vPosition, 1.0);
-	gl_Position = position;
+	position = mModelView * vec4(vPosition, 1.0);
+	gl_Position =  mModelViewProj * vec4(vPosition, 1.0);
 	
 }

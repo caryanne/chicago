@@ -80,7 +80,7 @@ int main() {
 		exit(EXIT_FAILURE);
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
-
+	//window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
 	window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
 	//window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
 	if(!window) {
@@ -111,22 +111,19 @@ int main() {
 	
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 
-	Mesh basemesh = Mesh("station2.obj");
-	Entity baseent = Entity(&basemesh);
-	SceneNode base = SceneNode(&baseent);
+	Mesh modulemesh = Mesh("module.obj");
+	Entity moduleent = Entity(&modulemesh);
+	SceneNode module = SceneNode(&moduleent);
+	mgr.getRootNode()->addChild(&module);
 
-	mgr.getRootNode()->addChild(&base);
-
-	Mesh gndmesh = Mesh("ground.obj");
-	Entity gndent = Entity(&gndmesh);
-	SceneNode ground = SceneNode(&gndent);
-
-	mgr.getRootNode()->addChild(&ground);
+	Mesh skymesh = Mesh("skysphere.obj");
+	Entity skyent = Entity(&skymesh);
+	SceneNode sky = SceneNode(&skyent);
+	mgr.getRootNode()->addChild(&sky);
 
 	Mesh helmetmesh = Mesh("helmetframe.obj");
 	Entity helmetent = Entity(&helmetmesh);
 	SceneNode helmet = SceneNode(&helmetent);
-	//helmet.setScale(glm::vec3(.95,.95,.95));
 	mgr.getRootNode()->addChild(&helmet);
 
 	Mesh shieldmesh = Mesh("helmetshield.obj");
@@ -134,8 +131,8 @@ int main() {
 	SceneNode shield = SceneNode(&shieldent);
 	helmet.addChild(&shield);
 
-	mgr.getCamera()->setPosition(glm::vec3(0,1,10));
-	
+	mgr.getCamera()->setPosition(glm::vec3(0,2,0));
+	mgr.getCamera()->setFOV(120.f);
 
 	mgr.setScreenRatio(width / (float) height);
 	
@@ -186,6 +183,10 @@ int main() {
 			yRotSpeed += dX * 0.001;
 
 		pitch += xRotSpeed;
+		if(pitch > 80.0)
+			pitch = 80.0;
+		if(pitch < -80.0)
+			pitch = -80.0;
 		yaw += yRotSpeed;
 		xRotSpeed *= 0.995f;
 		yRotSpeed *= 0.995f;
@@ -204,7 +205,7 @@ int main() {
 
 		glm::vec3 eye = mgr.getCamera()->getPosition();
 		
-		helmet.setPosition(eye - glm::vec3(0.2) * mgr.getCamera()->getDirection());
+		helmet.setPosition(eye + glm::vec3(0.17) * mgr.getCamera()->getDirection());
 
 		helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
 

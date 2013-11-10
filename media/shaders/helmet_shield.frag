@@ -16,8 +16,8 @@ void main() {
 	
 	float diffuse = max(0.3, dot(-1 * normal, lightDirection));
 	vec3 final = diffuse * vec3(color);
-	if(diffuse > 0.975)
-		gl_FragColor = vec4(1);
+	if(diffuse > 0.99)
+		gl_FragColor = vec4(1, 1, 1, 0.5);
 	else
-		gl_FragColor = vec4(final, 0.5);
+		gl_FragColor = vec4(final, 0.2);
 }
