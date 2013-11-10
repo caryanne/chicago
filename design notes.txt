@@ -1,10 +1,9 @@
 TEST
-	need ability to reload shaders.
+
 
 IMPLEMENT
 	error handling on mesh/texture/shader loading
-	skybox
-	working lighting 
 	irrklang audio scenenode
 	state manager
 	input engine
+	physics

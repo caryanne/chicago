@@ -29,8 +29,6 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		glm::mat4 mv = mView * model; //model-view
 		glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv)); //normal
 	
-		//update uniforms
-
 		sceneNode->bind();
 
 		glUniformMatrix4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::ModelViewProjectionMatrix),
@@ -50,7 +48,6 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		
 		glm::vec3 camPos = mCamera.getPosition();
 		glm::vec4 lightPos = mView * glm::vec4(10*sin(glfwGetTime()), 4 + sin(glfwGetTime() * 5.0), 0.0, 1.0);
-		//glm::vec4 lightPos = mView * glm::vec4(50.f * (float)sin(glfwGetTime()), 50.f, 50.f * (float)cos(glfwGetTime()), 1);
 		
 		glUniform4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::LightPosition), 1, glm::value_ptr(lightPos));
 
