@@ -232,7 +232,7 @@ int main() {
 
 		glm::vec3 eye = mgr.getCamera()->getPosition();
 		
-		helmet.setPosition(eye + glm::vec3(0.17) * mgr.getCamera()->getDirection());
+		helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
 		helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
 
 		world->stepSimulation(delta, 10); 
