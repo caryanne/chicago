@@ -83,6 +83,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="chicago\Camera.cpp" />
+    <ClCompile Include="chicago\imgui\imgui.cpp" />
+    <ClCompile Include="chicago\imgui\imguiRenderGL3.cpp" />
     <ClCompile Include="chicago\Main.cpp" />
     <ClCompile Include="chicago\Mesh.cpp" />
     <ClCompile Include="chicago\SceneManager.cpp" />

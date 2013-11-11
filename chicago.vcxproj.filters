@@ -24,6 +24,9 @@
     <Filter Include="libraries\soil">
       <UniqueIdentifier>{fc46d80b-ff3e-4a18-9bd3-1a2d51e82167}</UniqueIdentifier>
     </Filter>
+    <Filter Include="libraries\imgui">
+      <UniqueIdentifier>{751bd40a-edd7-4477-a209-2a84edb1ff91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="chicago\tinyobjloader\tiny_obj_loader.cc">
@@ -56,6 +59,12 @@
     </ClCompile>
     <ClCompile Include="chicago\soil\stb_image_aug.c">
       <Filter>libraries\soil</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\imgui\imgui.cpp">
+      <Filter>libraries\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="chicago\imgui\imguiRenderGL3.cpp">
+      <Filter>libraries\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

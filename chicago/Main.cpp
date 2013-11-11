@@ -19,6 +19,9 @@
 
 #include "Entity.h"
 
+#include "imgui\imgui.h"
+#include "imgui\imguiRenderGL3.h"
+
 GLFWwindow *window;
 
 SceneManager mgr;
@@ -35,7 +38,14 @@ void setup3d(double w, double h) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
+}
 
+void prepareGUI(double w, double h) {
+	glBindVertexArray(0);
+	glUseProgram(0);
+
+	glViewport(0, 0, w, h);
+	glDisable(GL_DEPTH_TEST);
 
 }
 
@@ -74,25 +84,31 @@ int main() {
 		exit(EXIT_FAILURE);
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
-	//window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
-	window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
+	window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
+	//window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
 	//window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
+	
 	if(!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
 	printf("%.2f:window created\n", glfwGetTime());
-
+	glfwSetWindowPos(window, 20, 20);
+	
 	glfwMakeContextCurrent(window);
 	glfwSetKeyCallback(window, keyPress);
-	
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 	printf("%.2f:OpenGL context created\n", glfwGetTime());
+	glfwSwapInterval(1);
 	if(glewInit() != GLEW_OK)
 		exit(EXIT_FAILURE);
 	printf("%.2f:checked OpenGL extensions\n", glfwGetTime());
 	
+	if(!imguiRenderGLInit("media/fonts/DroidSans.ttf"))
+		exit(EXIT_FAILURE);
+
+
 	//load and set up shit
 
 	glClearColor(0.0f, 0.5f, 1.f, 1.f);
@@ -121,9 +137,9 @@ int main() {
 	Entity shieldent = Entity(&shieldmesh);
 	SceneNode shield = SceneNode(&shieldent);
 	helmet.addChild(&shield);
-
+	
 	mgr.getCamera()->setPosition(glm::vec3(0,2,0));
-	mgr.getCamera()->setFOV(120.f);
+	mgr.getCamera()->setFOV(90.f);
 	mgr.setScreenRatio(width / (float) height);
 	
 	glm::vec3 movSpeed = glm::vec3(0.f);
@@ -183,9 +199,22 @@ int main() {
 
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 	
+	char buffer[20];
 	unsigned frames = 0;
+	unsigned fps = 0;
 	double lastUpdate = 0;
 	double last = glfwGetTime();
+
+
+	bool checked1 = false;
+    bool checked2 = false;
+    bool checked3 = true;
+    bool checked4 = false;
+    float value1 = 50.f;
+    float value2 = 30.f;
+    int scrollarea1 = 0;
+    int scrollarea2 = 0;
+
 	ShowCursor(false);
 	while(!glfwWindowShouldClose(window)) {
 
@@ -233,9 +262,10 @@ int main() {
 		glm::vec3 eye = mgr.getCamera()->getPosition();
 		
 		helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
-		helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
+		//helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
+		helmet.setRotation(glm::vec3(glm::radians(pitch/1.5/2),glm::radians(yaw/1.5),0));
 
-		world->stepSimulation(delta, 10); 
+		//world->stepSimulation(delta, 10); 
 		btTransform cubeTrans;
 		cubeRigidBody->getMotionState()->getWorldTransform(cubeTrans);
 		cube.setPosition(glm::vec3(cubeTrans.getOrigin().x(),
@@ -253,16 +283,40 @@ int main() {
 
 		mgr.drawScene();
 		
+		prepareGUI(width, height);
+		
+		
+		imguiBeginFrame(mouseX, mouseY, 0, 0);
 
+		/*imguiBeginScrollArea("fuck",10,10,100,height - 20,&scrollarea1);
+        imguiButton("Button");
+        imguiButton("Disabled button", false);
+		imguiEndScrollArea();*/
+
+
+
+        imguiEndFrame();
+		
+        imguiDrawText(20, height - 20, IMGUI_ALIGN_LEFT, buffer, imguiRGBA(255, 255, 255, 255));
+        //imguiDrawText(30 + width / 5 * 2 + 100, height - 40, IMGUI_ALIGN_RIGHT, "Free text",  imguiRGBA(32, 32, 192, 192));
+        //imguiDrawText(30 + width / 5 * 2 + 50, height - 60, IMGUI_ALIGN_CENTER, "Free text",  imguiRGBA(192, 32, 32,192));
+
+
+
+        
+       // imguiDrawRect(30 + width / 5 * 2, height - 590, 100, 100, imguiRGBA(32, 192, 32, 192));
+       // imguiDrawRect(30 + width / 5 * 2, height - 710, 100, 100, imguiRGBA(32, 32, 192, 192));
+       // imguiDrawRect(30 + width / 5 * 2, height - 830, 100, 100, imguiRGBA(192, 32, 32,192));
+
+        imguiRenderGLDraw(width, height); 
 
 		glfwSwapBuffers(window);
 
 		frames++;
 		if(glfwGetTime() - lastUpdate > 1.0) {
-			char buffer[32];
-			sprintf(buffer, "%ifps", frames);
+			fps = frames;
+			sprintf(buffer, "%i fps", fps);
 			lastUpdate = glfwGetTime();
-			glfwSetWindowTitle(window,buffer);
 			frames = 0;
 		}
 
@@ -288,6 +342,7 @@ int main() {
 	delete dispatcher;
 	delete collisionConfig;
 	delete broadphase;
+	imguiRenderGLDestroy();
 	glfwTerminate();
 	exit(EXIT_SUCCESS);
 }

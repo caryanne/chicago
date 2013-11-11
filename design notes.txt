@@ -1,9 +1,16 @@
-TEST
+**TEST**
+sadfgsdfg
+sdfg
+
+sdfg
 
 
-IMPLEMENT
-	error handling on mesh/texture/shader loading
-	irrklang audio scenenode
-	state manager
-	input engine
-	physics
+
+*IMPLEMENT*
+
+	- error handling on mesh/texture/shader loading
+	- irrklang audio scenenode
+	- state manager
+	- input engine
+	- physics
+	- gui
