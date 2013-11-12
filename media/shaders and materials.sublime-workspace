@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"a",
+				"adjustedNormal"
+			],
+			[
+				"max",
+				"maxVariance"
+			],
+			[
+				"no",
+				"normalize"
+			],
+			[
+				"No",
+				"normal"
+			],
+			[
+				"lig",
+				"lightDirection"
+			],
+			[
+				"ligh",
+				"lightDistance"
+			],
+			[
+				"li",
+				"lightDistance"
+			],
+			[
 				"fon",
 				"font-style"
 			],
@@ -32,26 +60,85 @@
 	"buffers":
 	[
 		{
+			"contents": "*TEST*\n\n	- use physics for camera movements\n		-figure out what's fun\n		-add stabilize and slowdown functions\n		does there need to be vertical movement in addition to side to side strafing\n\n*IMPLEMENT*\n\n	- error handling on mesh/texture/shader loading\n	- irrklang audio scenenode\n	- state manager\n	- input engine\n	- physics\n	- camera controller class\n		-change camera shape to ellipse\n\n\nfully implement obj loader to include multiple meshes per file\n\n\n\nenhance lighting effects to include multiple light sources\ntie physics into the entity system to include automatic set up of objects\n",
 			"file": "/C/Users/adam/Documents/GitHub/chicago/design notes.txt",
+			"file_size": 548,
+			"file_write_time": 130287682704238818,
 			"settings":
 			{
-				"buffer_size": 520,
+				"buffer_size": 585,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "shaders/basic.frag",
+			"file": "/C/Users/adam/Documents/GitHub/chicago/README.md",
 			"settings":
 			{
-				"buffer_size": 235,
+				"buffer_size": 90,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "shaders/basic.vert",
+			"file": "/C/Users/adam/Documents/GitHub/libRocket/Dependencies/empty.txt",
 			"settings":
 			{
-				"buffer_size": 544,
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "cube.mtl",
+			"settings":
+			{
+				"buffer_size": 245,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "shaders/basic_texture.frag",
+			"settings":
+			{
+				"buffer_size": 185,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/basic_texture.vert",
+			"settings":
+			{
+				"buffer_size": 521,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/basic_lighting.vert",
+			"settings":
+			{
+				"buffer_size": 521,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/basic_lighting.frag",
+			"settings":
+			{
+				"buffer_size": 455,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/cube.frag",
+			"settings":
+			{
+				"buffer_size": 516,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/cube.vert",
+			"settings":
+			{
+				"buffer_size": 515,
 				"line_ending": "Windows"
 			}
 		},
@@ -59,7 +146,7 @@
 			"file": "shaders/helmet_frame.frag",
 			"settings":
 			{
-				"buffer_size": 233,
+				"buffer_size": 455,
 				"line_ending": "Windows"
 			}
 		},
@@ -67,15 +154,66 @@
 			"file": "shaders/helmet_frame.vert",
 			"settings":
 			{
-				"buffer_size": 544,
+				"buffer_size": 521,
 				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "#version 400\n\nuniform mat4 mModelView;\nuniform mat4 mModelViewProj;\nuniform mat3 mNormalMatrix;\nuniform vec3 vEyePosition;\nuniform vec3 vEyeDirection;\nuniform vec4 vLightPosition;\n\nin vec3 vPosition;\nin vec3 vNormal;\nin vec2 vTexCoord;\n\nout vec2 UV;\nout vec4 color;\nout vec3 normal;\nout vec4 position;\n\nvoid main() {\n\n	UV = vTexCoord;\n	color = vec4(0.8, 0.8, 1.0, 1.0);\n	normal = normalize(mNormalMatrix * vNormal);\n\n	position = mModelView * vec4(vPosition, 1.0);\n	gl_Position =  mModelViewProj * vec4(vPosition, 1.0);\n	\n}",
+			"file": "shaders/module.vert",
+			"file_size": 547,
+			"file_write_time": 130285233525811202,
+			"settings":
+			{
+				"buffer_size": 522,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/module.frag",
+			"settings":
+			{
+				"buffer_size": 453,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "module.mtl",
+			"settings":
+			{
+				"buffer_size": 269,
+				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "shaders/helmet_shield.frag",
 			"settings":
 			{
-				"buffer_size": 207,
+				"buffer_size": 522,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "skysphere.mtl",
+			"settings":
+			{
+				"buffer_size": 245,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "shaders/sky.vert",
+			"settings":
+			{
+				"buffer_size": 521,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/sky.frag",
+			"settings":
+			{
+				"buffer_size": 185,
 				"line_ending": "Windows"
 			}
 		},
@@ -83,23 +221,7 @@
 			"file": "shaders/helmet_shield.vert",
 			"settings":
 			{
-				"buffer_size": 295,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/simple.frag",
-			"settings":
-			{
-				"buffer_size": 164,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/simple.vert",
-			"settings":
-			{
-				"buffer_size": 541,
+				"buffer_size": 521,
 				"line_ending": "Windows"
 			}
 		},
@@ -107,7 +229,15 @@
 			"file": "helmetframe.mtl",
 			"settings":
 			{
-				"buffer_size": 277,
+				"buffer_size": 241,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "helmetframe.obj",
+			"settings":
+			{
+				"buffer_size": 77259,
 				"line_ending": "Unix"
 			}
 		},
@@ -115,23 +245,7 @@
 			"file": "helmetshield.mtl",
 			"settings":
 			{
-				"buffer_size": 278,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "plane.mtl",
-			"settings":
-			{
-				"buffer_size": 247,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "station.mtl",
-			"settings":
-			{
-				"buffer_size": 238,
+				"buffer_size": 243,
 				"line_ending": "Unix"
 			}
 		}
@@ -167,7 +281,23 @@
 	},
 	"file_history":
 	[
+		"/C/Users/adam/Documents/GitHub/imgui/README.md",
+		"/C/Users/adam/Desktop/bloom/bloom/source/hdr.c",
+		"/C/Users/adam/Desktop/bloom/bloom/shaders/passv.glsl",
+		"/C/Users/adam/Desktop/bloom/bloom/shaders/combine4f.glsl",
+		"/C/Users/adam/Documents/GitHub/chicago/media/cube.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/media/station.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/media/plane.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/station.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/media/station2.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/media/ground.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/station.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/ground.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/ground.frag",
 		"/C/Users/adam/Documents/GitHub/chicago/media/helmetframe.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/media/helmetshield.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/media/ground.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/media/station2.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/helmetframe.mtl",
 		"/C/Users/adam/Documents/GitHub/chicago/helmetshield.mtl",
 		"/C/Users/adam/Documents/GitHub/chicago/helmet_shield.frag",
@@ -264,6 +394,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"o ",
+			"use",
+			"out",
 			"use",
 			"shield",
 			"s",
@@ -286,6 +419,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"in",
 			"frame",
 			"",
 			".0",
@@ -303,7 +437,7 @@
 	"groups":
 	[
 		{
-			"selected": 12,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -312,15 +446,69 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 520,
+						"buffer_size": 585,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								49,
-								49
+								383,
+								383
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/adam/Documents/GitHub/chicago/README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 90,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								89,
+								89
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/adam/Documents/GitHub/libRocket/Dependencies/empty.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
 							]
 						],
 						"settings":
@@ -334,79 +522,25 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "shaders/basic.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 235,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "shaders/basic.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 544,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
 					"buffer": 3,
-					"file": "shaders/helmet_frame.frag",
+					"file": "cube.mtl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 233,
+						"buffer_size": 245,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								231,
+								213
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -416,19 +550,19 @@
 				},
 				{
 					"buffer": 4,
-					"file": "shaders/helmet_frame.vert",
+					"file": "shaders/basic_texture.frag",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 544,
+						"buffer_size": 185,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								54,
+								43
 							]
 						],
 						"settings":
@@ -443,11 +577,11 @@
 				},
 				{
 					"buffer": 5,
-					"file": "shaders/helmet_shield.frag",
+					"file": "shaders/basic_texture.vert",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 207,
+						"buffer_size": 521,
 						"regions":
 						{
 						},
@@ -470,11 +604,11 @@
 				},
 				{
 					"buffer": 6,
-					"file": "shaders/helmet_shield.vert",
+					"file": "shaders/basic_lighting.vert",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 295,
+						"buffer_size": 521,
 						"regions":
 						{
 						},
@@ -497,11 +631,11 @@
 				},
 				{
 					"buffer": 7,
-					"file": "shaders/simple.frag",
+					"file": "shaders/basic_lighting.frag",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 164,
+						"buffer_size": 455,
 						"regions":
 						{
 						},
@@ -524,11 +658,281 @@
 				},
 				{
 					"buffer": 8,
-					"file": "shaders/simple.vert",
+					"file": "shaders/cube.frag",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 541,
+						"buffer_size": 516,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								387,
+								387
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "shaders/cube.vert",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 515,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								356,
+								356
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "shaders/helmet_frame.frag",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 455,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								455
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "shaders/helmet_frame.vert",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								362,
+								362
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "shaders/module.vert",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 522,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								302,
+								302
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "shaders/module.frag",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 453,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								231,
+								231
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "module.mtl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 269,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								239,
+								239
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "shaders/helmet_shield.frag",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 522,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								474,
+								474
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "skysphere.mtl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 245,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								243,
+								243
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "shaders/sky.vert",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								521,
+								521
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "shaders/sky.frag",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 185,
 						"regions":
 						{
 						},
@@ -550,20 +954,47 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 19,
+					"file": "shaders/helmet_shield.vert",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 521,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								357,
+								357
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 20,
 					"file": "helmetframe.mtl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 277,
+						"buffer_size": 241,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								239,
+								239
 							]
 						],
 						"settings":
@@ -577,74 +1008,47 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 21,
+					"file": "helmetframe.obj",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 77259,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								39133,
+								39133
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 17114.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 22,
 					"file": "helmetshield.mtl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 278,
+						"buffer_size": 243,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "plane.mtl",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 247,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "station.mtl",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 238,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
+								216,
+								216
 							]
 						],
 						"settings":

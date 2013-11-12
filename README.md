@@ -1,3 +1,3 @@
 chicago
 =======
-![logo](https://github.com/caryanne/chicago/raw/master/images/chicago.jpg)
+![logo](https://github.com/caryanne/chicago/raw/master/images/loading.png)
