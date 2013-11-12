@@ -27,6 +27,7 @@ GLFWwindow *window;
 SceneManager mgr;
 
 bool keyW = false, keyS = false, keyA = false, keyD = false, keyQ = false, keyE = false;
+bool keyUp = false, keyDown = false, keyRight = false, keyLeft = false;
 
 void setup3d(double w, double h) {
 
@@ -56,10 +57,8 @@ void reloadResources() {
 }
 
 static void keyPress(GLFWwindow* window, int key, int scanCode, int action, int mods) {
-	if(key == GLFW_KEY_F1 && action == GLFW_PRESS)
-		reloadResources();
-	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, true);
+	if(key == GLFW_KEY_F1 && action == GLFW_PRESS) reloadResources();
+	if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
 	
 	if(key == GLFW_KEY_W && action == GLFW_PRESS) keyW = true;
 	if(key == GLFW_KEY_W && action == GLFW_RELEASE)	keyW = false;
@@ -74,6 +73,14 @@ static void keyPress(GLFWwindow* window, int key, int scanCode, int action, int 
 	if(key == GLFW_KEY_E && action == GLFW_PRESS) keyE = true;
 	if(key == GLFW_KEY_E && action == GLFW_RELEASE)	keyE = false;
 
+	if(key == GLFW_KEY_UP && action == GLFW_PRESS) keyUp = true;
+	if(key == GLFW_KEY_UP && action == GLFW_RELEASE) keyUp = false;
+	if(key == GLFW_KEY_DOWN && action == GLFW_PRESS) keyDown = true;
+	if(key == GLFW_KEY_DOWN && action == GLFW_RELEASE) keyDown = false;
+	if(key == GLFW_KEY_RIGHT && action == GLFW_PRESS) keyRight = true;
+	if(key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)	keyRight = false;
+	if(key == GLFW_KEY_LEFT && action == GLFW_PRESS) keyLeft = true;
+	if(key == GLFW_KEY_LEFT && action == GLFW_RELEASE) keyLeft = false;
 		
 
 }
@@ -107,8 +114,7 @@ int main() {
 	
 	if(!imguiRenderGLInit("media/fonts/DroidSans.ttf"))
 		exit(EXIT_FAILURE);
-
-
+	
 	//load and set up shit
 
 	glClearColor(0.0f, 0.5f, 1.f, 1.f);
@@ -139,11 +145,9 @@ int main() {
 	helmet.addChild(&shield);
 	
 	mgr.getCamera()->setPosition(glm::vec3(0,2,0));
-	mgr.getCamera()->setFOV(90.f);
+	mgr.getCamera()->setFOV(120.f);
 	mgr.setScreenRatio(width / (float) height);
 	
-	glm::vec3 movSpeed = glm::vec3(0.f);
-	glm::vec3 strafeSpeed = glm::vec3(0.f);
 
 	double xRotSpeed = 0.0, yRotSpeed = 0.0, zRotSpeed = 0.0, pitch = 0.0, yaw = 0.0, roll = 0.0;
 	double mouseX = 0.0, mouseY = 0.0;
@@ -160,7 +164,7 @@ int main() {
 
 	btCollisionShape* moduleShape = new btBoxShape(btVector3(10, 0.2, 10));
 	btCollisionShape* cubeShape = new btBoxShape(btVector3(1, 1, 1));
-	btCollisionShape* camShape = new btSphereShape(1);
+	btCollisionShape* camShape = new btCapsuleShape(1, 3);
 
 	btVector3 inertia;
 	
@@ -180,20 +184,21 @@ int main() {
 		cubeRigidBodyCI(1, cubeMotionState, cubeShape, inertia);
 	btRigidBody* cubeRigidBody = new btRigidBody(cubeRigidBodyCI);
 	world->addRigidBody(cubeRigidBody);
-	cubeRigidBody->setActivationState(DISABLE_DEACTIVATION);
+	//cubeRigidBody->setActivationState(DISABLE_DEACTIVATION);
 	
 	btDefaultMotionState* camMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
+		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 5, 0)));
 	camShape->calculateLocalInertia(5, inertia);
 	btRigidBody::btRigidBodyConstructionInfo
 		camRigidBodyCI(5, camMotionState, camShape, inertia);
 	
 	btRigidBody* camRigidBody = new btRigidBody(camRigidBodyCI);
-	//camRigidBody->setCollisionFlags(camRigidBody->getCollisionFlags() | btCollisionObject::CF_KINEMATIC_OBJECT);
+
 	camRigidBody->setActivationState(DISABLE_DEACTIVATION);
+	camRigidBody->setDamping(0.1f, 0.3f);
+
 	world->addRigidBody(camRigidBody);
 
-	cubeRigidBody->setFriction(0);
 	cubeRigidBody->applyTorqueImpulse(btVector3(3, 1, 2));
 	cubeRigidBody->applyCentralImpulse(btVector3(0, 0.7, 0.8));
 
@@ -204,16 +209,6 @@ int main() {
 	unsigned fps = 0;
 	double lastUpdate = 0;
 	double last = glfwGetTime();
-
-
-	bool checked1 = false;
-    bool checked2 = false;
-    bool checked3 = true;
-    bool checked4 = false;
-    float value1 = 50.f;
-    float value2 = 30.f;
-    int scrollarea1 = 0;
-    int scrollarea2 = 0;
 
 	ShowCursor(false);
 	while(!glfwWindowShouldClose(window)) {
@@ -230,84 +225,59 @@ int main() {
 		double dY = mouseY - tY;
 		glfwSetCursorPos(window, mouseX, mouseY);
 
-		if(keyW) movSpeed = glm::vec3(delta * 7.f);
-		if(keyS) movSpeed = glm::vec3(delta * -7.f);
-		if(keyA) strafeSpeed = glm::vec3(delta * 7.f);
-		if(keyD) strafeSpeed = glm::vec3(delta * -7.f);
-		if(keyQ) zRotSpeed = delta * 100.f;
-		if(keyE) zRotSpeed = delta * -100.f;
+		btVector3 camForce = btVector3(0, 0, 0);
+		btVector3 camTorque = btVector3(0, 0, 0);
 
-		if(abs(dY) > 0.0 && abs(dY)) xRotSpeed += dY * 0.001;
-		if(abs(dX) > 0.0 && abs(dX)) yRotSpeed += dX * 0.001;
+		btMatrix3x3& camRot = camRigidBody->getWorldTransform().getBasis();
 
-		pitch += xRotSpeed;
-		if(pitch > 80.0) pitch = 80.0;
-		if(pitch < -80.0) pitch = -80.0;
-		yaw += yRotSpeed;
-		roll += zRotSpeed;
+		if(keyW) camForce = camRot * btVector3(0, 0, -0.05f);
+		if(keyS) camForce = camRot * btVector3(0, 0, 0.05f);
+		if(keyA) camForce = camRot * btVector3(-0.05f, 0, 0);
+		if(keyD) camForce = camRot * btVector3(0.05f, 0, 0);
 
-		xRotSpeed *= 0.995f;
-		yRotSpeed *= 0.995f;
-		zRotSpeed *= 0.995f;
-
-		mgr.getCamera()->setPosition(mgr.getCamera()->getPosition() - movSpeed * mgr.getCamera()->getDirection());
-		mgr.getCamera()->setPosition(mgr.getCamera()->getPosition() - strafeSpeed * glm::cross(glm::vec3(0,1,0), mgr.getCamera()->getDirection()));
-		mgr.getCamera()->setRotation(glm::vec3(glm::radians(pitch), glm::radians(yaw), 0));
-
-		sky.setPosition(mgr.getCamera()->getPosition());
-
-		movSpeed *= 0.999f;
-		strafeSpeed *= 0.999f;
-
-		glm::vec3 eye = mgr.getCamera()->getPosition();
+		if(keyQ) camTorque = camRot * btVector3(0, 0.005f, 0);
+		if(keyE) camTorque = camRot * btVector3(0, -0.005f, 0);
 		
-		helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
-		//helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
-		helmet.setRotation(glm::vec3(glm::radians(pitch/1.5/2),glm::radians(yaw/1.5),0));
+		if(keyUp) camTorque = camRot * btVector3(-0.005f, 0, 0);
+		if(keyDown) camTorque = camRot * btVector3(0.005f, 0, 0);
+		if(keyRight) camTorque = camRot * btVector3(0, 0, -0.005f);
+		if(keyLeft) camTorque = camRot * btVector3(0, 0, 0.005f);
 
-		//world->stepSimulation(delta, 10); 
+
+
+		camRigidBody->applyCentralImpulse(camForce);
+		camRigidBody->applyTorqueImpulse(camTorque);
+
+
+		world->stepSimulation(delta, 10); 
+
 		btTransform cubeTrans;
 		cubeRigidBody->getMotionState()->getWorldTransform(cubeTrans);
-		cube.setPosition(glm::vec3(cubeTrans.getOrigin().x(),
-									cubeTrans.getOrigin().y(),
-									cubeTrans.getOrigin().z()));
-		cube.setRotation(glm::quat(cubeTrans.getRotation().w(),
-									cubeTrans.getRotation().x(),
-									cubeTrans.getRotation().y(),
-									cubeTrans.getRotation().z()));
-		mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
+		cube.setPosition(glm::vec3(cubeTrans.getOrigin().x(), cubeTrans.getOrigin().y(), cubeTrans.getOrigin().z()));
+		cube.setRotation(glm::quat(cubeTrans.getRotation().w(), cubeTrans.getRotation().x(), cubeTrans.getRotation().y(), cubeTrans.getRotation().z()));
 		
-		btTransform camPos = camRigidBody->getCenterOfMassTransform();
-		camPos.setOrigin(btVector3(eye.x, eye.y, eye.z));
-		camRigidBody->setCenterOfMassTransform(camPos);
+		
+		
+
+		btTransform camTrans;
+		camRigidBody->getMotionState()->getWorldTransform(camTrans);
+		mgr.getCamera()->setPosition(glm::vec3(camTrans.getOrigin().x(), camTrans.getOrigin().y(), camTrans.getOrigin().z()));
+		mgr.getCamera()->setRotation(glm::quat(camTrans.getRotation().w(), camTrans.getRotation().x(), camTrans.getRotation().y(), camTrans.getRotation().z()));
+		
+		glm::vec3 eye = mgr.getCamera()->getPosition();
+		sky.setPosition(eye);
+		//mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
+		mgr.setLightPos(glm::vec4(eye, 1.0));
+
+		helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
+		helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
 
 		mgr.drawScene();
 		
 		prepareGUI(width, height);
-		
-		
 		imguiBeginFrame(mouseX, mouseY, 0, 0);
-
-		/*imguiBeginScrollArea("fuck",10,10,100,height - 20,&scrollarea1);
-        imguiButton("Button");
-        imguiButton("Disabled button", false);
-		imguiEndScrollArea();*/
-
-
-
-        imguiEndFrame();
-		
+        imguiEndFrame();	
         imguiDrawText(20, height - 20, IMGUI_ALIGN_LEFT, buffer, imguiRGBA(255, 255, 255, 255));
-        //imguiDrawText(30 + width / 5 * 2 + 100, height - 40, IMGUI_ALIGN_RIGHT, "Free text",  imguiRGBA(32, 32, 192, 192));
-        //imguiDrawText(30 + width / 5 * 2 + 50, height - 60, IMGUI_ALIGN_CENTER, "Free text",  imguiRGBA(192, 32, 32,192));
-
-
-
-        
-       // imguiDrawRect(30 + width / 5 * 2, height - 590, 100, 100, imguiRGBA(32, 192, 32, 192));
-       // imguiDrawRect(30 + width / 5 * 2, height - 710, 100, 100, imguiRGBA(32, 32, 192, 192));
-       // imguiDrawRect(30 + width / 5 * 2, height - 830, 100, 100, imguiRGBA(192, 32, 32,192));
-
         imguiRenderGLDraw(width, height); 
 
 		glfwSwapBuffers(window);

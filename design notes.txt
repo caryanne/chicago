@@ -1,10 +1,9 @@
-**TEST**
-sadfgsdfg
-sdfg
+*TEST*
 
-sdfg
-
-
+	- use physics for camera movements
+		-figure out what's fun
+		-add stabilize and slowdown functions
+		does there need to be vertical movement in addition to side to side strafing
 
 *IMPLEMENT*
 
@@ -13,4 +12,12 @@ sdfg
 	- state manager
 	- input engine
 	- physics
-	- gui
+
+
+
+fully implement obj loader to include multiple meshes per file
+
+
+
+enhance lighting effects to include multiple light sources
+tie physics into the entity system to include automatic set up of objects
