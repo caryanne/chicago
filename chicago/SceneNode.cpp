@@ -35,14 +35,14 @@ void SceneNode::reload() {
 	if(mEntity->getMesh() != NULL)
 		mEntity->getMesh()->reload();
 }
-void SceneNode::bind() {
+void SceneNode::bind(unsigned submesh) {
 	if(hasRenderable())
-		mEntity->getMesh()->bind();
+		mEntity->getMesh()->bind(submesh);
 }
 
-void SceneNode::draw() {
+void SceneNode::draw(unsigned submesh) {
 	if(hasRenderable())
-		mEntity->getMesh()->draw();
+		mEntity->getMesh()->draw(submesh);
 }
 
 glm::mat4 SceneNode::getModelMatrix() {

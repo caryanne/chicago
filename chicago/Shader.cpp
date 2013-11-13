@@ -63,6 +63,16 @@ Shader::Shader(const string& filename) {
 void Shader::load(const string& filename) {
 	mShader = makeShaderProgram(makeVertexShader(filename + ".vert"),
 								makeFragmentShader(filename + ".frag"));
+
+	mUniforms[UNIFORM::ModelViewProjectionMatrix] = getUniformLocation("mModelViewProj");
+	mUniforms[UNIFORM::ModelViewMatrix] = getUniformLocation("mModelView");
+	mUniforms[UNIFORM::NormalMatrix] = getUniformLocation("mNormalMatrix");
+	mUniforms[UNIFORM::EyePosition] = getUniformLocation("vEyePosition");
+	mUniforms[UNIFORM::EyeDirection] = getUniformLocation("vEyeDirection");
+	mUniforms[UNIFORM::LightPosition] = getUniformLocation("vLightPosition");
+	mUniforms[UNIFORM::TextureColor] = getUniformLocation("sTexture");
+	mUniforms[UNIFORM::TextureNormal] = getUniformLocation("sNormal");
+	mUniforms[UNIFORM::Time] = getUniformLocation("fTime");
 }
 
 void Shader::unload() {

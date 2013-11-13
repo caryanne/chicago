@@ -90,6 +90,7 @@
     <ClCompile Include="chicago\SceneManager.cpp" />
     <ClCompile Include="chicago\SceneNode.cpp" />
     <ClCompile Include="chicago\Shader.cpp" />
+    <ClCompile Include="chicago\ShaderManager.cpp" />
     <ClCompile Include="chicago\soil\image_DXT.c" />
     <ClCompile Include="chicago\soil\image_helper.c" />
     <ClCompile Include="chicago\soil\SOIL.c" />
@@ -103,6 +104,7 @@
     <ClInclude Include="chicago\SceneManager.h" />
     <ClInclude Include="chicago\SceneNode.h" />
     <ClInclude Include="chicago\Shader.h" />
+    <ClInclude Include="chicago\ShaderManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

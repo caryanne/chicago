@@ -12,7 +12,8 @@
 	- state manager
 	- input engine
 	- physics
-
+	- camera controller class
+		-change camera shape to ellipse
 
 
 fully implement obj loader to include multiple meshes per file

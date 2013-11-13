@@ -28,35 +28,22 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		glm::mat4 mvp = mViewProjection * model; //model-view-projection
 		glm::mat4 mv = mView * model; //model-view
 		glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv)); //normal
-	
-		sceneNode->bind();
-
-		glUniformMatrix4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::ModelViewProjectionMatrix),
-							1, GL_FALSE, glm::value_ptr(mvp));
-
-		glUniformMatrix4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::ModelViewMatrix),
-							1, GL_FALSE, glm::value_ptr(mv));
-
-		glUniformMatrix3fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::NormalMatrix),
-							1, GL_FALSE, glm::value_ptr(nm));
-
-		glUniform1f(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::Time), glfwGetTime());
-
-		glUniform3fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::EyePosition), 1, glm::value_ptr(mCamera.getPosition()));
-
-		glUniform3fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::EyeDirection), 1, glm::value_ptr(mCamera.getDirection()));
-		
-		
 		glm::vec4 lightPos = mView * mLightPos;
-		
-		glUniform4fv(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::LightPosition), 1, glm::value_ptr(lightPos));
 
-
-		glUniform1i(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::TextureColor), 0);
-		glUniform1i(sceneNode->getEntity()->getMesh()->getUniform(UNIFORM::TextureNormal), 1);
-
-		sceneNode->draw();
-
+		for(unsigned i = 0; i < sceneNode->getEntity()->getMesh()->subMeshCount(); i++) {
+			sceneNode->bind(i);
+			Mesh* mesh = sceneNode->getEntity()->getMesh();
+			mesh->subMeshShader(i)->uniformModelViewProjectionMatrix(mvp);
+			mesh->subMeshShader(i)->uniformModelViewMatrix(mv);
+			mesh->subMeshShader(i)->uniformNormalMatrix(nm);
+			mesh->subMeshShader(i)->uniformTime(glfwGetTime());
+			mesh->subMeshShader(i)->uniformEyePosition(mCamera.getPosition());
+			mesh->subMeshShader(i)->uniformEyeDirection(mCamera.getDirection());
+			mesh->subMeshShader(i)->uniformLightPosition(lightPos);
+			mesh->subMeshShader(i)->uniformTextureColor(0);
+			mesh->subMeshShader(i)->uniformTextureNormal(1);
+			sceneNode->draw(i);
+		}
 
 	}
 

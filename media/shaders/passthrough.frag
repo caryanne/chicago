@@ -18,7 +18,7 @@ void main() {
 	float diffuse = max(0.0, dot(normal, lightDirection));
 
 
-	vec4 final = diffuse * texture( sTexture, UV);
+	vec4 final = diffuse * color;
 	final.a = 1.0;
 	gl_FragColor = final;
 }

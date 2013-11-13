@@ -1,8 +1,9 @@
 #include "soil\SOIL.h"
 #include "Mesh.h"
+#include "ShaderManager.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
-#define mesh mData[0].mesh
+//#define mesh mData[0].mesh
 
 Mesh::Mesh(const string& filename) {
 	load(filename);
@@ -10,11 +11,14 @@ Mesh::Mesh(const string& filename) {
 
 void Mesh::load(const string& filename) {
 	double start = glfwGetTime();
-
+	mSubMeshData = vector<SubMeshData>();
 	mFilename = filename;
 	printf("%.2f:loading mesh %s\n", glfwGetTime(), filename.c_str());
-	tinyobj::LoadObj(mData, ("media/" + filename).c_str(), "media/");
+	if(tinyobj::LoadObj(mData, ("media/" + filename).c_str(), "media/") != "")
+		return;
+
 	for(unsigned i = 0; i < mData.size(); i++) {
+		mSubMeshData.push_back(SubMeshData());
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
 			printf("%.2f:...loading texture %s\n", glfwGetTime(), mData[i].material.diffuse_texname.c_str());
 			mTextures[mData[i].material.diffuse_texname] =
@@ -28,76 +32,75 @@ void Mesh::load(const string& filename) {
 		}
 		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
 			printf("%.2f:...loading shader %i/%s\n", glfwGetTime(), i, mData[i].material.unknown_parameter.find("shader")->second.c_str());
-			mShaders[i] = Shader(("media/shaders/" + mData[i].material.unknown_parameter.find("shader")->second).c_str());
+			
+			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader(mData[i].material.unknown_parameter.find("shader")->second);
+
+		} else {
+			printf("%.2f:...using passthrough shader %i\n", glfwGetTime(), i);
+			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader("passthrough");
 		}
+
+		printf("%.2f:...populating vertex array\n", glfwGetTime());
+	
+		glGenVertexArrays(1, &mSubMeshData.back().mVAO);
+
+		glBindVertexArray(mSubMeshData.back().mVAO);
+		glGenBuffers(1, &mSubMeshData.back().mIB);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mSubMeshData.back().mIB);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mData[i].mesh.indices[0]) * mData[i].mesh.indices.size(), &(mData[i].mesh.indices.front()), GL_STATIC_DRAW);
+
+		glGenBuffers(1, &mSubMeshData.back().mVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, mSubMeshData.back().mVBO);
+
+		//total size = positions(3), normals(3), tex(2)
+		int sizePositions = sizeof(mData[i].mesh.positions[0]) * mData[i].mesh.positions.size();
+		int sizeNormals = sizeof(mData[i].mesh.normals[0]) * mData[i].mesh.normals.size();
+		int sizeTexCoords = sizeof(mData[i].mesh.texcoords[0]) * mData[i].mesh.texcoords.size();
+
+		glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords, NULL, GL_STATIC_DRAW);// 
+
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizePositions, &mData[i].mesh.positions[0]);//positions
+		glBufferSubData(GL_ARRAY_BUFFER, sizePositions, sizeNormals, &mData[i].mesh.normals[0]);//normals
+		glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, sizeTexCoords, &mData[i].mesh.texcoords[0]);//textures
+
+		GLuint position = mSubMeshData.back().mShader->getAttribLocation("vPosition");
+		GLuint normal = mSubMeshData.back().mShader->getAttribLocation("vNormal");
+		GLuint texcoord = mSubMeshData.back().mShader->getAttribLocation("vTexCoord");
+
+
+
+		glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions));
+		glVertexAttribPointer(texcoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizePositions + sizeNormals));
+	
+		mSubMeshData.back().mShader->use();
+
+		glEnableVertexAttribArray(position);
+		glEnableVertexAttribArray(normal);
+		glEnableVertexAttribArray(texcoord);
+
+		glBindVertexArray(0);
+
 	}
-	printf("%.2f:...populating vertex array\n", glfwGetTime());
-	glGenVertexArrays(1, &mVAO);
-	glBindVertexArray(mVAO);
 
-	glGenBuffers(1, &mIB);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mIB);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mesh.indices[0]) * mesh.indices.size(), &(mesh.indices.front()), GL_STATIC_DRAW);
-
-	glGenBuffers(1, &mVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-
-	//total size = positions(3), normals(3), tex(2)
-	int sizePositions = sizeof(mesh.positions[0]) * mesh.positions.size();
-	int sizeNormals = sizeof(mesh.normals[0]) * mesh.normals.size();
-	int sizeTexCoords = sizeof(mesh.texcoords[0]) * mesh.texcoords.size();
-
-	glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords, NULL, GL_STATIC_DRAW);// 
-
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizePositions, &mesh.positions[0]);//positions
-	glBufferSubData(GL_ARRAY_BUFFER, sizePositions, sizeNormals, &mesh.normals[0]);//normals
-	glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, sizeTexCoords, &mesh.texcoords[0]);//textures
-
-	GLuint position = getShader()->getAttribLocation("vPosition");
-	GLuint normal = getShader()->getAttribLocation("vNormal");
-	GLuint texcoord = getShader()->getAttribLocation("vTexCoord");
-
-	mUniforms[UNIFORM::ModelViewProjectionMatrix] = getShader()->getUniformLocation("mModelViewProj");
-	mUniforms[UNIFORM::ModelViewMatrix] = getShader()->getUniformLocation("mModelView");
-	mUniforms[UNIFORM::NormalMatrix] = getShader()->getUniformLocation("mNormalMatrix");
-	mUniforms[UNIFORM::EyePosition] = getShader()->getUniformLocation("vEyePosition");
-	mUniforms[UNIFORM::EyeDirection] = getShader()->getUniformLocation("vEyeDirection");
-	mUniforms[UNIFORM::LightPosition] = getShader()->getUniformLocation("vLightPosition");
-	mUniforms[UNIFORM::TextureColor] = getShader()->getUniformLocation("sTexture");
-	mUniforms[UNIFORM::TextureNormal] = getShader()->getUniformLocation("sNormal");
-	mUniforms[UNIFORM::Time] = getShader()->getUniformLocation("fTime");
-
-	glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions));
-	glVertexAttribPointer(texcoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizePositions + sizeNormals));
-	
-	getShader()->use();
-
-	glEnableVertexAttribArray(position);
-	glEnableVertexAttribArray(normal);
-	glEnableVertexAttribArray(texcoord);
-
-	glBindVertexArray(0);
-	
 	printf("%.2f:done loading %s in %.2fms\n", glfwGetTime(), filename.c_str(), (glfwGetTime() - start) * 1000.0);
 
 
 }
 
-void Mesh::bind() {
-
-	getShader()->use();
-
+void Mesh::bind(unsigned submesh) {
 	GLint last;
 	glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &last);
-	if(last != mVAO)
-		glBindVertexArray(mVAO);
+	if(last != mSubMeshData[submesh].mVAO) {
+		glBindVertexArray(mSubMeshData[submesh].mVAO);
+		mSubMeshData[submesh].mShader->use();
+	}
 }
 
-void Mesh::draw() {
+void Mesh::draw(unsigned submesh) {
+	bind(submesh);
 
-	
-	//update uniforms, bind texture, etc;
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.diffuse_texname]);
 	
@@ -105,19 +108,19 @@ void Mesh::draw() {
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.unknown_parameter.find("normalmap")->second]);
 	}
-	glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
+	glDrawElements(GL_TRIANGLES, mData[submesh].mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 	glBindVertexArray(0);
 }
 
 void Mesh::reload() {
 	printf("%.2f:commence reloading mesh %s\n", glfwGetTime(), mFilename.c_str());
 	
-	for(int i = 0; i < mShaders.size(); i++)
-		getShader(i)->unload();
+	for(int i = 0; i < mSubMeshData.size(); i++) {
+		mSubMeshData[i].mShader->unload();
 
-	glDeleteBuffers(1, &mVBO);
-	glDeleteBuffers(1, &mIB);
-	glDeleteVertexArrays(1, &mVAO);
-
+		glDeleteBuffers(1, &mSubMeshData[i].mVBO);
+		glDeleteBuffers(1, &mSubMeshData[i].mIB);
+		glDeleteVertexArrays(1, &mSubMeshData[i].mVAO);
+	}
 	load(mFilename);
 }

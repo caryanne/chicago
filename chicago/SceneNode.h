@@ -40,8 +40,8 @@ public:
 
 	void setScale(glm::vec3 scale) { mScale = scale; }
 	void reload();
-	void bind();
-	void draw();
+	void bind(unsigned submesh);
+	void draw(unsigned submesh);
 
 	glm::mat4 getModelMatrix();
 

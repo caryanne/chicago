@@ -11,56 +11,44 @@
 
 using namespace std;
 
-enum UNIFORM {
-	ModelViewProjectionMatrix,
-	ModelViewMatrix,
-	NormalMatrix,
-	EyePosition,
-	EyeDirection,
-	LightPosition,
-	TextureColor,
-	TextureNormal,
-	Time,
-	COUNT
+
+struct SubMeshData {
+	GLuint mVAO;
+	GLuint mVBO;
+	GLuint mIB;
+	Shader *mShader;
 };
 
 class Mesh {
 
 private:
 	map<string, unsigned> mTextures;
-	map<unsigned, Shader> mShaders;
+	//map<unsigned, Shader*> mShaders;
 	vector<tinyobj::shape_t> mData;
 	string mFilename;
 
-	GLuint mVAO;
-	GLuint mVBO;
-	GLuint mIB;
+	vector<SubMeshData> mSubMeshData;
 	
-	GLuint mUniforms[UNIFORM::COUNT];
-
+	//GLuint getVertexBuffer() { return mVBO; }
+	//GLuint getVertexArray() { return mVAO; }
+	//GLuint getIndexBuffer() { return mIB; }	
 	
 public:
 	Mesh() {
-		mShaders = map<unsigned, Shader>();
-	
 	
 	};
 	Mesh(const string& filename);
 	void load(const string& filename);
-	void setShader(unsigned index, Shader shader) { mShaders[index] = shader; }
-	Shader* getShader(unsigned index = 0) { return (mShaders.size() == 0 ? NULL: &mShaders[index]); }
+	//void setShader(unsigned index, Shader* shader) { mShaders[index] = shader; }
+	
+	//Shader* getShader(unsigned index = 0) { return (mShaders.size() == 0 ? NULL: mShaders[index]); }
+	//GLuint getUniform(UNIFORM uniform) { return mUniforms[uniform]; }
+	unsigned subMeshCount() { return mData.size(); }
+	Shader* subMeshShader(unsigned submesh) { return mSubMeshData[submesh].mShader; }
+	void bind(unsigned submesh);
 
-	GLuint getUniform(UNIFORM uniform) { return mUniforms[uniform]; }
-
-	void bind();
-	void draw();
+	void draw(unsigned submesh);
 	void reload();
-
-	GLuint getVertexBuffer() { return mVBO; }
-	GLuint getVertexArray() { return mVAO; }
-	GLuint getIndexBuffer() { return mIB; }
-
-	//void setMode
 
 };
 

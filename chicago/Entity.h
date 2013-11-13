@@ -13,7 +13,7 @@ public:
 	Entity() {}
 	Entity(Mesh* mesh) { setMesh(mesh); }
 	Mesh* getMesh() { return mMesh; }
-	Shader* getShader() { return mMesh->getShader(0); }
+	//Shader* getShader() { return mMesh->getShader(0); }
 	void setMesh(Mesh* mesh) { mMesh = mesh; }
 };
 

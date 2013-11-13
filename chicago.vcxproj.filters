@@ -66,6 +66,9 @@
     <ClCompile Include="chicago\imgui\imguiRenderGL3.cpp">
       <Filter>libraries\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="chicago\ShaderManager.cpp">
+      <Filter>header\engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chicago\Shader.h">
@@ -84,6 +87,9 @@
       <Filter>header\engine</Filter>
     </ClInclude>
     <ClInclude Include="chicago\SceneNode.h">
+      <Filter>header\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="chicago\ShaderManager.h">
       <Filter>header\engine</Filter>
     </ClInclude>
   </ItemGroup>

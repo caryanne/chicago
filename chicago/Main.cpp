@@ -12,6 +12,7 @@
 #include "glm\gtc\matrix_transform.hpp"
 #include "glm\gtc\matrix_inverse.hpp"
 
+#include "ShaderManager.h"
 #include "SceneManager.h"
 #include "SceneNode.h"
 #include "Camera.h"
@@ -91,8 +92,8 @@ int main() {
 		exit(EXIT_FAILURE);
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
-	window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
-	//window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
+	//window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
+	window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
 	//window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
 	
 	if(!window) {
@@ -129,6 +130,12 @@ int main() {
 	SceneNode cube = SceneNode(&cubeent);
 	mgr.getRootNode()->addChild(&cube);
 
+	Mesh monkeysmesh = Mesh("monkeys.obj");
+	Entity monkeysent = Entity(&monkeysmesh);
+	SceneNode monkeys = SceneNode(&monkeysent);
+	mgr.getRootNode()->addChild(&monkeys);
+	monkeys.setPosition(glm::vec3(3, 3, 0));
+
 	Mesh skymesh = Mesh("skysphere.obj");
 	Entity skyent = Entity(&skymesh);
 	SceneNode sky = SceneNode(&skyent);
@@ -145,7 +152,7 @@ int main() {
 	helmet.addChild(&shield);
 	
 	mgr.getCamera()->setPosition(glm::vec3(0,2,0));
-	mgr.getCamera()->setFOV(120.f);
+	mgr.getCamera()->setFOV(90.f);
 	mgr.setScreenRatio(width / (float) height);
 	
 
@@ -162,7 +169,7 @@ int main() {
 	btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
 	world->setGravity(btVector3(0, 0, 0));
 
-	btCollisionShape* moduleShape = new btBoxShape(btVector3(10, 0.2, 10));
+	btCollisionShape* moduleShape = new btBoxShape(btVector3(50, 0.5f, 50));
 	btCollisionShape* cubeShape = new btBoxShape(btVector3(1, 1, 1));
 	btCollisionShape* camShape = new btCapsuleShape(1, 3);
 
@@ -195,7 +202,7 @@ int main() {
 	btRigidBody* camRigidBody = new btRigidBody(camRigidBodyCI);
 
 	camRigidBody->setActivationState(DISABLE_DEACTIVATION);
-	camRigidBody->setDamping(0.1f, 0.3f);
+	camRigidBody->setDamping(0.4f, 0.4f);
 
 	world->addRigidBody(camRigidBody);
 
@@ -210,7 +217,7 @@ int main() {
 	double lastUpdate = 0;
 	double last = glfwGetTime();
 
-	ShowCursor(false);
+	//ShowCursor(false);
 	while(!glfwWindowShouldClose(window)) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -223,7 +230,7 @@ int main() {
 		glfwGetCursorPos(window, &tX, &tY);
 		double dX = mouseX - tX;
 		double dY = mouseY - tY;
-		glfwSetCursorPos(window, mouseX, mouseY);
+		//glfwSetCursorPos(window, mouseX, mouseY);
 
 		btVector3 camForce = btVector3(0, 0, 0);
 		btVector3 camTorque = btVector3(0, 0, 0);
@@ -235,13 +242,13 @@ int main() {
 		if(keyA) camForce = camRot * btVector3(-0.05f, 0, 0);
 		if(keyD) camForce = camRot * btVector3(0.05f, 0, 0);
 
-		if(keyQ) camTorque = camRot * btVector3(0, 0.005f, 0);
-		if(keyE) camTorque = camRot * btVector3(0, -0.005f, 0);
+		if(keyLeft) camTorque = camRot * btVector3(0, 0.005f, 0);
+		if(keyRight) camTorque = camRot * btVector3(0, -0.005f, 0);
 		
-		if(keyUp) camTorque = camRot * btVector3(-0.005f, 0, 0);
-		if(keyDown) camTorque = camRot * btVector3(0.005f, 0, 0);
-		if(keyRight) camTorque = camRot * btVector3(0, 0, -0.005f);
-		if(keyLeft) camTorque = camRot * btVector3(0, 0, 0.005f);
+		if(keyUp) camTorque = camRot * btVector3(-0.01f, 0, 0);
+		if(keyDown) camTorque = camRot * btVector3(0.01f, 0, 0);
+		if(keyE) camTorque = camRot * btVector3(0, 0, -0.01f);
+		if(keyQ) camTorque = camRot * btVector3(0, 0, 0.01f);
 
 
 
@@ -266,6 +273,7 @@ int main() {
 		
 		glm::vec3 eye = mgr.getCamera()->getPosition();
 		sky.setPosition(eye);
+		
 		//mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
 		mgr.setLightPos(glm::vec4(eye, 1.0));
 
@@ -292,7 +300,8 @@ int main() {
 
 		glfwPollEvents();
 	}
-	ShowCursor(true);
+	//ShowCursor(true);
+	ShaderManager::getInstance().unload();
 	world->removeRigidBody(camRigidBody);
 	delete camRigidBody->getMotionState();
 	delete camRigidBody;
