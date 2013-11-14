@@ -46,7 +46,7 @@ public:
 	unsigned subMeshCount() { return mData.size(); }
 	Shader* subMeshShader(unsigned submesh) { return mSubMeshData[submesh].mShader; }
 	void bind(unsigned submesh);
-
+	glm::vec3 halfExtents(unsigned submesh = -1);
 	void draw(unsigned submesh);
 	void reload();
 

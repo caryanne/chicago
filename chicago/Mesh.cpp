@@ -1,6 +1,7 @@
 #include "soil\SOIL.h"
 #include "Mesh.h"
 #include "ShaderManager.h"
+#include <iostream>
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 //#define mesh mData[0].mesh
@@ -19,6 +20,9 @@ void Mesh::load(const string& filename) {
 
 	for(unsigned i = 0; i < mData.size(); i++) {
 		mSubMeshData.push_back(SubMeshData());
+		//glm::vec3 hx = halfExtents(i);
+		//cout << hx.x << ',' << hx.y << ',' << hx.z << '\n';		
+
 		if(mTextures.find(mData[i].material.diffuse_texname) == mTextures.end()) {
 			printf("%.2f:...loading texture %s\n", glfwGetTime(), mData[i].material.diffuse_texname.c_str());
 			mTextures[mData[i].material.diffuse_texname] =
@@ -123,4 +127,23 @@ void Mesh::reload() {
 		glDeleteVertexArrays(1, &mSubMeshData[i].mVAO);
 	}
 	load(mFilename);
+}
+
+glm::vec3 Mesh::halfExtents(unsigned submesh) {
+	float minX = mData[submesh].mesh.positions[0], maxX = mData[submesh].mesh.positions[0];
+	float minY = mData[submesh].mesh.positions[1], maxY = mData[submesh].mesh.positions[1];
+	float minZ = mData[submesh].mesh.positions[2], maxZ = mData[submesh].mesh.positions[2];
+
+	for(unsigned i = 0; i < mData[submesh].mesh.positions.size(); i += 3) {
+		minX = min(minX, mData[submesh].mesh.positions[i]);
+		minY = min(minX, mData[submesh].mesh.positions[i+1]);
+		minZ = min(minX, mData[submesh].mesh.positions[i+2]);
+		maxX = max(maxX, mData[submesh].mesh.positions[i]);
+		maxY = max(maxX, mData[submesh].mesh.positions[i+1]);
+		maxZ = max(maxX, mData[submesh].mesh.positions[i+2]);
+	}
+	return glm::vec3((maxX - minX) / 2.f,
+					(maxY - minY) / 2.f,
+					(maxZ - minZ) / 2.f);
+	
 }
