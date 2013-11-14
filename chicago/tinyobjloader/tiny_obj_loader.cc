@@ -270,6 +270,7 @@ void InitMaterial(material_t& material) {
     material.emission[i] = 0.f;
   }
   material.shininess = 1.f;
+  material.unknown_parameter.clear();
 }
 
 std::string LoadMtl (
@@ -448,6 +449,8 @@ std::string LoadMtl (
       std::string key(token, len);
       std::string value = _space + 1;
       material.unknown_parameter.insert(std::pair<std::string, std::string>(key, value));
+	  
+	  printf("%s unknown:%s, %s\n",material.name.c_str(), key.c_str(),value.c_str());
     }
   }
   // flush last material.

@@ -28,16 +28,19 @@ void Mesh::load(const string& filename) {
 			mTextures[mData[i].material.diffuse_texname] =
 				SOIL_load_OGL_texture(("media/textures/" + mData[i].material.diffuse_texname).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
 		}
-		if(mData[i].material.unknown_parameter.find("normalmap") != mData[i].material.unknown_parameter.end()) {
-			string normalmap = mData[i].material.unknown_parameter.find("normalmap")->second;
-			printf("%.2f:...loading normalmap %i/%s\n", glfwGetTime(), i, normalmap.c_str());
-			mTextures[normalmap] =
-				SOIL_load_OGL_texture(string("media/textures/").append(normalmap).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
-		}
-		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
-			printf("%.2f:...loading shader %i/%s\n", glfwGetTime(), i, mData[i].material.unknown_parameter.find("shader")->second.c_str());
-			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader(mData[i].material.unknown_parameter.find("shader")->second);
 
+		if(mTextures.find(mData[i].material.normal_texname) == mTextures.end()) {
+			printf("%.2f:...loading normal map %s\n", glfwGetTime(), mData[i].material.normal_texname.c_str());
+			mTextures[mData[i].material.normal_texname] =
+				SOIL_load_OGL_texture(("media/textures/" + mData[i].material.normal_texname).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
+		}
+
+		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
+			string shadername = mData[i].material.unknown_parameter["shader"];
+			printf("material:%s found %i unknowns. shader = %s\n", mData[i].material.name.c_str(), mData[i].material.unknown_parameter.size(), shadername.c_str());
+			printf("%.2f:...selecting shader %i/%s\n", glfwGetTime(), i, mData[i].material.unknown_parameter.find("shader")->second.c_str());
+			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader(mData[i].material.unknown_parameter.find("shader")->second);
+			shadername = "";
 		} else {
 			printf("%.2f:...using passthrough shader %i\n", glfwGetTime(), i);
 			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader("passthrough");
@@ -103,16 +106,18 @@ void Mesh::bind(unsigned submesh) {
 
 void Mesh::draw(unsigned submesh) {
 	bind(submesh);
+	mSubMeshData[submesh].mShader->use();
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, mTextures[mData[submesh].material.diffuse_texname]);
 	
-	if(mData[submesh].material.unknown_parameter.find("normalmap") != mData[submesh].material.unknown_parameter.end()) {
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, mTextures[mData[submesh].material.unknown_parameter.find("normalmap")->second]);
-	}
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, mTextures[mData[submesh].material.normal_texname]);
+
 	glDrawElements(GL_TRIANGLES, mData[submesh].mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 	glBindVertexArray(0);
+	glActiveTexture(GL_TEXTURE0);
+	glUseProgram(0);
 }
 
 void Mesh::reload() {

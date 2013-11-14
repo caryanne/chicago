@@ -6,6 +6,7 @@
 using namespace std;
 
 static char *readFile(const string& filename) {
+
 	FILE *fp = fopen(filename.c_str(), "r");
 	fseek(fp, 0, SEEK_END);
 	long length = ftell(fp);

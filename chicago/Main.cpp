@@ -29,6 +29,7 @@ SceneManager mgr;
 
 bool keyW = false, keyS = false, keyA = false, keyD = false, keyQ = false, keyE = false;
 bool keyUp = false, keyDown = false, keyRight = false, keyLeft = false;
+bool keySpace = false;
 
 void setup3d(double w, double h) {
 
@@ -82,7 +83,8 @@ static void keyPress(GLFWwindow* window, int key, int scanCode, int action, int 
 	if(key == GLFW_KEY_RIGHT && action == GLFW_RELEASE)	keyRight = false;
 	if(key == GLFW_KEY_LEFT && action == GLFW_PRESS) keyLeft = true;
 	if(key == GLFW_KEY_LEFT && action == GLFW_RELEASE) keyLeft = false;
-		
+	if(key == GLFW_KEY_SPACE && action == GLFW_PRESS) keySpace = true;
+	if(key == GLFW_KEY_SPACE && action == GLFW_RELEASE) keySpace = false;		
 
 }
 
@@ -141,7 +143,7 @@ int main() {
 	SceneNode sky = SceneNode(&skyent);
 	mgr.getRootNode()->addChild(&sky);
 
-	Mesh helmetmesh = Mesh("helmetframe.obj");
+	/*Mesh helmetmesh = Mesh("helmetframe.obj");
 	Entity helmetent = Entity(&helmetmesh);
 	SceneNode helmet = SceneNode(&helmetent);
 	mgr.getRootNode()->addChild(&helmet);
@@ -149,17 +151,16 @@ int main() {
 	Mesh shieldmesh = Mesh("helmetshield.obj");
 	Entity shieldent = Entity(&shieldmesh);
 	SceneNode shield = SceneNode(&shieldent);
-	//helmet.addChild(&shield);
+	helmet.addChild(&shield);*/
 	
 	mgr.getCamera()->setPosition(glm::vec3(0,2,0));
 	mgr.getCamera()->setFOV(90.f);
 	mgr.setScreenRatio(width / (float) height);
 	
 
-	double xRotSpeed = 0.0, yRotSpeed = 0.0, zRotSpeed = 0.0, pitch = 0.0, yaw = 0.0, roll = 0.0;
-	double mouseX = 0.0, mouseY = 0.0;
-	glfwSetCursorPos(window, width / 2, height / 2);
-	glfwGetCursorPos(window, &mouseX, &mouseY);
+	//double mouseX = 0.0, mouseY = 0.0;
+	//glfwSetCursorPos(window, width / 2, height / 2);
+	//glfwGetCursorPos(window, &mouseX, &mouseY);
 
 	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
 	btDefaultCollisionConfiguration* collisionConfig = new btDefaultCollisionConfiguration();
@@ -226,27 +227,28 @@ int main() {
 		double delta = glfwGetTime() - last;
 		last = glfwGetTime();
 
-		double tX, tY = 0.0;
-		glfwGetCursorPos(window, &tX, &tY);
-		double dX = mouseX - tX;
-		double dY = mouseY - tY;
+		//double tX, tY = 0.0;
+		//glfwGetCursorPos(window, &tX, &tY);
+		//double dX = mouseX - tX;
+		//double dY = mouseY - tY;
 		//glfwSetCursorPos(window, mouseX, mouseY);
 
 		btVector3 camForce = btVector3(0, 0, 0);
 		btVector3 camTorque = btVector3(0, 0, 0);
 
 		btMatrix3x3& camRot = camRigidBody->getWorldTransform().getBasis();
+		if(!keySpace) {
+			if(keyW) camForce = camRot * btVector3(0, 0, -0.05f);
+			if(keyS) camForce = camRot * btVector3(0, 0, 0.05f);
+			if(keyA) camForce = camRot * btVector3(-0.05f, 0, 0);
+			if(keyD) camForce = camRot * btVector3(0.05f, 0, 0);
+		} else {
+			if(keyA) camTorque = camRot * btVector3(0, 0.005f, 0);
+			if(keyD) camTorque = camRot * btVector3(0, -0.005f, 0);
+			if(keyW) camTorque = camRot * btVector3(-0.01f, 0, 0);
+			if(keyS) camTorque = camRot * btVector3(0.01f, 0, 0);
+		}
 
-		if(keyW) camForce = camRot * btVector3(0, 0, -0.05f);
-		if(keyS) camForce = camRot * btVector3(0, 0, 0.05f);
-		if(keyA) camForce = camRot * btVector3(-0.05f, 0, 0);
-		if(keyD) camForce = camRot * btVector3(0.05f, 0, 0);
-
-		if(keyLeft) camTorque = camRot * btVector3(0, 0.005f, 0);
-		if(keyRight) camTorque = camRot * btVector3(0, -0.005f, 0);
-		
-		if(keyUp) camTorque = camRot * btVector3(-0.01f, 0, 0);
-		if(keyDown) camTorque = camRot * btVector3(0.01f, 0, 0);
 		if(keyE) camTorque = camRot * btVector3(0, 0, -0.01f);
 		if(keyQ) camTorque = camRot * btVector3(0, 0, 0.01f);
 
@@ -276,15 +278,17 @@ int main() {
 		
 		//mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
 		//mgr.setLightPos(glm::vec4(eye, 1.0));
-		mgr.setLightPos(glm::vec4(4,5,4,1));
+		mgr.setLightPos(glm::vec4(-4, 8, 0, 1));
 
-		helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
-		helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
+		//helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
+		//helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
 
+		
 		mgr.drawScene();
 		
 		prepareGUI(width, height);
-		imguiBeginFrame(mouseX, mouseY, 0, 0);
+		imguiBeginFrame(100, 100, 0, 0);
+
         imguiEndFrame();	
         imguiDrawText(20, height - 20, IMGUI_ALIGN_LEFT, buffer, imguiRGBA(255, 255, 255, 255));
         imguiRenderGLDraw(width, height); 

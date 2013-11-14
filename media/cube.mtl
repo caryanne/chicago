@@ -9,5 +9,5 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd paisley.jpg
-shader cube
+shader lit_texture
 

@@ -6,10 +6,9 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
-d 1.000000
-illum 2
 shader lit_texture
 map_Kd rusty.JPG
+map_Ns rusty_Normal.JPG
 
 newmtl bracket
 Ns 96.078431
@@ -17,9 +16,7 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
-d 1.000000
-illum 2
-shader passthrough
+shader basic_lighting
 
 newmtl horizontal_flooring.JPG
 Ns 96.078431
@@ -27,10 +24,9 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
-d 1.000000
-illum 2
 shader lit_texture
 map_Kd flooring.JPG
+map_Ns flooring_Normal.JPG
 
 newmtl rails
 Ns 96.078431
@@ -38,9 +34,7 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
-d 1.000000
-illum 2
-shader passthrough
+shader basic_lighting
 
 newmtl wall_walling.JPG
 Ns 96.078431
@@ -48,10 +42,9 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
-d 1.000000
-illum 2
 shader lit_texture
 map_Kd walling.JPG
+map_Ns walling_Normal.JPG
 
 newmtl wiring
 Ns 96.078431
@@ -59,8 +52,6 @@ Ka 0.000000 0.000000 0.000000
 Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
-d 1.000000
-illum 2
-shader passthrough
+shader basic_lighting
 
 

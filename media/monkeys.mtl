@@ -7,7 +7,7 @@ Kd 0.8 0.8 0.8
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-shader cube
+shader lit_texture
 map_Kd paisley.jpg
 
 newmtl monkey2
@@ -17,7 +17,7 @@ Kd 0.8 0.8 0.8
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-shader passthrough
+shader lit_texture
 map_Kd moon.jpg
 
 

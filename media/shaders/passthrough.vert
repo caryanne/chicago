@@ -3,22 +3,19 @@
 uniform mat4 mModelView;
 uniform mat4 mModelViewProj;
 uniform mat3 mNormalMatrix;
-uniform vec3 vEyePosition;
-uniform vec3 vEyeDirection;
+uniform vec4 vEyePosition;
 
 in vec3 vPosition;
 in vec3 vNormal;
-in vec2 vTexCoord;
 
-out vec2 UV;
 out vec4 color;
-out vec3 normal;
-out vec4 position;
+out float diffuse;
 
 void main() {
-	UV = vTexCoord;
-	color = vec4(1, 1, 1, 1.0);
-	normal = normalize(mNormalMatrix * vNormal);
-	position = mModelView * vec4(vPosition, 1.0);
-	gl_Position =  mModelViewProj * vec4(vPosition, 1.0);
+	vec4 position = mModelView * vec4(vPosition, 1.0);
+	color = vec4(1.0, 1.0, 1.0, 1.0);
+	vec3 normal = normalize(mNormalMatrix * vNormal);
+	vec3 lightDirection = normalize(vec3(vEyePosition) - vec3(position));
+	diffuse = max(0.0, dot(normal, lightDirection));
+	gl_Position = mModelViewProj * vec4(vPosition, 1.0);
 }

@@ -9,5 +9,5 @@ Ni 1.000000
 d 1.000000
 illum 0
 map_Kd space.jpg
-shader sky
+shader basic_texture
 
