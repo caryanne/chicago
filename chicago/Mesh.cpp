@@ -29,7 +29,7 @@ void Mesh::load(const string& filename) {
 				SOIL_load_OGL_texture(("media/textures/" + mData[i].material.diffuse_texname).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);
 		}
 		if(mData[i].material.unknown_parameter.find("normalmap") != mData[i].material.unknown_parameter.end()) {
-			const string normalmap = mData[i].material.unknown_parameter.find("normalmap")->second;
+			string normalmap = mData[i].material.unknown_parameter.find("normalmap")->second;
 			printf("%.2f:...loading normalmap %i/%s\n", glfwGetTime(), i, normalmap.c_str());
 			mTextures[normalmap] =
 				SOIL_load_OGL_texture(string("media/textures/").append(normalmap).c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_TEXTURE_REPEATS|SOIL_FLAG_INVERT_Y|SOIL_FLAG_NTSC_SAFE_RGB);

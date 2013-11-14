@@ -29,7 +29,7 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		glm::mat4 mv = mView * model; //model-view
 		glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv)); //normal
 		glm::vec4 lightPos = mView * mLightPos;
-
+		
 		for(unsigned i = 0; i < sceneNode->getEntity()->getMesh()->subMeshCount(); i++) {
 			sceneNode->bind(i);
 			Mesh* mesh = sceneNode->getEntity()->getMesh();

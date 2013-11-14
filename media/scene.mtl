@@ -1,5 +1,5 @@
 # Blender MTL File: 'test scene.blend'
-# Material Count: 8
+# Material Count: 6
 newmtl boxes_rusty.JPG
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
@@ -11,7 +11,6 @@ illum 2
 shader lit_texture
 map_Kd rusty.JPG
 
-
 newmtl bracket
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
@@ -20,19 +19,7 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
-
-
-newmtl horizontal
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ni 1.000000
-d 1.000000
-illum 2
-shader lit_texture
-map_Kd flooring.JPG
-
+shader passthrough
 
 newmtl horizontal_flooring.JPG
 Ns 96.078431
@@ -45,7 +32,6 @@ illum 2
 shader lit_texture
 map_Kd flooring.JPG
 
-
 newmtl rails
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
@@ -54,19 +40,7 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
-
-
-newmtl wall
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ni 1.000000
-d 1.000000
-illum 2
-shader lit_texture
-map_Kd walling.JPG
-
+shader passthrough
 
 newmtl wall_walling.JPG
 Ns 96.078431
@@ -79,7 +53,6 @@ illum 2
 shader lit_texture
 map_Kd walling.JPG
 
-
 newmtl wiring
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
@@ -88,5 +61,6 @@ Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
 illum 2
+shader passthrough
 
 
