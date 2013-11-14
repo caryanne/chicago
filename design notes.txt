@@ -13,6 +13,7 @@
 	- input engine
 	- physics
 	- camera controller class
+	- bump mapping (requires calculating tangent vectors)
 
 
 

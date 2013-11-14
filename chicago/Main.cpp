@@ -41,6 +41,7 @@ void setup3d(double w, double h) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_MULTISAMPLE);
 }
 
 void prepareGUI(double w, double h) {
@@ -238,15 +239,15 @@ int main() {
 
 		btMatrix3x3& camRot = camRigidBody->getWorldTransform().getBasis();
 		if(!keySpace) {
-			if(keyW) camForce = camRot * btVector3(0, 0, -0.05f);
-			if(keyS) camForce = camRot * btVector3(0, 0, 0.05f);
-			if(keyA) camForce = camRot * btVector3(-0.05f, 0, 0);
-			if(keyD) camForce = camRot * btVector3(0.05f, 0, 0);
+			if(keyW) camForce += camRot * btVector3(0, 0, -0.05f);
+			if(keyS) camForce += camRot * btVector3(0, 0, 0.05f);
+			if(keyA) camForce += camRot * btVector3(-0.05f, 0, 0);
+			if(keyD) camForce += camRot * btVector3(0.05f, 0, 0);
 		} else {
-			if(keyA) camTorque = camRot * btVector3(0, 0.005f, 0);
-			if(keyD) camTorque = camRot * btVector3(0, -0.005f, 0);
-			if(keyW) camTorque = camRot * btVector3(-0.01f, 0, 0);
-			if(keyS) camTorque = camRot * btVector3(0.01f, 0, 0);
+			if(keyA) camTorque += camRot * btVector3(0, 0.005f, 0);
+			if(keyD) camTorque += camRot * btVector3(0, -0.005f, 0);
+			if(keyW) camTorque += camRot * btVector3(-0.01f, 0, 0);
+			if(keyS) camTorque += camRot * btVector3(0.01f, 0, 0);
 		}
 
 		if(keyE) camTorque = camRot * btVector3(0, 0, -0.01f);
@@ -278,8 +279,8 @@ int main() {
 		
 		//mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
 		//mgr.setLightPos(glm::vec4(eye, 1.0));
-		mgr.setLightPos(glm::vec4(-4, 8, 0, 1));
-
+		mgr.setLightPos(glm::vec4(-5 * sin(glfwGetTime()), 7.0 +  sin(glfwGetTime() * 2.0), -6 * cos(glfwGetTime()), 1));
+		monkeys.setRotation(glm::vec3(0, glm::radians(glfwGetTime() * 45), 0));
 		//helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
 		//helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
 

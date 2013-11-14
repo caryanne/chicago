@@ -22,6 +22,6 @@ void main() {
 	float lightDistance = length(lightDirection);
 	lightDirection = lightDirection / lightDistance;
 
-	diffuse = max(0.0, dot(normal, lightDirection)) * pow(8.0 / lightDistance, 2);
+	diffuse = max(0.0, dot(normal, lightDirection));
 	gl_Position = mModelViewProj * vec4(vPosition, 1.0);
 }
