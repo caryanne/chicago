@@ -102,11 +102,11 @@ void Mesh::draw(unsigned submesh) {
 	bind(submesh);
 
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.diffuse_texname]);
+	glBindTexture(GL_TEXTURE_2D, mTextures[mData[submesh].material.diffuse_texname]);
 	
-	if(mData[0].material.unknown_parameter.find("normalmap") != mData[0].material.unknown_parameter.end()) {
+	if(mData[submesh].material.unknown_parameter.find("normalmap") != mData[submesh].material.unknown_parameter.end()) {
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, mTextures[mData[0].material.unknown_parameter.find("normalmap")->second]);
+		glBindTexture(GL_TEXTURE_2D, mTextures[mData[submesh].material.unknown_parameter.find("normalmap")->second]);
 	}
 	glDrawElements(GL_TRIANGLES, mData[submesh].mesh.indices.size(), GL_UNSIGNED_INT, (void*)0);
 	glBindVertexArray(0);

@@ -120,7 +120,7 @@ int main() {
 
 	glClearColor(0.0f, 0.5f, 1.f, 1.f);
 	
-	Mesh modulemesh = Mesh("module.obj");
+	Mesh modulemesh = Mesh("scene.obj");
 	Entity moduleent = Entity(&modulemesh);
 	SceneNode module = SceneNode(&moduleent);
 	mgr.getRootNode()->addChild(&module);
@@ -149,7 +149,7 @@ int main() {
 	Mesh shieldmesh = Mesh("helmetshield.obj");
 	Entity shieldent = Entity(&shieldmesh);
 	SceneNode shield = SceneNode(&shieldent);
-	helmet.addChild(&shield);
+	//helmet.addChild(&shield);
 	
 	mgr.getCamera()->setPosition(glm::vec3(0,2,0));
 	mgr.getCamera()->setFOV(90.f);
@@ -275,7 +275,8 @@ int main() {
 		sky.setPosition(eye);
 		
 		//mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
-		mgr.setLightPos(glm::vec4(eye, 1.0));
+		//mgr.setLightPos(glm::vec4(eye, 1.0));
+		mgr.setLightPos(glm::vec4(4,5,4,1));
 
 		helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
 		helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
