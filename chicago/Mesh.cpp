@@ -36,7 +36,6 @@ void Mesh::load(const string& filename) {
 		}
 		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
 			printf("%.2f:...loading shader %i/%s\n", glfwGetTime(), i, mData[i].material.unknown_parameter.find("shader")->second.c_str());
-			
 			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader(mData[i].material.unknown_parameter.find("shader")->second);
 
 		} else {
