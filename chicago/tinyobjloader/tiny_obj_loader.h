@@ -36,6 +36,8 @@ typedef struct
     std::vector<float>          positions;
     std::vector<float>          normals;
     std::vector<float>          texcoords;
+	std::vector<float>			tangents;
+	std::vector<float>			binormals;
     std::vector<unsigned int>   indices;
 } mesh_t;
 

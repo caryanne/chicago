@@ -28,7 +28,7 @@ private:
 	string mFilename;
 
 	vector<SubMeshData> mSubMeshData;
-	
+
 public:
 	Mesh() {
 	

@@ -37,7 +37,6 @@ void Mesh::load(const string& filename) {
 
 		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
 			string shadername = mData[i].material.unknown_parameter["shader"];
-			printf("material:%s found %i unknowns. shader = %s\n", mData[i].material.name.c_str(), mData[i].material.unknown_parameter.size(), shadername.c_str());
 			printf("%.2f:...selecting shader %i/%s\n", glfwGetTime(), i, mData[i].material.unknown_parameter.find("shader")->second.c_str());
 			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader(mData[i].material.unknown_parameter.find("shader")->second);
 			shadername = "";
@@ -63,8 +62,10 @@ void Mesh::load(const string& filename) {
 		int sizePositions = sizeof(mData[i].mesh.positions[0]) * mData[i].mesh.positions.size();
 		int sizeNormals = sizeof(mData[i].mesh.normals[0]) * mData[i].mesh.normals.size();
 		int sizeTexCoords = sizeof(mData[i].mesh.texcoords[0]) * mData[i].mesh.texcoords.size();
+		int sizeTangents = sizeof(mData[i].mesh.tangents[0]) * mData[i].mesh.tangents.size();
+		int sizeBinormals = sizeof(mData[i].mesh.binormals[0]) * mData[i].mesh.binormals.size();
 
-		glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords, NULL, GL_STATIC_DRAW);// 
+		glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords + sizeBinormals + sizeTangents, NULL, GL_STATIC_DRAW);// 
 
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizePositions, &mData[i].mesh.positions[0]);//positions
 		glBufferSubData(GL_ARRAY_BUFFER, sizePositions, sizeNormals, &mData[i].mesh.normals[0]);//normals
@@ -151,3 +152,4 @@ glm::vec3 Mesh::halfExtents(unsigned submesh) {
 					(maxZ - minZ) / 2.f);
 	
 }
+

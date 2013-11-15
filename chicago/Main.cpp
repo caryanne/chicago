@@ -196,7 +196,7 @@ int main() {
 	//cubeRigidBody->setActivationState(DISABLE_DEACTIVATION);
 	
 	btDefaultMotionState* camMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 5, 0)));
+		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 5, 6)));
 	camShape->calculateLocalInertia(5, inertia);
 	btRigidBody::btRigidBodyConstructionInfo
 		camRigidBodyCI(5, camMotionState, camShape, inertia);
@@ -280,7 +280,7 @@ int main() {
 		//mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
 		//mgr.setLightPos(glm::vec4(eye, 1.0));
 		mgr.setLightPos(glm::vec4(-5 * sin(glfwGetTime()), 7.0 +  sin(glfwGetTime() * 2.0), -6 * cos(glfwGetTime()), 1));
-		monkeys.setRotation(glm::vec3(0, glm::radians(glfwGetTime() * 45), 0));
+		monkeys.setRotation(glm::vec3(0, glm::radians(glfwGetTime() * 70), 0));
 		//helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
 		//helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
 

@@ -17,6 +17,7 @@ out vec2 UV;
 void main() {
 	UV = vTexCoord;
 	vec4 position = mModelView * vec4(vPosition, 1.0);
+
 	vec3 normal = normalize(mNormalMatrix * vNormal);
 	vec3 lightDirection = vec3(vLightPosition) - vec3(position);
 	float lightDistance = length(lightDirection);
