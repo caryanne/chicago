@@ -95,8 +95,8 @@ int main() {
 		exit(EXIT_FAILURE);
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
-	//window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
-	window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
+	window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
+	//window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
 	//window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
 	
 	if(!window) {

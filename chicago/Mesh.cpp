@@ -63,29 +63,37 @@ void Mesh::load(const string& filename) {
 		int sizeNormals = sizeof(mData[i].mesh.normals[0]) * mData[i].mesh.normals.size();
 		int sizeTexCoords = sizeof(mData[i].mesh.texcoords[0]) * mData[i].mesh.texcoords.size();
 		int sizeTangents = sizeof(mData[i].mesh.tangents[0]) * mData[i].mesh.tangents.size();
-		int sizeBinormals = sizeof(mData[i].mesh.binormals[0]) * mData[i].mesh.binormals.size();
+		int sizeBinormals = 0;//sizeof(mData[i].mesh.binormals[0]) * mData[i].mesh.binormals.size();
 
 		glBufferData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords + sizeBinormals + sizeTangents, NULL, GL_STATIC_DRAW);// 
 
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizePositions, &mData[i].mesh.positions[0]);//positions
 		glBufferSubData(GL_ARRAY_BUFFER, sizePositions, sizeNormals, &mData[i].mesh.normals[0]);//normals
 		glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals, sizeTexCoords, &mData[i].mesh.texcoords[0]);//textures
+		glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords, sizeTangents, &mData[i].mesh.tangents[0]); //tangents
+		//glBufferSubData(GL_ARRAY_BUFFER, sizePositions + sizeNormals + sizeTexCoords + sizeTangents, sizeBinormals, &mData[i].mesh.binormals[0]); //binormals
+
 
 		GLuint position = mSubMeshData.back().mShader->getAttribLocation("vPosition");
 		GLuint normal = mSubMeshData.back().mShader->getAttribLocation("vNormal");
 		GLuint texcoord = mSubMeshData.back().mShader->getAttribLocation("vTexCoord");
-
+		GLuint tangent = mSubMeshData.back().mShader->getAttribLocation("vTangent");
+		//GLuint binormal = mSubMeshData.back().mShader->getAttribLocation("vBinormal");
 
 
 		glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		glVertexAttribPointer(normal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions));
 		glVertexAttribPointer(texcoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizePositions + sizeNormals));
+		glVertexAttribPointer(tangent, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions + sizeNormals + sizeTexCoords));
+		//glVertexAttribPointer(binormal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizePositions + sizeNormals + sizeTexCoords + sizeTangents));
 	
 		mSubMeshData.back().mShader->use();
 
 		glEnableVertexAttribArray(position);
 		glEnableVertexAttribArray(normal);
 		glEnableVertexAttribArray(texcoord);
+		glEnableVertexAttribArray(tangent);
+		//glEnableVertexAttribArray(binormal);
 
 		glBindVertexArray(0);
 
