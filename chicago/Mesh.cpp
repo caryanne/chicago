@@ -14,6 +14,7 @@ void Mesh::load(const string& filename) {
 	double start = glfwGetTime();
 	mSubMeshData = vector<SubMeshData>();
 	mFilename = filename;
+	mMass = 0.f;
 	printf("%.2f:loading mesh %s\n", glfwGetTime(), filename.c_str());
 	if(tinyobj::LoadObj(mData, ("media/" + filename).c_str(), "media/") != "")
 		return;
@@ -36,13 +37,17 @@ void Mesh::load(const string& filename) {
 		}
 
 		if(mData[i].material.unknown_parameter.find("shader") != mData[i].material.unknown_parameter.end()) {
-			string shadername = mData[i].material.unknown_parameter["shader"];
 			printf("%.2f:...selecting shader %i/%s\n", glfwGetTime(), i, mData[i].material.unknown_parameter.find("shader")->second.c_str());
 			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader(mData[i].material.unknown_parameter.find("shader")->second);
-			shadername = "";
 		} else {
 			printf("%.2f:...using passthrough shader %i\n", glfwGetTime(), i);
 			mSubMeshData.back().mShader = ShaderManager::getInstance().getShader("passthrough");
+		}
+
+		if(mData[i].material.unknown_parameter.find("mass") != mData[i].material.unknown_parameter.end()) {
+			float mass = atof(mData[i].material.unknown_parameter["mass"].c_str());
+			printf("%.2f:...mass %.2f\n", glfwGetTime(), mass);
+			mMass = mass;
 		}
 
 		printf("%.2f:...populating vertex array\n", glfwGetTime());
@@ -142,22 +147,41 @@ void Mesh::reload() {
 	load(mFilename);
 }
 
-glm::vec3 Mesh::halfExtents(unsigned submesh) {
-	float minX = mData[submesh].mesh.positions[0], maxX = mData[submesh].mesh.positions[0];
-	float minY = mData[submesh].mesh.positions[1], maxY = mData[submesh].mesh.positions[1];
-	float minZ = mData[submesh].mesh.positions[2], maxZ = mData[submesh].mesh.positions[2];
+glm::vec3 Mesh::halfExtents(int submesh) {
+	if(submesh > -1) { 
+		float minX = mData[submesh].mesh.positions[0], maxX = mData[submesh].mesh.positions[0];
+		float minY = mData[submesh].mesh.positions[1], maxY = mData[submesh].mesh.positions[1];
+		float minZ = mData[submesh].mesh.positions[2], maxZ = mData[submesh].mesh.positions[2];
 
-	for(unsigned i = 0; i < mData[submesh].mesh.positions.size(); i += 3) {
-		minX = min(minX, mData[submesh].mesh.positions[i]);
-		minY = min(minX, mData[submesh].mesh.positions[i+1]);
-		minZ = min(minX, mData[submesh].mesh.positions[i+2]);
-		maxX = max(maxX, mData[submesh].mesh.positions[i]);
-		maxY = max(maxX, mData[submesh].mesh.positions[i+1]);
-		maxZ = max(maxX, mData[submesh].mesh.positions[i+2]);
+		for(unsigned i = 0; i < mData[submesh].mesh.positions.size(); i += 3) {
+			minX = min(minX, mData[submesh].mesh.positions[i]);
+			minY = min(minX, mData[submesh].mesh.positions[i+1]);
+			minZ = min(minX, mData[submesh].mesh.positions[i+2]);
+			maxX = max(maxX, mData[submesh].mesh.positions[i]);
+			maxY = max(maxX, mData[submesh].mesh.positions[i+1]);
+			maxZ = max(maxX, mData[submesh].mesh.positions[i+2]);
+		}
+		return glm::vec3((maxX - minX) / 2.f,
+						(maxY - minY) / 2.f,
+						(maxZ - minZ) / 2.f);
+	}
+	float minX = mData[0].mesh.positions[0], maxX = mData[0].mesh.positions[0];
+	float minY = mData[0].mesh.positions[1], maxY = mData[0].mesh.positions[1];
+	float minZ = mData[0].mesh.positions[2], maxZ = mData[0].mesh.positions[2];
+	for(unsigned s = 0; s < mData.size(); s++) {
+		for(unsigned i = 0; i < mData[s].mesh.positions.size(); i += 3) {
+			minX = min(minX, mData[s].mesh.positions[i]);
+			minY = min(minX, mData[s].mesh.positions[i+1]);
+			minZ = min(minX, mData[s].mesh.positions[i+2]);
+			maxX = max(maxX, mData[s].mesh.positions[i]);
+			maxY = max(maxX, mData[s].mesh.positions[i+1]);
+			maxZ = max(maxX, mData[s].mesh.positions[i+2]);
+		}
 	}
 	return glm::vec3((maxX - minX) / 2.f,
 					(maxY - minY) / 2.f,
 					(maxZ - minZ) / 2.f);
-	
+
 }
+
 

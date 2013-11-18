@@ -9,6 +9,7 @@ d 1
 illum 2
 shader ceramic
 map_Kd paisley.jpg
+mass 4
 
 newmtl monkey2
 Ns 0

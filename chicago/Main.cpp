@@ -18,8 +18,6 @@
 #include "Camera.h"
 #include "Mesh.h"
 
-#include "Entity.h"
-
 #include "imgui\imgui.h"
 #include "imgui\imguiRenderGL3.h"
 
@@ -95,8 +93,8 @@ int main() {
 		exit(EXIT_FAILURE);
 	printf("%.2f:started. begin initializing systems\n", glfwGetTime());
 	double start = glfwGetTime();
-	window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
-	//window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
+	//window = glfwCreateWindow(1920, 1080, "chicago", glfwGetPrimaryMonitor(), NULL);
+	window = glfwCreateWindow(1728, 972, "chicago", NULL, NULL);
 	//window = glfwCreateWindow(1024, 768, "chicago", NULL, NULL);
 	
 	if(!window) {
@@ -122,26 +120,33 @@ int main() {
 	//load and set up shit
 
 	glClearColor(0.0f, 0.5f, 1.f, 1.f);
+
+	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
+	btDefaultCollisionConfiguration* collisionConfig = new btDefaultCollisionConfiguration();
+	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfig);
+	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
 	
+	btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
+	world->setGravity(btVector3(0, -5.0, 0));
+
 	Mesh modulemesh = Mesh("scene.obj");
-	Entity moduleent = Entity(&modulemesh);
-	SceneNode module = SceneNode(&moduleent);
+	SceneNode module = SceneNode(&modulemesh, true);
 	mgr.getRootNode()->addChild(&module);
 
 	Mesh cubemesh = Mesh("cube.obj");
-	Entity cubeent = Entity(&cubemesh);
-	SceneNode cube = SceneNode(&cubeent);
+	SceneNode cube = SceneNode(&cubemesh, false);
 	mgr.getRootNode()->addChild(&cube);
+	world->addRigidBody(cube.getRigidBody());
 
 	Mesh monkeysmesh = Mesh("monkeys.obj");
-	Entity monkeysent = Entity(&monkeysmesh);
-	SceneNode monkeys = SceneNode(&monkeysent);
+	SceneNode monkeys = SceneNode(&monkeysmesh);
 	mgr.getRootNode()->addChild(&monkeys);
+	world->addRigidBody(monkeys.getRigidBody());
 	monkeys.setPosition(glm::vec3(3, 3, 0));
+	
 
 	Mesh skymesh = Mesh("skysphere.obj");
-	Entity skyent = Entity(&skymesh);
-	SceneNode sky = SceneNode(&skyent);
+	SceneNode sky = SceneNode(&skymesh, true);
 	mgr.getRootNode()->addChild(&sky);
 
 	/*Mesh helmetmesh = Mesh("helmetframe.obj");
@@ -163,21 +168,9 @@ int main() {
 	//glfwSetCursorPos(window, width / 2, height / 2);
 	//glfwGetCursorPos(window, &mouseX, &mouseY);
 
-	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-	btDefaultCollisionConfiguration* collisionConfig = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfig);
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
-	
-	btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
-	world->setGravity(btVector3(0, 0, 0));
-
-	btCollisionShape* moduleShape = new btBoxShape(btVector3(50, 0.5f, 50));
-	btCollisionShape* cubeShape = new btBoxShape(btVector3(1, 1, 1));
-	btCollisionShape* camShape = new btCapsuleShape(1, 3);
-
 	btVector3 inertia;
 	
-
+	btCollisionShape* moduleShape = new btBoxShape(btVector3(50, 0.5f, 50));
 	btDefaultMotionState* moduleMotionState =
 		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 	moduleShape->calculateLocalInertia(0, inertia);
@@ -186,15 +179,7 @@ int main() {
 	btRigidBody* moduleRigidBody = new btRigidBody(moduleRigidBodyCI);
 	world->addRigidBody(moduleRigidBody);
 
-	btDefaultMotionState* cubeMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 2, -7)));
-	cubeShape->calculateLocalInertia(1, inertia);
-	btRigidBody::btRigidBodyConstructionInfo
-		cubeRigidBodyCI(1, cubeMotionState, cubeShape, inertia);
-	btRigidBody* cubeRigidBody = new btRigidBody(cubeRigidBodyCI);
-	world->addRigidBody(cubeRigidBody);
-	//cubeRigidBody->setActivationState(DISABLE_DEACTIVATION);
-	
+	btCollisionShape* camShape = new btCapsuleShape(1, 3);
 	btDefaultMotionState* camMotionState =
 		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 5, 6)));
 	camShape->calculateLocalInertia(5, inertia);
@@ -208,8 +193,8 @@ int main() {
 
 	world->addRigidBody(camRigidBody);
 
-	cubeRigidBody->applyTorqueImpulse(btVector3(3, 1, 2));
-	cubeRigidBody->applyCentralImpulse(btVector3(0, 0.7, 0.8));
+	cube.getRigidBody()->applyTorqueImpulse(btVector3(3, 1, 2));
+	cube.getRigidBody()->applyCentralImpulse(btVector3(0, 0.7, 0.8));
 
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 	
@@ -236,8 +221,8 @@ int main() {
 
 		btVector3 camForce = btVector3(0, 0, 0);
 		btVector3 camTorque = btVector3(0, 0, 0);
-
 		btMatrix3x3& camRot = camRigidBody->getWorldTransform().getBasis();
+
 		if(!keySpace) {
 			if(keyW) camForce += camRot * btVector3(0, 0, -0.05f);
 			if(keyS) camForce += camRot * btVector3(0, 0, 0.05f);
@@ -249,11 +234,8 @@ int main() {
 			if(keyW) camTorque += camRot * btVector3(-0.01f, 0, 0);
 			if(keyS) camTorque += camRot * btVector3(0.01f, 0, 0);
 		}
-
-		if(keyE) camTorque = camRot * btVector3(0, 0, -0.01f);
-		if(keyQ) camTorque = camRot * btVector3(0, 0, 0.01f);
-
-
+		if(keyE) camTorque = camRot * btVector3(0, 0, -0.025f);
+		if(keyQ) camTorque = camRot * btVector3(0, 0, 0.025f);
 
 		camRigidBody->applyCentralImpulse(camForce);
 		camRigidBody->applyTorqueImpulse(camTorque);
@@ -261,14 +243,7 @@ int main() {
 
 		world->stepSimulation(delta, 10); 
 
-		btTransform cubeTrans;
-		cubeRigidBody->getMotionState()->getWorldTransform(cubeTrans);
-		cube.setPosition(glm::vec3(cubeTrans.getOrigin().x(), cubeTrans.getOrigin().y(), cubeTrans.getOrigin().z()));
-		cube.setRotation(glm::quat(cubeTrans.getRotation().w(), cubeTrans.getRotation().x(), cubeTrans.getRotation().y(), cubeTrans.getRotation().z()));
 		
-		
-		
-
 		btTransform camTrans;
 		camRigidBody->getMotionState()->getWorldTransform(camTrans);
 		mgr.getCamera()->setPosition(glm::vec3(camTrans.getOrigin().x(), camTrans.getOrigin().y(), camTrans.getOrigin().z()));
@@ -312,15 +287,11 @@ int main() {
 	delete camRigidBody->getMotionState();
 	delete camRigidBody;
 
-	world->removeRigidBody(cubeRigidBody);
-	delete cubeRigidBody->getMotionState();
-	delete cubeRigidBody;
 
 	world->removeRigidBody(moduleRigidBody);
 	delete moduleRigidBody->getMotionState();
 	delete moduleRigidBody;
 
-	delete cubeShape;
 	delete moduleShape;
 	delete world;
 	delete solver;

@@ -4,8 +4,52 @@
 		"selected_items":
 		[
 			[
+				"sp",
+				"specularLight"
+			],
+			[
+				"di",
+				"diffuseMat"
+			],
+			[
+				"no",
+				"normal"
+			],
+			[
+				"specu",
+				"specularMat"
+			],
+			[
+				"diff",
+				"diffuseLight"
+			],
+			[
+				"tex",
+				"texture2D"
+			],
+			[
+				"ha",
+				"halfv"
+			],
+			[
+				"n",
+				"normal"
+			],
+			[
+				"light",
+				"lightDirection"
+			],
+			[
 				"nor",
+				"normal"
+			],
+			[
+				"norm",
 				"normalize"
+			],
+			[
+				"ligh",
+				"lightDirection"
 			],
 			[
 				"vn",
@@ -24,20 +68,12 @@
 				"maxVariance"
 			],
 			[
-				"no",
-				"normalize"
-			],
-			[
 				"No",
 				"normal"
 			],
 			[
 				"lig",
 				"lightDirection"
-			],
-			[
-				"ligh",
-				"lightDistance"
 			],
 			[
 				"li",
@@ -75,7 +111,7 @@
 			"file": "/C/Users/adam/Documents/GitHub/chicago/design notes.txt",
 			"settings":
 			{
-				"buffer_size": 487,
+				"buffer_size": 542,
 				"line_ending": "Windows"
 			}
 		},
@@ -91,23 +127,15 @@
 			"file": "scene.mtl",
 			"settings":
 			{
-				"buffer_size": 1123,
+				"buffer_size": 1141,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/adam/Documents/GitHub/libRocket/Dependencies/empty.txt",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "cube.mtl",
 			"settings":
 			{
-				"buffer_size": 245,
+				"buffer_size": 252,
 				"line_ending": "Unix"
 			}
 		},
@@ -115,7 +143,7 @@
 			"file": "shaders/lit_texture_bump.frag",
 			"settings":
 			{
-				"buffer_size": 702,
+				"buffer_size": 896,
 				"line_ending": "Windows"
 			}
 		},
@@ -123,7 +151,7 @@
 			"file": "shaders/lit_texture_bump.vert",
 			"settings":
 			{
-				"buffer_size": 438,
+				"buffer_size": 961,
 				"line_ending": "Windows"
 			}
 		},
@@ -131,7 +159,7 @@
 			"file": "shaders/lit_texture.vert",
 			"settings":
 			{
-				"buffer_size": 527,
+				"buffer_size": 647,
 				"line_ending": "Windows"
 			}
 		},
@@ -163,7 +191,7 @@
 			"file": "shaders/basic_lighting.vert",
 			"settings":
 			{
-				"buffer_size": 529,
+				"buffer_size": 647,
 				"line_ending": "Windows"
 			}
 		},
@@ -192,138 +220,42 @@
 			}
 		},
 		{
-			"file": "shaders/cube.vert",
-			"settings":
-			{
-				"buffer_size": 515,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/cube.frag",
-			"settings":
-			{
-				"buffer_size": 510,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/helmet_frame.frag",
-			"settings":
-			{
-				"buffer_size": 455,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/helmet_frame.vert",
-			"settings":
-			{
-				"buffer_size": 521,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/module.vert",
-			"settings":
-			{
-				"buffer_size": 522,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/module.frag",
-			"settings":
-			{
-				"buffer_size": 453,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "monkeys.mtl",
 			"settings":
 			{
-				"buffer_size": 300,
+				"buffer_size": 303,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "monkeys.obj",
+			"file": "shaders/ceramic.frag",
 			"settings":
 			{
-				"buffer_size": 182811,
-				"line_ending": "Unix"
+				"buffer_size": 317,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "shaders/ceramic.vert",
+			"settings":
+			{
+				"buffer_size": 616,
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "module.mtl",
 			"settings":
 			{
-				"buffer_size": 269,
+				"buffer_size": 256,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "shaders/helmet_shield.frag",
-			"settings":
-			{
-				"buffer_size": 522,
-				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "skysphere.mtl",
 			"settings":
 			{
-				"buffer_size": 245,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "shaders/sky.vert",
-			"settings":
-			{
-				"buffer_size": 521,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/sky.frag",
-			"settings":
-			{
-				"buffer_size": 185,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "shaders/helmet_shield.vert",
-			"settings":
-			{
-				"buffer_size": 521,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "helmetframe.mtl",
-			"settings":
-			{
-				"buffer_size": 241,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "helmetframe.obj",
-			"settings":
-			{
-				"buffer_size": 77259,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "helmetshield.mtl",
-			"settings":
-			{
-				"buffer_size": 243,
+				"buffer_size": 255,
 				"line_ending": "Unix"
 			}
 		}
@@ -359,6 +291,24 @@
 	},
 	"file_history":
 	[
+		"/C/Users/adam/Downloads/OpenGL-tutorial_v0013_33/OpenGL-tutorial_v0013_33/tutorial13_normal_mapping/NormalMapping.fragmentshader",
+		"/C/Users/adam/Downloads/OpenGL-tutorial_v0013_33/OpenGL-tutorial_v0013_33/tutorial13_normal_mapping/NormalMapping.vertexshader",
+		"/C/Users/adam/Documents/GitHub/chicago/media/cube.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/helmet_shield.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/helmet_shield.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/media/helmetshield.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/media/helmetframe.mtl",
+		"/C/Users/adam/Documents/GitHub/chicago/media/monkeys.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/media/helmetframe.obj",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/sky.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/sky.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/module.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/module.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/helmet_frame.vert",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/helmet_frame.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/cube.frag",
+		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/cube.vert",
+		"/C/Users/adam/Documents/GitHub/libRocket/Dependencies/empty.txt",
 		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/lit_texture_bump.frag",
 		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/lit_texture_bump.vert",
 		"/C/Users/adam/Documents/GitHub/chicago/media/test scene.mtl",
@@ -368,7 +318,6 @@
 		"/C/Users/adam/Desktop/bloom/bloom/source/hdr.c",
 		"/C/Users/adam/Desktop/bloom/bloom/shaders/passv.glsl",
 		"/C/Users/adam/Desktop/bloom/bloom/shaders/combine4f.glsl",
-		"/C/Users/adam/Documents/GitHub/chicago/media/cube.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/media/station.mtl",
 		"/C/Users/adam/Documents/GitHub/chicago/media/plane.mtl",
 		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/station.vert",
@@ -377,7 +326,6 @@
 		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/station.frag",
 		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/ground.vert",
 		"/C/Users/adam/Documents/GitHub/chicago/media/shaders/ground.frag",
-		"/C/Users/adam/Documents/GitHub/chicago/media/helmetframe.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/media/helmetshield.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/media/ground.obj",
 		"/C/Users/adam/Documents/GitHub/chicago/media/station2.obj",
@@ -524,7 +472,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 18,
 			"sheets":
 			[
 				{
@@ -533,15 +481,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 487,
+						"buffer_size": 542,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								229,
-								229
+								403,
+								403
 							]
 						],
 						"settings":
@@ -587,15 +535,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1123,
+						"buffer_size": 1141,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								926,
-								926
+								220,
+								220
 							]
 						],
 						"settings":
@@ -610,19 +558,19 @@
 				},
 				{
 					"buffer": 3,
-					"file": "/C/Users/adam/Documents/GitHub/libRocket/Dependencies/empty.txt",
+					"file": "cube.mtl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 252,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								250,
+								250
 							]
 						],
 						"settings":
@@ -637,24 +585,24 @@
 				},
 				{
 					"buffer": 4,
-					"file": "cube.mtl",
+					"file": "shaders/lit_texture_bump.frag",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 245,
+						"buffer_size": 896,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								231,
-								213
+								298,
+								298
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/User/OpenGL SL.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -664,19 +612,19 @@
 				},
 				{
 					"buffer": 5,
-					"file": "shaders/lit_texture_bump.frag",
+					"file": "shaders/lit_texture_bump.vert",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 702,
+						"buffer_size": 961,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								224,
-								224
+								390,
+								390
 							]
 						],
 						"settings":
@@ -691,19 +639,19 @@
 				},
 				{
 					"buffer": 6,
-					"file": "shaders/lit_texture_bump.vert",
+					"file": "shaders/lit_texture.vert",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 438,
+						"buffer_size": 647,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								380,
-								380
+								523,
+								591
 							]
 						],
 						"settings":
@@ -718,33 +666,6 @@
 				},
 				{
 					"buffer": 7,
-					"file": "shaders/lit_texture.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 527,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
 					"file": "shaders/lit_texture.frag",
 					"semi_transient": false,
 					"settings":
@@ -771,7 +692,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 8,
 					"file": "shaders/basic_texture.frag",
 					"semi_transient": false,
 					"settings":
@@ -798,7 +719,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 9,
 					"file": "shaders/basic_texture.vert",
 					"semi_transient": false,
 					"settings":
@@ -825,20 +746,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 10,
 					"file": "shaders/basic_lighting.vert",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 529,
+						"buffer_size": 647,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								529
+								247,
+								247
 							]
 						],
 						"settings":
@@ -852,7 +773,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 11,
 					"file": "shaders/basic_lighting.frag",
 					"semi_transient": false,
 					"settings":
@@ -879,7 +800,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 12,
 					"file": "shaders/passthrough.frag",
 					"semi_transient": false,
 					"settings":
@@ -906,7 +827,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 13,
 					"file": "shaders/passthrough.vert",
 					"semi_transient": false,
 					"settings":
@@ -933,20 +854,47 @@
 					"type": "text"
 				},
 				{
-					"buffer": 15,
-					"file": "shaders/cube.vert",
+					"buffer": 14,
+					"file": "monkeys.mtl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 515,
+						"buffer_size": 303,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								356,
-								356
+								153,
+								153
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "shaders/ceramic.frag",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 317,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								251,
+								251
 							]
 						],
 						"settings":
@@ -961,19 +909,19 @@
 				},
 				{
 					"buffer": 16,
-					"file": "shaders/cube.frag",
+					"file": "shaders/ceramic.vert",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 510,
+						"buffer_size": 616,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								510,
-								0
+								559,
+								559
 							]
 						],
 						"settings":
@@ -988,24 +936,24 @@
 				},
 				{
 					"buffer": 17,
-					"file": "shaders/helmet_frame.frag",
+					"file": "module.mtl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 455,
+						"buffer_size": 256,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								455
+								256,
+								256
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1015,370 +963,19 @@
 				},
 				{
 					"buffer": 18,
-					"file": "shaders/helmet_frame.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 521,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								362,
-								362
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 19,
-					"file": "shaders/module.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 522,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								302,
-								302
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 20,
-					"file": "shaders/module.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 453,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								231,
-								231
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 21,
-					"file": "monkeys.mtl",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 300,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								220,
-								220
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 22,
-					"file": "monkeys.obj",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 182811,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								89746,
-								89749
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 11.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 23,
-					"file": "module.mtl",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 269,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								239,
-								239
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 24,
-					"file": "shaders/helmet_shield.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 522,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								474,
-								474
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 25,
 					"file": "skysphere.mtl",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 245,
+						"buffer_size": 255,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								232,
-								216
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 26,
-					"file": "shaders/sky.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 521,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								521,
-								521
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 27,
-					"file": "shaders/sky.frag",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 185,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 28,
-					"file": "shaders/helmet_shield.vert",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 521,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								357,
-								357
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 29,
-					"file": "helmetframe.mtl",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 241,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 30,
-					"file": "helmetframe.obj",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 77259,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								39133,
-								39133
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 17114.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 31,
-					"file": "helmetshield.mtl",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 243,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								220,
-								203
+								253,
+								253
 							]
 						],
 						"settings":

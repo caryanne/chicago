@@ -7,7 +7,7 @@
 #include "SceneManager.h"
 
 SceneManager::SceneManager() {
-	 mRootNode = SceneNode();
+	 //mRootNode = SceneNode();
 	 mCamera = Camera();
 	 mCamera.setFOV(45.f);
 	 setScreenRatio(1.77778f);
@@ -30,9 +30,9 @@ void SceneManager::drawNode(SceneNode* sceneNode) {
 		glm::mat3 nm = glm::inverseTranspose(glm::mat3(mv)); //normal
 		glm::vec4 lightPos = mView * mLightPos;
 		
-		for(unsigned i = 0; i < sceneNode->getEntity()->getMesh()->subMeshCount(); i++) {
+		for(unsigned i = 0; i < sceneNode->getEntity()->subMeshCount(); i++) {
 			sceneNode->bind(i);
-			Mesh* mesh = sceneNode->getEntity()->getMesh();
+			Mesh* mesh = sceneNode->getEntity();
 			mesh->subMeshShader(i)->uniformModelViewProjectionMatrix(mvp);
 			mesh->subMeshShader(i)->uniformModelViewMatrix(mv);
 			mesh->subMeshShader(i)->uniformNormalMatrix(nm);

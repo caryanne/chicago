@@ -10,4 +10,5 @@ d 1.000000
 illum 2
 map_Kd paisley.jpg
 shader lit_texture
+mass 3
 

@@ -67,7 +67,7 @@
       <Filter>libraries\imgui</Filter>
     </ClCompile>
     <ClCompile Include="chicago\ShaderManager.cpp">
-      <Filter>header\engine</Filter>
+      <Filter>source\engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +75,6 @@
       <Filter>header\engine</Filter>
     </ClInclude>
     <ClInclude Include="chicago\Camera.h">
-      <Filter>header\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="chicago\Entity.h">
       <Filter>header\engine</Filter>
     </ClInclude>
     <ClInclude Include="chicago\Mesh.h">

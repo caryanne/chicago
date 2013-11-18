@@ -99,7 +99,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chicago\Camera.h" />
-    <ClInclude Include="chicago\Entity.h" />
     <ClInclude Include="chicago\Mesh.h" />
     <ClInclude Include="chicago\SceneManager.h" />
     <ClInclude Include="chicago\SceneNode.h" />

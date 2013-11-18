@@ -4,7 +4,6 @@
 #include <gl\glew.h>
 #include "glfw\glfw3.h"
 #include "tinyobjloader\tiny_obj_loader.h"
-
 #include <map>
 #include <string>
 #include "Shader.h"
@@ -29,6 +28,9 @@ private:
 
 	vector<SubMeshData> mSubMeshData;
 
+	float mMass;
+
+
 public:
 	Mesh() {
 	
@@ -39,9 +41,10 @@ public:
 	unsigned subMeshCount() { return mData.size(); }
 	Shader* subMeshShader(unsigned submesh) { return mSubMeshData[submesh].mShader; }
 	void bind(unsigned submesh);
-	glm::vec3 halfExtents(unsigned submesh = -1);
+	glm::vec3 halfExtents(int submesh = -1);
 	void draw(unsigned submesh);
 	void reload();
+	float getMass() { return mMass; }
 
 };
 
