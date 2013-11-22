@@ -135,7 +135,7 @@
 			"file": "cube.mtl",
 			"settings":
 			{
-				"buffer_size": 252,
+				"buffer_size": 259,
 				"line_ending": "Unix"
 			}
 		},
@@ -223,7 +223,7 @@
 			"file": "monkeys.mtl",
 			"settings":
 			{
-				"buffer_size": 303,
+				"buffer_size": 310,
 				"line_ending": "Unix"
 			}
 		},
@@ -472,7 +472,7 @@
 	"groups":
 	[
 		{
-			"selected": 18,
+			"selected": 14,
 			"sheets":
 			[
 				{
@@ -494,7 +494,8 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.tmLanguage"
+							"syntax": "Packages/Markdown/Markdown.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -542,8 +543,8 @@
 						"selection":
 						[
 							[
-								220,
-								220
+								1139,
+								1139
 							]
 						],
 						"settings":
@@ -551,7 +552,7 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 252.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -562,15 +563,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 252,
+						"buffer_size": 259,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								250,
-								250
+								257,
+								257
 							]
 						],
 						"settings":
@@ -602,7 +603,8 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+							"syntax": "Packages/User/OpenGL SL.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -629,7 +631,8 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/User/OpenGL SL.tmLanguage"
+							"syntax": "Packages/User/OpenGL SL.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -859,15 +862,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 303,
+						"buffer_size": 310,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								153,
-								153
+								307,
+								307
 							]
 						],
 						"settings":
