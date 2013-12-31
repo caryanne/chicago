@@ -2,7 +2,6 @@
 #include <windows.h>
 #include "glfw\glfw3.h"
 #include <gl\GLU.h>
-#include "bullet\btBulletDynamicsCommon.h"
 
 #include "soil\SOIL.h"
 #include "Shader.h"
@@ -121,80 +120,27 @@ int main() {
 
 	glClearColor(0.0f, 0.5f, 1.f, 1.f);
 
-	btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-	btDefaultCollisionConfiguration* collisionConfig = new btDefaultCollisionConfiguration();
-	btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfig);
-	btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver();
-	
-	btDiscreteDynamicsWorld* world = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
-	world->setGravity(btVector3(0, -5.0, 0));
-
-	Mesh modulemesh = Mesh("scene.obj");
-	SceneNode module = SceneNode(&modulemesh, true);
+	Mesh modulemesh = Mesh("scene.obj"); SceneNode module = SceneNode(&modulemesh);
 	mgr.getRootNode()->addChild(&module);
 
-	Mesh cubemesh = Mesh("cube.obj");
-	SceneNode cube = SceneNode(&cubemesh, false);
+	Mesh cubemesh = Mesh("cube.obj"); SceneNode cube = SceneNode(&cubemesh);
 	mgr.getRootNode()->addChild(&cube);
-	world->addRigidBody(cube.getRigidBody());
 
-	Mesh monkeysmesh = Mesh("monkeys.obj");
-	SceneNode monkeys = SceneNode(&monkeysmesh);
+
+	Mesh monkeysmesh = Mesh("monkeys.obj");	SceneNode monkeys = SceneNode(&monkeysmesh);
 	mgr.getRootNode()->addChild(&monkeys);
-	world->addRigidBody(monkeys.getRigidBody());
 	monkeys.setPosition(glm::vec3(3, 3, 0));
 	
 
 	Mesh skymesh = Mesh("skysphere.obj");
-	SceneNode sky = SceneNode(&skymesh, true);
+	SceneNode sky = SceneNode(&skymesh);
 	mgr.getRootNode()->addChild(&sky);
 
-	/*Mesh helmetmesh = Mesh("helmetframe.obj");
-	Entity helmetent = Entity(&helmetmesh);
-	SceneNode helmet = SceneNode(&helmetent);
-	mgr.getRootNode()->addChild(&helmet);
-
-	Mesh shieldmesh = Mesh("helmetshield.obj");
-	Entity shieldent = Entity(&shieldmesh);
-	SceneNode shield = SceneNode(&shieldent);
-	helmet.addChild(&shield);*/
-	
-	mgr.getCamera()->setPosition(glm::vec3(0,2,0));
+	mgr.getCamera()->setPosition(glm::vec3(0,5,5));
 	mgr.getCamera()->setFOV(90.f);
 	mgr.setScreenRatio(width / (float) height);
 	
 
-	//double mouseX = 0.0, mouseY = 0.0;
-	//glfwSetCursorPos(window, width / 2, height / 2);
-	//glfwGetCursorPos(window, &mouseX, &mouseY);
-
-	btVector3 inertia;
-	
-	btCollisionShape* moduleShape = new btBoxShape(btVector3(50, 0.5f, 50));
-	btDefaultMotionState* moduleMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
-	moduleShape->calculateLocalInertia(0, inertia);
-	btRigidBody::btRigidBodyConstructionInfo
-		moduleRigidBodyCI(0, moduleMotionState, moduleShape, inertia);
-	btRigidBody* moduleRigidBody = new btRigidBody(moduleRigidBodyCI);
-	world->addRigidBody(moduleRigidBody);
-
-	btCollisionShape* camShape = new btCapsuleShape(1, 3);
-	btDefaultMotionState* camMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 5, 6)));
-	camShape->calculateLocalInertia(5, inertia);
-	btRigidBody::btRigidBodyConstructionInfo
-		camRigidBodyCI(5, camMotionState, camShape, inertia);
-	
-	btRigidBody* camRigidBody = new btRigidBody(camRigidBodyCI);
-
-	camRigidBody->setActivationState(DISABLE_DEACTIVATION);
-	camRigidBody->setDamping(0.4f, 0.4f);
-
-	world->addRigidBody(camRigidBody);
-
-	cube.getRigidBody()->applyTorqueImpulse(btVector3(3, 1, 2));
-	cube.getRigidBody()->applyCentralImpulse(btVector3(0, 0.7, 0.8));
 
 	printf("%.2f:end initializing systems in %.2fs\n", glfwGetTime(), glfwGetTime() - start);
 	
@@ -204,7 +150,7 @@ int main() {
 	double lastUpdate = 0;
 	double last = glfwGetTime();
 
-	//ShowCursor(false);
+
 	while(!glfwWindowShouldClose(window)) {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -212,59 +158,17 @@ int main() {
 		
 		double delta = glfwGetTime() - last;
 		last = glfwGetTime();
-
-		//double tX, tY = 0.0;
-		//glfwGetCursorPos(window, &tX, &tY);
-		//double dX = mouseX - tX;
-		//double dY = mouseY - tY;
-		//glfwSetCursorPos(window, mouseX, mouseY);
-
-		btVector3 camForce = btVector3(0, 0, 0);
-		btVector3 camTorque = btVector3(0, 0, 0);
-		btMatrix3x3& camRot = camRigidBody->getWorldTransform().getBasis();
-
-		if(!keySpace) {
-			if(keyW) camForce += camRot * btVector3(0, 0, -0.05f);
-			if(keyS) camForce += camRot * btVector3(0, 0, 0.05f);
-			if(keyA) camForce += camRot * btVector3(-0.05f, 0, 0);
-			if(keyD) camForce += camRot * btVector3(0.05f, 0, 0);
-		} else {
-			if(keyA) camTorque += camRot * btVector3(0, 0.005f, 0);
-			if(keyD) camTorque += camRot * btVector3(0, -0.005f, 0);
-			if(keyW) camTorque += camRot * btVector3(-0.01f, 0, 0);
-			if(keyS) camTorque += camRot * btVector3(0.01f, 0, 0);
-		}
-		if(keyE) camTorque = camRot * btVector3(0, 0, -0.025f);
-		if(keyQ) camTorque = camRot * btVector3(0, 0, 0.025f);
-
-		camRigidBody->applyCentralImpulse(camForce);
-		camRigidBody->applyTorqueImpulse(camTorque);
-
-
-		world->stepSimulation(delta, 10); 
-
-		
-		btTransform camTrans;
-		camRigidBody->getMotionState()->getWorldTransform(camTrans);
-		mgr.getCamera()->setPosition(glm::vec3(camTrans.getOrigin().x(), camTrans.getOrigin().y(), camTrans.getOrigin().z()));
-		mgr.getCamera()->setRotation(glm::quat(camTrans.getRotation().w(), camTrans.getRotation().x(), camTrans.getRotation().y(), camTrans.getRotation().z()));
 		
 		glm::vec3 eye = mgr.getCamera()->getPosition();
 		sky.setPosition(eye);
-		
-		//mgr.setLightPos(glm::vec4(cube.getPosition(), 1.0));
-		//mgr.setLightPos(glm::vec4(eye, 1.0));
+	
 		mgr.setLightPos(glm::vec4(-5 * sin(glfwGetTime()), 7.0 +  sin(glfwGetTime() * 2.0), -6 * cos(glfwGetTime()), 1));
 		monkeys.setRotation(glm::vec3(0, glm::radians(glfwGetTime() * 70), 0));
-		//helmet.setPosition(eye + glm::vec3(0.2) * mgr.getCamera()->getDirection());
-		//helmet.setRotation(glm::toQuat(glm::inverse(mgr.getCamera()->getView())));
-
 		
 		mgr.drawScene();
 		
 		prepareGUI(width, height);
 		imguiBeginFrame(100, 100, 0, 0);
-
         imguiEndFrame();	
         imguiDrawText(20, height - 20, IMGUI_ALIGN_LEFT, buffer, imguiRGBA(255, 255, 255, 255));
         imguiRenderGLDraw(width, height); 
@@ -281,23 +185,9 @@ int main() {
 
 		glfwPollEvents();
 	}
-	//ShowCursor(true);
+
 	ShaderManager::getInstance().unload();
-	world->removeRigidBody(camRigidBody);
-	delete camRigidBody->getMotionState();
-	delete camRigidBody;
-
-
-	world->removeRigidBody(moduleRigidBody);
-	delete moduleRigidBody->getMotionState();
-	delete moduleRigidBody;
-
-	delete moduleShape;
-	delete world;
-	delete solver;
-	delete dispatcher;
-	delete collisionConfig;
-	delete broadphase;
+	
 	imguiRenderGLDestroy();
 	glfwTerminate();
 	exit(EXIT_SUCCESS);

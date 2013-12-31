@@ -4,7 +4,6 @@
 #include <vector>
 #include "glm\glm.hpp"
 #include "glm\gtx\quaternion.hpp"
-#include "bullet\btBulletDynamicsCommon.h"
 #include "Mesh.h"
 
 using namespace std;
@@ -19,14 +18,9 @@ private:
 	glm::quat mRotation;
 	glm::vec3 mScale;
 
-	btVector3 mInertia;
-	btCollisionShape* mCollisionShape;
-	btDefaultMotionState* mMotionState;
-	btRigidBody* mRigidBody;
-
 public:
 	SceneNode();
-	SceneNode(Mesh* entity, bool noPhysics = false);
+	SceneNode(Mesh* entity);
 	~SceneNode();
 	unsigned addChild(SceneNode* sceneNode);
 	
@@ -51,8 +45,6 @@ public:
 	void draw(unsigned submesh);
 
 	glm::mat4 getModelMatrix();
-
-	btRigidBody* getRigidBody() { return mRigidBody; }
 
 	//void detach();
 	//void removeChild();
